@@ -70,6 +70,8 @@ export default {
         password: this.password,
       };
 
+      this.$router.push({ name: 'home.dashboard' });
+
 
       this.$axios.post('/login', data)
           .then(() => {
