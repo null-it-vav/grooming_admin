@@ -1,0 +1,47 @@
+// Body
+$body-bg: #FDFEFE;
+
+// Typography
+$font-family-sans-serif: 'Roboto';
+$font-size-base: 0.88rem;
+$line-height-base: 1.6;
+
+// Colors
+$white: #fff;
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #6a1b9a;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$darken-gray: #313742;
+$darken-gray-selected: #353B47;
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1140px,
+    xxl: 1400px
+) !default;
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1200px,
+    xxl: 1360px
+) !default;
+
+$custom-file-text: (
+    en: "Browse",
+    ru: "Выбрать"
+);
+
+
+

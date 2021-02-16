@@ -1,0 +1,63 @@
+{
+  "name": "groomer_admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.6.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^5.0.0-beta2",
+    "bootstrap-vue": "^2.21.2",
+    "core-js": "^3.6.5",
+    "fibers": "^5.0.0",
+    "font-awesome": "^4.7.0",
+    "laravel-echo": "^1.10.0",
+    "popper.js": "^1.16.1",
+    "socket.io-client": "^3.1.1",
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.22.4",
+    "vue-loading-overlay": "^3.4.2",
+    "vue-moment": "^4.1.0",
+    "vue-progress-bar": "^1.0.1",
+    "vue-progressbar": "^0.7.5",
+    "vue-router": "^3.5.1",
+    "vuejs-datetimepicker": "^1.1.13",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^5.0.0",
+    "sass": "^1.32.7",
+    "sass-loader": "^10.1.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.46.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

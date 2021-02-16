@@ -1,0 +1,86 @@
+$alto: #ddd;
+$calendar-border: 1px solid $alto;
+$buttermilk: rgba(255, 238, 173, 0.4);
+$vista-blue: #42b983;
+
+@mixin calendar-row {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+@mixin calendar-cell {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+
+#calendar-area {
+    #day-bar {
+        @include calendar-row;
+        div {
+            @include calendar-cell;
+        }
+    }
+
+    #calendar {
+        background-color: white;
+        .calendar-week {
+            @include calendar-row;
+            .day {
+                overflow: hidden;
+                font-weight: bold;
+                @include calendar-cell;
+                height: 100px;
+                user-select: none;
+                cursor: default;
+                border-left: $calendar-border;
+                border-top: $calendar-border;
+
+                &:last-child {
+                    border-right: $calendar-border;
+                }
+
+                &.past {
+                    opacity: 0.6;
+                }
+
+                &.not-current-month {
+                    color: $alto;
+                }
+
+                &.today {
+                    background-color: $buttermilk;
+                }
+
+                &.active {
+                    background-color: $pink;
+                }
+
+                .event-list {
+                    font-size: 0.8rem;
+                    color: $vista-blue;
+                    font-weight: bold;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0.5rem 0 0.5rem 0;
+
+                    li {
+                        white-space: nowrap;
+                    }
+                }
+            }
+
+
+            .day {
+
+
+            }
+            &:last-child {
+                .day {
+                    border-bottom: $calendar-border;
+                }
+            }
+        }
+    }
+}
