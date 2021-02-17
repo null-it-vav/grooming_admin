@@ -85,8 +85,8 @@
           </div>
         </nav>
 
-        <div class="container mt-5"> <br>
-          <router-view/>
+        <div class="container mt-5 mb-5"> <br>
+          <router-view class="mt-3"/>
         </div>
 
       </div>
