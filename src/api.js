@@ -22,3 +22,27 @@ export function masters(payload){
         params: payload
     }).then((response) => response)
 }
+
+export function salons(payload){
+    return axios.get(BASE_URL + "profile/salons", {
+        params: payload
+    }).then((response) => response)
+}
+
+export function services(payload){
+    return axios.get(BASE_URL + "profile/services", {
+        params: payload
+    }).then((response) => response)
+}
+
+export function create_service(payload){
+    return axios.post(BASE_URL + "profile/services", payload)
+        .then((response) => response)
+}
+
+export function update_service(id, payload){
+    payload.append('_method', 'patch');
+    
+    return axios.post(BASE_URL + "profile/services/" + id , payload)
+        .then((response) => response)
+}

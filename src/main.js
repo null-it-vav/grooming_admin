@@ -7,14 +7,14 @@ import { BootstrapVue } from 'bootstrap-vue'
 import ru from "./i18n/ru";
 import axios from './bootstrap';
 import "./sass/app.scss";
-
-
+import FlagIcon from 'vue-flag-icon'
 import VueI18n from 'vue-i18n'
-
-
 import VueMoment from 'vue-moment'
 import moment from 'moment'
 import 'moment/locale/ru'
+
+Vue.use(FlagIcon);
+
 
 Vue.prototype.$moment = VueMoment;
 Vue.use(VueMoment, {

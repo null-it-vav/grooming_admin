@@ -7,6 +7,8 @@ import { me } from "@/api";
 const store = new Vuex.Store({
     state: {
         auth: false,
+        salons: [],
+        salon_selected: {},
         internetError: false,
         loading: {
             local: 0,
@@ -16,6 +18,12 @@ const store = new Vuex.Store({
     mutations: {
         auth(state, {data}) {
             state.auth = data; // eslint-disable-line no-param-reassign
+        },
+        salons(state, {data}){
+            state.salons = data
+        },
+        salon_selected(state, {data}) {
+            state.salon_selected = data
         },
         setStore(state, { key, data, allowCreate = false }) {
             if (key.includes('.')) {
@@ -42,6 +50,8 @@ const store = new Vuex.Store({
     },
     getters: {
         auth: (state) => state.auth,
+        salons: (state) => state.salons,
+        salon_selected: (state) => state.salon_selected,
         getStore: (state) => (key) => {
             if (key.includes('.')) {
                 let tmp = state;
@@ -65,14 +75,31 @@ const store = new Vuex.Store({
         // eslint-disable-next-line no-unused-vars
         clearAuth({ commit, state }) {
             commit('setStore', {key: 'auth', data: false});
+            commit('setStore', {key: 'salons', data: []});
             localStorage.removeItem('user-token')
         },
         getAuth: async function ({dispatch, commit, state}) { // eslint-disable-line
             await me().then((response) => {
                 commit('setStore', {key: 'auth', data: response.data.data.user});
+                commit('setStore', {key: 'salons', data: response.data.data.salons});
+
+                var salon_id = localStorage.getItem('salon_selected')
+                if(salon_id){
+                    var salon = response.data.data.salons.find(salon => salon.id == salon_id)
+                    // eslint-disable-next-line no-debugger
+                    // debugger;
+                    commit('setStore', {key: 'salon_selected', data: salon});
+                }
             })
         },
+        setSalon({dispatch, commit, state},  salon_id ){// eslint-disable-line
 
+            var salon = state.salons.find(salon => salon.id === salon_id)
+            if (salon){
+                commit('setStore', {key: 'salon_selected', data: salon});
+                localStorage.setItem('salon_selected', salon.id)
+            }
+        },
         animateLoading({ getters, commit }, { type, action, status_code }) {
             let value = getters.getStore(`loading.${type}`);
             switch (action) {

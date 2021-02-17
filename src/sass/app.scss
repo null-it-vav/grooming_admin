@@ -211,3 +211,7 @@ a.list-group-item:hover {
 a.list-group-item i{
   width: 20px;
 }
+
+.custom-file-label::after:lang(ru) {
+  content: 'Выбрать';
+}

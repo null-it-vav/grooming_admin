@@ -54,11 +54,8 @@
           <hr>
           <div class="form-group">
             <label>{{ $t('app.components.main.selected_salon') }}</label>
-            <select class="form-control">
-              <option>12312</option>
-              <option>12312</option>
-              <option>12312</option>
-              <option>12312</option>
+            <select class="form-control" @change="setSalon" v-model="selected_salon">
+              <option v-for="(salon, k) in salons" :value="salon.id" :key="k">{{ salon.address }}</option>
             </select>
           </div>
         </div>
@@ -100,20 +97,26 @@
 <script>
 import { logout } from "@/api";
 import {mapGetters} from "vuex";
+import store from "@/store/app";
 
 export default {
   name: "DashboardIndex",
   data() {
     return {
-      nav_open: false
+      nav_open: false,
+      selected_salon: localStorage.getItem('salon_selected')
     }
   },
   computed: {
     ...mapGetters([
-      'auth'
+      'auth',
+      'salons'
     ])
   },
   methods: {
+    setSalon(){
+      store.dispatch('setSalon', this.selected_salon)
+    },
     logout(){
       logout()
           .then(() => {

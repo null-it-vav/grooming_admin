@@ -15,7 +15,28 @@ let ru = {
                 password: "Пароль",
                 login: "Войти",
                 reset_password: "Восстановить пароль",
-            }
+            },
+            services: {
+                create: "Создать услугу",
+                update: "Обновить услугу",
+                field: {
+                    name: 'Название',
+                    description: 'Описание',
+                    price: 'Цена, от',
+                    type: 'Тип',
+                    duration: 'Продолжительность, мин',
+                    image: 'Фото',
+                }
+            },
+            settings: {
+                name: 'Название',
+                phone: 'Телефон',
+                site: 'Сайт',
+                email: 'Email',
+                schedule_step: 'Шаг расписания, мин',
+                timezone: 'Временная зона',
+                lang: 'Язык',
+            },
         },
         titles: {
             home: {
@@ -34,6 +55,9 @@ let ru = {
         }
     },
     base: {
+        validation: {
+            file_to_large: "Файл слишком большой"
+        },
         months: {
             1: "Январь",
             2: "Февраль",
@@ -47,6 +71,15 @@ let ru = {
             10: "Октябрь",
             11: "Ноябрь",
             12: "Декабрь",
+        },
+        save: 'Сохранить',
+        create: 'Создать',
+        update: 'Обновить',
+        service_types: {
+            select: 'Выбрать..',
+            cat: 'Кошка',
+            dog: 'Собака',
+            other: 'Другое',
         }
     }
 }

@@ -38,6 +38,7 @@
 
 <script>
 import { masters } from "@/api";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Index",
@@ -55,8 +56,16 @@ export default {
   created() {
     this.loadMasters()
   },
+  computed: {
+    ...mapGetters([
+      'salon_selected'
+    ])
+  },
   watch: {
     'masters.page': function(){
+      this.loadMasters()
+    },
+    'salon_selected.id': function(){
       this.loadMasters()
     }
   },
@@ -64,7 +73,8 @@ export default {
     loadMasters(){
       masters({
         page: this.masters.page,
-        qty: this.masters.per_page
+        qty: this.masters.per_page,
+        salon_id: this.salon_selected.id
       }).then(response => {
         this.masters.data = response.data.data.masters.data
         this.masters.total = response.data.data.masters.total
@@ -74,7 +84,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
