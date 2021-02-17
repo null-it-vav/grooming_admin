@@ -79,7 +79,9 @@
 .sidebar {
   background: white;
 }
-
+.main-panel {
+  overflow-y: unset;
+}
 .main-panel, .sidebar {
   overflow: auto;
   max-height: 100%;

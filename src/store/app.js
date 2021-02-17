@@ -83,15 +83,20 @@ const store = new Vuex.Store({
                 commit('setStore', {key: 'auth', data: response.data.data.user});
                 commit('setStore', {key: 'salons', data: response.data.data.salons});
 
+                // eslint-disable-next-line no-debugger
+                // debugger;
+
+
                 var salon_id = localStorage.getItem('salon_selected')
                 if(salon_id){
                     var salon = response.data.data.salons.find(salon => salon.id == salon_id)
-                    // eslint-disable-next-line no-debugger
-                    // debugger;
+
                     commit('setStore', {key: 'salon_selected', data: salon});
+                    localStorage.setItem('salon_selected', salon.id)
                 }else {
                     if (response.data.data.salons.length && response.data.data.salons[0]){
                         commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
+                        localStorage.setItem('salon_selected', response.data.data.salons[0].id)
                     }
                 }
             })
