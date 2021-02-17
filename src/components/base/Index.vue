@@ -85,8 +85,9 @@
           </div>
         </nav>
 
-        <div class="container mt-5 mb-5"> <br>
-          <router-view class="mt-3"/>
+        <div class="container">
+          <div style="height: 100px; width: 100%;"></div>
+          <router-view />
         </div>
 
       </div>
