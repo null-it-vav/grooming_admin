@@ -90,8 +90,8 @@ const store = new Vuex.Store({
                     // debugger;
                     commit('setStore', {key: 'salon_selected', data: salon});
                 }else {
-                    if (this.salons[0]){
-                        commit('setStore', {key: 'salon_selected', data: this.salons[0]});
+                    if (response.data.data.salons.length && response.data.data.salons[0]){
+                        commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
                     }
                 }
             })
