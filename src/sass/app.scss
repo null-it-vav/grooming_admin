@@ -76,6 +76,10 @@
   height: 100vh;
 }
 
+.sidebar {
+  background: white;
+}
+
 .main-panel, .sidebar {
   overflow: auto;
   max-height: 100%;
@@ -93,7 +97,7 @@
   left: 0;
   width: 260px;
   display: block;
-  z-index: 1;
+  z-index: 9999;
   font-weight: 200;
   background-size: cover;
   background-position: 50%;
@@ -105,6 +109,10 @@
   float: right;
   width: calc(100% - 260px);
   min-height: 100%;
+}
+
+.main-panel .navbar {
+  margin-left: 260px;
 }
 
 .navbar-light {
@@ -131,6 +139,9 @@
     width: 100%;
   }
 
+  .main-panel .navbar {
+    margin-left: 0px;
+  }
 
   .nav-open .main-panel {
     position: absolute;

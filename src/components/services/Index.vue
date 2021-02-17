@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4">
     <div class="row mb-2">
-      <div class="col-lg-3 col">
+      <div class="col-9 col">
         <form-group
           type="select"
           :items="[
@@ -14,7 +14,7 @@
           v-model="filter_type"
         />
       </div>
-      <div class="ml-auto col-2 d-flex">
+      <div class="ml-auto col-3 d-flex">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -28,7 +28,7 @@
         :key="service.id"
         class="row mb-3"
     >
-      <div class="col-10 d-flex">
+      <div class="col-9 d-flex align-items-center">
         <div class="mr-2">
           <b-avatar class="mr-3" :src="service.image"></b-avatar>
         </div>
@@ -42,9 +42,20 @@
           </div>
         </div>
       </div>
-      <div class="col-2 d-flex align-items-center">
-        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
-        <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
+      <div class="col-3 d-flex align-items-center">
+        <div class="ml-auto  d-none d-sm-block">
+          <button class="btn btn-dark rounded-circle fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
+          <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
+        </div>
+        <div class="ml-auto d-block d-sm-none">
+          <b-dropdown variant="link" size="sm" toggle-class="text-decoration-none" no-caret>
+            <template #button-content>
+              <i class="btn btn-dark rounded-circle fa fa-align-justify"/>
+            </template>
+            <b-dropdown-item @click="openUpdatePopup(service)">{{ $t('base.update') }}</b-dropdown-item>
+            <b-dropdown-item @click="deleteService(service.id)">{{ $t('base.delete') }}</b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
     </div>
 

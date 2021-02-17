@@ -115,6 +115,7 @@ let ru = {
         save: 'Сохранить',
         create: 'Создать',
         update: 'Обновить',
+        delete: 'Удалить',
         service_types: {
             select: 'Выбрать..',
             cat: 'Кошка',

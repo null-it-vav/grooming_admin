@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="main-panel">
-        <nav class="navbar navbar-expand-md navbar-light bg-faded shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-faded shadow-sm fixed-top">
           <div class="container-fluid">
             <a href="#" class="navbar-brand">
               {{ $t('app.titles.' + $route.name) }}
@@ -85,7 +85,7 @@
           </div>
         </nav>
 
-        <div class="container mt-4">
+        <div class="container mt-5"> <br>
           <router-view/>
         </div>
 
@@ -132,7 +132,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
