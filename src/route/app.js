@@ -99,8 +99,10 @@ router.beforeEach((to, from, next) => {
         store.dispatch('getAuth').then(() => {
             next()
         }).catch((error) => {
-            if (error.response.status == 401){
+            if (error?.response?.status == 401){
                 window.location.href = '/'
+            }else {
+                console.warn(error)
             }
         })
     } else {
