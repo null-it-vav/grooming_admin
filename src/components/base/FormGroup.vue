@@ -19,7 +19,7 @@
         :class="(name in errors) ? 'is-invalid' : ''"
         :disabled="disabled"
     >
-      <option v-for="(item,k) in items" :key="k" :value="item.value">{{ item.text }}</option>
+      <option v-for="(item,k) in items" :key="k" :value="item.value ? item.value : item">{{ item.text ? item.text : item }}</option>
     </select>
     <input
         v-else-if="type == 'password'"
@@ -154,6 +154,11 @@ export default {
     }
   },
   watch: {
+    value: function (){
+      if (this.value){
+        this.localValue = this.value
+      }
+    },
     localValue(newVal, oldVal) {
       // if (newVal !== oldVal && newVal !== (this.value || 0)) {
       if (newVal !== oldVal) {

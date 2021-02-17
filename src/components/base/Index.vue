@@ -122,6 +122,11 @@ export default {
           .then(() => {
             this.$store.dispatch('clearAuth');
             this.$router.push({ name: 'login' });
+          }).catch((error) => {
+            if (error.response.status == 401){
+              this.$store.dispatch('clearAuth');
+              this.$router.push({ name: 'login' });
+            }
           })
     }
   }

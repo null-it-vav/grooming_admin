@@ -28,6 +28,25 @@ let ru = {
                     image: 'Фото',
                 }
             },
+            salons: {
+                create: "Создать салон",
+                fields: {
+                    address: 'Адрес'
+                }
+            },
+            masters: {
+                create: "Создать мастера",
+                fields: {
+                    name: 'ФИО',
+                    email: 'Email',
+                    password: 'Пароль для входа',
+                    position: 'Должность',
+                    photo: 'Фото',
+                    schedule: 'Часы работы',
+                    description: 'Описание',
+                    profit: 'Процент прибыли от заказа',
+                }
+            },
             settings: {
                 name: 'Название',
                 phone: 'Телефон',
@@ -56,7 +75,8 @@ let ru = {
     },
     base: {
         validation: {
-            file_to_large: "Файл слишком большой"
+            file_to_large: "Файл слишком большой",
+            address_not_found: "Адрес не определился"
         },
         months: {
             1: "Январь",
@@ -80,6 +100,16 @@ let ru = {
             cat: 'Кошка',
             dog: 'Собака',
             other: 'Другое',
+        },
+        find_me: "Найти меня",
+        days: {
+            0: "Пн",
+            1: "Вт",
+            2: "Ср",
+            3: "Чт",
+            4: "Пт",
+            5: "Сб",
+            6: "Вс",
         }
     }
 }

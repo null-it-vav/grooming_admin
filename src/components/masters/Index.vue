@@ -1,6 +1,16 @@
 <template>
   <div class="card p-4">
 
+    <div class="row mb-4">
+      <div class="ml-auto col-2 d-flex">
+        <div class="ml-auto">
+          <a
+              class="btn btn-purpure rounded-circle fa fa-plus"
+              @click="showCreatePopup = true"
+          />
+        </div>
+      </div>
+    </div>
     <div
         v-for="master in masters.data"
         :key="master.id"
@@ -21,7 +31,7 @@
         </div>
       </div>
       <div class="col-2 d-flex align-items-center">
-        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg"/>
+        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(master)"/>
       </div>
     </div>
 
@@ -33,24 +43,41 @@
         aria-controls="my-table"
         class="m-auto"
     ></b-pagination>
+
+    <create
+        v-if="showCreatePopup"
+        @closePopup="closeCreatePopup"
+    />
+    <update
+        v-if="showUpdatePopup"
+        :master="master"
+        @closePopup="closeUpdatePopup"
+    />
   </div>
 </template>
 
 <script>
 import { masters } from "@/api";
 import {mapGetters} from "vuex";
+import Create from "@/components/masters/Create";
+import Update from "@/components/masters/Update";
+import deepClone from 'clonedeep';
 
 export default {
   name: "Index",
+  components: {Update, Create},
   data(){
     return {
+      master: {},
       masters: {
         data: [],
         page: 1,
         per_page: 15,
         last_page: 1,
         total: 0,
-      }
+      },
+      showCreatePopup: false,
+      showUpdatePopup: false,
     }
   },
   created() {
@@ -80,6 +107,18 @@ export default {
         this.masters.total = response.data.data.masters.total
         this.masters.last_page = response.data.data.masters.last_page
       })
+    },
+    closeCreatePopup(){
+      this.showCreatePopup = false
+      this.loadMasters()
+    },
+    openUpdatePopup(master){
+      this.showUpdatePopup = true
+      this.master = deepClone(master)
+    },
+    closeUpdatePopup(){
+      this.showUpdatePopup = false
+      this.loadMasters()
     }
   }
 }

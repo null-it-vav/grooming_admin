@@ -1,5 +1,16 @@
 <template>
   <div class="card p-4">
+    <div class="row mb-4">
+
+      <div class="ml-auto col-2 d-flex">
+        <div class="ml-auto">
+          <a
+              class="btn btn-purpure rounded-circle fa fa-plus"
+              @click="showCreatePopup = true"
+          />
+        </div>
+      </div>
+    </div>
 
     <div
         v-for="salon in salons.data"
@@ -17,7 +28,7 @@
         </div>
       </div>
       <div class="col-2 d-flex align-items-center">
-        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg"/>
+        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(salon)"/>
       </div>
     </div>
 
@@ -30,14 +41,30 @@
         aria-controls="my-table"
         class="m-auto"
     ></b-pagination>
+
+    <create
+      v-if="showCreatePopup"
+      @closePopup="closeCreatePopup"
+    />
+
+    <update
+        v-if="showUpdatePopup"
+        :salon="salon"
+        @closePopup="closeUpdatePopup"
+    />
   </div>
 </template>
 
 <script>
 import {salons} from "@/api";
+import Create from "@/components/salons/Create";
+import Update from "@/components/salons/Update";
+import deepClone from 'clonedeep';
+
 
 export default {
   name: "Index",
+  components: {Update, Create},
   data() {
     return {
       salons: {
@@ -46,7 +73,9 @@ export default {
         per_page: 15,
         last_page: 1,
         total: 0,
-      }
+      },
+      showCreatePopup: false,
+      showUpdatePopup: false
     }
   },
   created() {
@@ -67,6 +96,18 @@ export default {
         this.salons.total = response.data.data.salons.total
         this.salons.last_page = response.data.data.salons.last_page
       })
+    },
+    closeCreatePopup() {
+      this.showCreatePopup = false
+      this.loadSalons()
+    },
+    openUpdatePopup(salon){
+      this.showUpdatePopup = true
+      this.salon = deepClone(salon)
+    },
+    closeUpdatePopup(){
+      this.showUpdatePopup = false
+      this.loadSalons()
     }
   }
 }

@@ -89,6 +89,10 @@ const store = new Vuex.Store({
                     // eslint-disable-next-line no-debugger
                     // debugger;
                     commit('setStore', {key: 'salon_selected', data: salon});
+                }else {
+                    if (this.salons[0]){
+                        commit('setStore', {key: 'salon_selected', data: this.salons[0]});
+                    }
                 }
             })
         },
