@@ -30,21 +30,40 @@ let ru = {
             },
             salons: {
                 create: "Создать салон",
+                update: "Обновить салон",
                 fields: {
                     address: 'Адрес'
                 }
             },
+            promotions: {
+                create: "Создать акцию",
+                update: "Обновить акцию",
+                fields: {
+                    name: "Заголок",
+                    description: "Описание",
+                    start: "Дата начала",
+                    finish: "Дата конца",
+                },
+                statuses: {
+                    expect: "Ожидает",
+                    active: "Активна",
+                    inactive: "Завершена",
+                }
+            },
             masters: {
                 create: "Создать мастера",
+                update: "Обновить мастера",
                 fields: {
                     name: 'ФИО',
                     email: 'Email',
                     password: 'Пароль для входа',
+                    password_confirmation: "Подтвердите пароль",
                     position: 'Должность',
                     photo: 'Фото',
                     schedule: 'Часы работы',
                     description: 'Описание',
                     profit: 'Процент прибыли от заказа',
+                    salon: 'Салон',
                 }
             },
             settings: {
@@ -74,6 +93,7 @@ let ru = {
         }
     },
     base: {
+        are_you_sure_delete: "Вы точно хотите удалить?",
         validation: {
             file_to_large: "Файл слишком большой",
             address_not_found: "Адрес не определился"

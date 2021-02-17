@@ -19,7 +19,7 @@
         :class="(name in errors) ? 'is-invalid' : ''"
         :disabled="disabled"
     >
-      <option v-for="(item,k) in items" :key="k" :value="item.value ? item.value : item">{{ item.text ? item.text : item }}</option>
+      <option v-for="(item,k) in items" :key="k" :value="item.text ? item.value : item">{{ item.text ? item.text : item }}</option>
     </select>
     <input
         v-else-if="type == 'password'"

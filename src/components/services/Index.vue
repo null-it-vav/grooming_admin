@@ -44,6 +44,7 @@
       </div>
       <div class="col-2 d-flex align-items-center">
         <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
+        <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
       </div>
     </div>
 
@@ -70,7 +71,7 @@
 </template>
 
 <script>
-import { services } from "@/api";
+import { services, delete_service } from "@/api";
 import FormGroup from "@/components/base/FormGroup";
 import Create from "@/components/services/Create";
 import Update from "@/components/services/Update";
@@ -128,6 +129,13 @@ export default {
     closeUpdatePopup(){
       this.loadServices()
       this.showUpdatePopup = false;
+    },
+    deleteService(service_id){
+      if (confirm(this.$t('base.are_you_sure_delete'))) {
+        delete_service(service_id).then(() => {
+          this.loadServices()
+        })
+      }
     }
   }
 }

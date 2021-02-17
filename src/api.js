@@ -72,4 +72,40 @@ export function update_service(id, payload){
         .then((response) => response)
 }
 
+export function delete_service(id){
+    return axios.post(BASE_URL + "profile/services/" + id , {
+        _method: "DELETE"
+    })
+        .then((response) => response)
+}
+
+
+
+export function promotions(payload){
+    return axios.get(BASE_URL + "profile/promotions" , {
+        params: payload
+    })
+        .then((response) => response)
+}
+
+export function delete_promotion(id){
+    return axios.post(BASE_URL + "profile/promotions/" + id , {
+        _method: "DELETE"
+    })
+        .then((response) => response)
+}
+
+
+export function create_promotion(payload){
+    return axios.post(BASE_URL + "profile/promotions" , payload)
+        .then((response) => response)
+}
+
+
+export function update_promotion(id, payload){
+    payload.append('_method', 'patch');
+
+    return axios.post(BASE_URL + "profile/promotions/" + id , payload)
+        .then((response) => response)
+}
 

@@ -1,6 +1,6 @@
 <template>
   <base-popup
-      :caption="$t('app.components.masters.create')"
+      :caption="$t('app.components.masters.update')"
       @closePopup="closePopup"
       :success_error="success_error"
       dialogSize="modal-lg"
@@ -39,6 +39,15 @@
               :errors="errors"
           />
         </div>
+        <div class="col-lg-6">
+          <form-group
+              :label="$t('app.components.masters.fields.password_confirmation')"
+              type="password"
+              name="password_confirmation"
+              v-model="master.password_confirmation"
+              :errors="errors"
+          />
+        </div>
 
         <div class="col-lg-6">
           <form-group
@@ -67,6 +76,17 @@
               type="number"
               name="profit"
               v-model="master.profit"
+              :errors="errors"
+          />
+        </div>
+
+        <div class="col-lg-6">
+          <form-group
+              :label="$t('app.components.masters.fields.salon')"
+              type="select"
+              :items="salons.map(salon => { return {value: salon.id, text: salon.address} })"
+              name="salon"
+              v-model="master.salon_id"
               :errors="errors"
           />
         </div>
@@ -157,9 +177,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'salon_selected'
+      'salon_selected',
+      'salons'
     ])
   },
+
   methods: {
     closePopup() {
       this.$emit('closePopup');
@@ -173,11 +195,12 @@ export default {
 
       if (this.master.password) {
         data.append('password', this.master.password)
+        data.append('password_confirmation', this.master.password_confirmation)
       }
 
 
       data.append('position', this.master.position)
-      data.append('salon_id', this.salon_selected.id)
+      data.append('salon_id', this.master.salon_id)
       data.append('profit', this.master.profit)
 
       if (this.new_photo)

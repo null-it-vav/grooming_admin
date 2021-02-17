@@ -1,6 +1,6 @@
 <template>
   <base-popup
-      :caption="$t('app.components.salons.create')"
+      :caption="$t('app.components.salons.update')"
       @closePopup="closePopup"
       :success_error="success_error"
       dialogSize="modal-lg"
