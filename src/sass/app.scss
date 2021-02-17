@@ -1,7 +1,10 @@
 @import 'variables';
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
 
 // Loading Overlay
 @import '~vue-loading-overlay/dist/vue-loading.css';
@@ -10,6 +13,21 @@
 @import "~font-awesome/css/font-awesome.css";
 
 @import "calendar";
+
+.page-item.active .page-link {
+  background-color: $purple !important;
+  border-color: $purple !important;
+}
+.page-link {
+  color: #000000;
+}
+.page-link:hover {
+  color: #000000;
+}
+
+.pointer {
+  cursor: pointer;
+}
 
 .btn {
   color: #fff !important;
@@ -132,7 +150,23 @@
   color: #6a1b9a!important;
 }
 
-.list-group .router-link-active:before {
+
+
+.list-group a:hover:before {
+  background: #6a1b9a80 !important;
+  opacity: .12;
+  bottom: 0;
+  content: "";
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-radius: 4px;
+  transition: .3s cubic-bezier(.25,.8,.5,1);
+}
+
+.list-group a.router-link-active:before {
   background: #6a1b9a!important;
   opacity: .12;
   bottom: 0;
@@ -145,6 +179,11 @@
   border-radius: 4px;
   transition: .3s cubic-bezier(.25,.8,.5,1);
 }
+
+a.list-group-item {
+  margin-bottom: 0.2rem;
+}
+
 
 .list-group.border-none {
   .list-group-item {
@@ -160,4 +199,15 @@ button:focus:not(:focus-visible),
 button:focus {
   outline: none;
   box-shadow: none;
+}
+
+.page-item.active .page-link {
+
+}
+
+a.list-group-item:hover {
+  text-decoration: none;
+}
+a.list-group-item i{
+  width: 20px;
 }

@@ -3,9 +3,9 @@
       class="page"
   >
     <div class="container vh-100">
-      <div class="row vh-100">
+      <div class="row">
         <div class="col-lg-8 text-center">
-          <img class=" my-5 logo" src='~@/assets/logo.png' />
+          <img class=" my-5 logo" src='~@/assets/grooming_box.svg' />
           <div class="d-none d-md-block">
             <div class="text-white">{{ $t('app.components.login.head_title') }}</div>
             <div>
@@ -24,11 +24,11 @@
                 >
                   <div class="mb-3">
                     <label for="login" class="form-label">{{ $t('app.components.login.username') }}</label>
-                    <input autocomplete="username" required type="email" class="form-control" id="login">
+                    <input autocomplete="username" required type="email" class="form-control" id="login" v-model="email">
                   </div>
                   <div class="mb-3">
                     <label for="password" class="form-label">{{ $t('app.components.login.password') }} </label>
-                    <input autocomplete="current-password" required class="form-control" id="password" type="password" />
+                    <input autocomplete="current-password" required class="form-control" id="password" type="password" v-model="password" />
                   </div>
                   <div class="mb-3">
                     <button type="submit" class="btn btn-purpure btn-block">{{ $t('app.components.login.login') }}</button>
@@ -48,54 +48,63 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { login } from '@/api'
+import store from "@/store/app";
 
 export default {
   name: "Login",
   data(){
     return {
-      login: '',
-      password: '',
+      email: 'email1@mail.ru',
+      password: '123456',
       errors: {}
     }
   },
   computed: {
     ...mapGetters([
-        'auth'
+      'auth'
     ])
+  },
+  watch: {
+    'auth': function (){
+      if (this.auth.id){
+        this.$router.push({ name: 'home.dashboard' });
+      }
+    }
   },
   methods: {
     submit(){
       const data = {
-        login: this.login,
+        email: this.email,
         password: this.password,
       };
 
-      this.$router.push({ name: 'home.dashboard' });
 
+      login(data)
+          .then((response) => {
+            localStorage.setItem('user-token', response.data.data.token)
+            this.$axios.defaults.headers.common['Authorization'] = response.data.data.token
 
-      this.$axios.post('/login', data)
-          .then(() => {
+            store.dispatch('getAuth').then(() => {
+              this.$router.push({ name: 'home.dashboard' });
+            });
 
-            this.$router.push({ name: 'me.profile' });
           })
           .catch((e) => {
-
             this.errors = e.response.data.errors;
           })
-          .finally(() => {
-          });
     }
   }
 }
 </script>
 
 <style>
-  .logo{
-    max-width: 300px;
-  }
-  .page {
-    min-width: 100vw;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, #6200E8 50%, #fff 50%);
-  }
+.logo{
+  max-width: 300px;
+}
+.page {
+  min-width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #6200E8 50%, #fff 50%);
+}
 </style>

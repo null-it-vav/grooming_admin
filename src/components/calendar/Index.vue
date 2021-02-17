@@ -1,22 +1,20 @@
 <template>
   <div>
     <div class="row mb-2">
-      <div class="col col-lg-3">
+      <div class="col">
         <a
-            class="btn btn-purpure"
-
-        >
-          {{ $t("app.base.create") }}
-        </a>
+            class="btn btn-purpure fa fa-plus rounded-circle"
+        />
       </div>
-      <div class="ms-auto col col-lg-3 d-flex align-items-center">
+      <div class="mx-auto col  d-flex align-items-center">
 
-        <i class="p-2 ms-auto fa fa-angle-left pointer" @click="calendarLeft" />
-        <div class="px-2" style="width: 120px">
-          {{ year }} {{ months[month] }}
+        <i class="p-2 ml-auto fa fa-angle-left pointer" @click="calendarLeft" />
+        <div class="px-2 text-center" style="width: 120px">
+          <b>{{ months[month] }} {{ year }}</b>
         </div>
-        <i class="p-2 fa fa-angle-right pointer" @click="calendarRight" />
+        <i class="p-2 mr-auto fa fa-angle-right pointer" @click="calendarRight" />
       </div>
+      <div class="col"></div>
     </div>
 
     <div id="calendar-area" class="mb-4">

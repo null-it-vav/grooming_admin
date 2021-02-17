@@ -29,6 +29,7 @@ const routes = [
         path: '/home',
         name: 'home',
         component: BaseIndex,
+        meta: { needAuth: true },
         redirect: { name: 'home.dashboard' },
         children: [
             {
@@ -96,8 +97,12 @@ router.afterEach((to, from) => {
 router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.needAuth) && !store.getters.auth) {
         store.dispatch('getAuth').then(() => {
-            next();
-        });
+            next()
+        }).catch((error) => {
+            if (error.response.status == 401){
+                window.location.href = '/'
+            }
+        })
     } else {
         next();
     }

@@ -1,10 +1,21 @@
 // Body
 $body-bg: #FDFEFE;
+$border-width:                1px !default;
 
 // Typography
 $font-family-sans-serif: 'Roboto';
 $font-size-base: 0.88rem;
 $line-height-base: 1.6;
+$custom-control-indicator-size: 1.75rem;
+$custom-control-indicator-bg-size: 50%;
+$custom-radio-indicator-border-radius: 50%;
+$custom-control-gutter: 0.5rem;
+$input-btn-border-width:      $border-width !default;
+$input-border-width: $input-btn-border-width;
+$custom-control-indicator-border-width: $input-border-width;
+
+
+
 
 // Colors
 $white: #fff;
@@ -20,6 +31,7 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 $darken-gray: #313742;
 $darken-gray-selected: #353B47;
+
 
 $grid-breakpoints: (
     xs: 0,

@@ -6,11 +6,11 @@
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
-                <b>Gav Love</b>
+                <b>{{ auth.organization.name }}</b>
                 <br>
-                123@asda.ru
+                {{ auth.organization.email }}
               </div>
-              <i class="fa fa-sign-out"/>
+              <i class="fa fa-sign-out pointer" @click="logout"/>
             </li>
           </ul>
           <hr>
@@ -18,43 +18,43 @@
 
             <router-link :to="{ name: 'home.dashboard' }" class="list-group-item">
               <i class="fa fa-sliders"/>
-              <span class="mx-3">Панель управления</span>
+              <span class="mx-3">{{ $t('app.titles.home.dashboard') }}</span>
             </router-link>
 
             <router-link :to="{ name: 'home.calendar' }" class="list-group-item">
               <i class="fa fa-calendar"/>
-              <span class="mx-3">Календарь</span>
+              <span class="mx-3">{{ $t('app.titles.home.calendar') }}</span>
             </router-link>
 
             <router-link :to="{ name: 'home.masters' }" class="list-group-item">
               <i class="fa fa-user"/>
-              <span class="mx-3">Мастера</span>
+              <span class="mx-3">{{ $t('app.titles.home.masters') }}</span>
             </router-link>
             <router-link :to="{ name: 'home.orders' }" class="list-group-item">
               <i class="fa fa-shopping-bag" />
-              <span class="mx-3">Записи</span>
+              <span class="mx-3">{{ $t('app.titles.home.orders') }}</span>
             </router-link>
             <router-link :to="{ name: 'home.salons' }" class="list-group-item">
               <i class="fa fa-map-marker" />
-              <span class="mx-3">Салоны</span>
+              <span class="mx-3">{{ $t('app.titles.home.salons') }}</span>
             </router-link>
             <router-link :to="{ name: 'home.services' }" class="list-group-item">
               <i class="fa fa-briefcase"/>
-              <span class="mx-3">Услуги</span>
+              <span class="mx-3">{{ $t('app.titles.home.services') }}</span>
             </router-link>
             <router-link :to="{ name: 'home.promotions' }" class="list-group-item">
               <i class="fa fa-bullhorn"/>
-              <span class="mx-3">Акции</span>
+              <span class="mx-3">{{ $t('app.titles.home.promotions') }}</span>
             </router-link>
             <router-link :to="{ name: 'home.settings' }" class="list-group-item">
               <i class="fa fa-cogs"/>
-              <span class="mx-3">Настройки</span>
+              <span class="mx-3">{{ $t('app.titles.home.settings') }}</span>
             </router-link>
           </div>
           <hr>
           <div class="form-group">
-            <label>Выбранный салон</label>
-            <select class="form-select">
+            <label>{{ $t('app.components.main.selected_salon') }}</label>
+            <select class="form-control">
               <option>12312</option>
               <option>12312</option>
               <option>12312</option>
@@ -98,11 +98,28 @@
 </template>
 
 <script>
+import { logout } from "@/api";
+import {mapGetters} from "vuex";
+
 export default {
   name: "DashboardIndex",
   data() {
     return {
       nav_open: false
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'auth'
+    ])
+  },
+  methods: {
+    logout(){
+      logout()
+          .then(() => {
+            this.$store.dispatch('clearAuth');
+            this.$router.push({ name: 'login' });
+          })
     }
   }
 }

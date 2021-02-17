@@ -2,6 +2,9 @@ let ru = {
     language: "Русский",
     app: {
         components: {
+            main: {
+                selected_salon: "Выбранный салон"
+            },
             dashboard: {
                 title: "Dashboard"
             },
@@ -18,6 +21,12 @@ let ru = {
             home: {
                 dashboard: 'Dashboard',
                 calendar: 'Календарь',
+                masters: 'Мастера',
+                orders: 'Записи',
+                salons: 'Салоны',
+                services: 'Услуги',
+                promotions: 'Акции',
+                settings: 'Настройки',
             }
         },
         base: {

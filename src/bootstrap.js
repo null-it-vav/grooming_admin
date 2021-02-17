@@ -33,6 +33,13 @@ try {
 
 const axios = require('axios');
 
+axios.defaults.baseURL = 'https://api.null-it.ru';
+
+const token = localStorage.getItem('user-token')
+if (token) {
+    axios.defaults.headers.common['Authorization'] = token
+}
+
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios = axios;
 window.io = require('socket.io-client');

@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from '../bootstrap';
 Vue.use(Vuex);
 
+import { me } from "@/api";
 
 const store = new Vuex.Store({
     state: {
@@ -65,26 +65,14 @@ const store = new Vuex.Store({
         // eslint-disable-next-line no-unused-vars
         clearAuth({ commit, state }) {
             commit('setStore', {key: 'auth', data: false});
+            localStorage.removeItem('user-token')
         },
         getAuth: async function ({dispatch, commit, state}) { // eslint-disable-line
-
-            await axios.get('/api/v1/me', {})
-                .then(({
-                           data: {
-                               auth,
-                           },
-                       }) => {
-
-                    commit('setStore', {key: 'auth', data: auth});
-
-                })
-                // eslint-disable-next-line no-unused-vars
-                .catch((error) => {
-
-                })
-                .finally(() => {
-                });
+            await me().then((response) => {
+                commit('setStore', {key: 'auth', data: response.data.data.user});
+            })
         },
+
         animateLoading({ getters, commit }, { type, action, status_code }) {
             let value = getters.getStore(`loading.${type}`);
             switch (action) {
