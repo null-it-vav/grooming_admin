@@ -1,6 +1,5 @@
 <template>
   <div class="card p-4">
-
     <div class="row mb-4">
       <div class="col-lg-3">
         <form-group
@@ -10,6 +9,21 @@
             :items="masters_list"
         />
       </div>
+      <div class="col-lg-2">
+        <form-group
+            v-model="status_filter"
+            :errors="{}"
+            type="select"
+            :items="[
+                {value: null, text: $t('app.components.orders.filters.status_select')},
+                {value: 'NEW', text: $t('app.components.orders.statuses.NEW')},
+                {value: 'CONFIRMED', text: $t('app.components.orders.statuses.CONFIRMED')},
+                {value: 'REJECTED', text: $t('app.components.orders.statuses.REJECTED')},
+                {value: 'PENALTY', text: $t('app.components.orders.statuses.PENALTY')},
+            ]"
+        />
+      </div>
+
       <div class="ml-auto col-2 d-flex">
         <div class="ml-auto">
           <a
@@ -19,7 +33,7 @@
         </div>
       </div>
     </div>
-    <table class="table table-bordered table-adaptive">
+    <table class="table table-bordered table-adaptive" v-if="orders.data.length">
       <thead>
         <tr>
           <th>{{$t('app.components.orders.fields.name')}}</th>
@@ -27,7 +41,8 @@
           <th>{{$t('app.components.orders.fields.date')}}</th>
           <th>{{$t('app.components.orders.fields.phone')}}</th>
           <th>{{$t('app.components.orders.fields.comment')}}</th>
-          <th>{{$t('app.components.orders.fields.status')}}</th>
+          <th v-if="!master_filter">{{$t('app.components.orders.fields.master')}}</th>
+          <th v-if="!status_filter">{{$t('app.components.orders.fields.status')}}</th>
           <th></th>
         </tr>
       </thead>
@@ -37,12 +52,42 @@
         <td :data-label="$t('app.components.orders.fields.date')">{{order.date}} {{order.time_start}}</td>
         <td :data-label="$t('app.components.orders.fields.phone')">{{order.phone}}</td>
         <td :data-label="$t('app.components.orders.fields.comment')">{{order.comment}}</td>
-        <td :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
+        <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
+        <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>
           <button class=" btn btn-dark btn-sm rounded-circle fa fa-pencil"/>
+          <button
+              v-if="order.status == 'NEW'"
+              v-b-tooltip="$t('app.components.orders.tooltip.check')"
+              @click="set_status(order, 'approve')"
+              class="ml-2 btn btn-dark btn-sm rounded-circle fa fa-check"
+          />
+
+          <button
+              v-if="order.status == 'NEW'"
+              v-b-tooltip="$t('app.components.orders.tooltip.rejected')"
+              @click="set_status(order, 'rejected')"
+              class="ml-2 btn btn-dark btn-sm rounded-circle fa fa-times"
+          />
+
+          <button
+              v-if="order.status == 'CONFIRMED'"
+              v-b-tooltip="$t('app.components.orders.tooltip.penalty')"
+              @click="set_status(order, 'penalty')"
+              class="ml-2 btn btn-dark btn-sm rounded-circle fa fa-times"
+          />
         </td>
       </tr>
     </table>
+
+    <div v-else-if="!page_load" class="text-center">
+      <img src="~@/assets/not_found.svg"/>
+      <h4 class="mt-3">{{ $t('app.components.orders.not_found') }}</h4>
+    </div>
+
+    <div v-if="page_load" class="d-flex">
+      <b-spinner class="m-auto my-5"></b-spinner>
+    </div>
 
     <b-pagination
         v-if="orders.last_page > 1"
@@ -61,7 +106,7 @@
 </template>
 
 <script>
-import {masters, orders} from "@/api";
+import {masters, orders, update_orders} from "@/api";
 import {mapGetters} from "vuex";
 import Create from "@/components/orders/Create";
 import FormGroup from "@/components/base/FormGroup";
@@ -69,8 +114,14 @@ import FormGroup from "@/components/base/FormGroup";
 export default {
   name: "Index",
   components: {FormGroup, Create},
+  props: {
+    day: {
+      required: false
+    }
+  },
   data() {
     return {
+      page_load: false,
       showCreatePopup: false,
       orders: {
         data: [],
@@ -80,7 +131,10 @@ export default {
         total: 0,
       },
       master_filter: null,
-      masters: []
+      status_filter: null,
+      filter_start: null,
+      filter_end: null,
+      masters: [],
     }
   },
   watch: {
@@ -93,6 +147,9 @@ export default {
       this.master_filter = null
     },
     'master_filter': function (){
+      this.loadOrders()
+    },
+    'status_filter': function (){
       this.loadOrders()
     }
   },
@@ -108,7 +165,7 @@ export default {
       var data = [];
       data.push({
         value: null,
-        text: this.$t('base.select')
+        text: this.$t('app.components.orders.filters.master_select')
       })
 
       this.masters.forEach(master => {
@@ -123,15 +180,27 @@ export default {
   },
   methods: {
     loadOrders(){
+      this.page_load = true;
+      this.orders.data = [];
+      this.orders.total = 0;
+
       orders({
         page: this.orders.page,
         qty: this.orders.per_page,
         salon_id: this.salon_selected.id,
-        master_id: this.master_filter
+        status: this.status_filter,
+        master_id: this.master_filter,
+        start: this.filter_start ? this.filter_start : this.day,
+        end: this.filter_end ? this.filter_end : this.day,
       }).then(response => {
         this.orders.data = response.data.data.orders.data
         this.orders.total = response.data.data.orders.total
         this.orders.last_page = response.data.data.orders.last_page
+
+        this.page_load = false;
+      }).catch(error => {
+        console.warn(error)
+        this.page_load = false;
       })
     },
     loadMasters(){
@@ -146,6 +215,14 @@ export default {
     closeCreatePopup(){
       this.showCreatePopup = false
       this.loadOrders()
+    },
+    set_status(order, status){
+      update_orders(order.id, {
+        action: 'set-'+status
+      })
+          .then(() => {
+            this.loadOrders()
+          })
     }
   }
 }

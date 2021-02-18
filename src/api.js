@@ -121,6 +121,13 @@ export function create_orders(organization_id, payload){
         .then((response) => response)
 }
 
+export function update_orders(order_id,payload){
+    payload._method = 'patch'
+    return axios.post(BASE_URL + "profile/orders/" + order_id , payload)
+        .then((response) => response)
+}
+
+
 export function workingDiapasons(payload){
     return axios.get(BASE_URL + "clients/" + payload.organization_id + '/masters/' + payload.master_id + '/working-diapasons' , {
         params: payload

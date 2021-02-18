@@ -20,6 +20,11 @@
   background-color: $purple !important;
   border-color: $purple !important;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: $purple !important;
+}
+
 .page-link {
   color: #000000;
 }

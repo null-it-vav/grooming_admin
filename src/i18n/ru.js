@@ -19,6 +19,7 @@ let ru = {
             services: {
                 create: "Создать услугу",
                 update: "Обновить услугу",
+                not_found: "Услуги не заполнены",
                 field: {
                     name: 'Название',
                     description: 'Описание',
@@ -38,6 +39,7 @@ let ru = {
             promotions: {
                 create: "Создать акцию",
                 update: "Обновить акцию",
+                not_found: "Акций нет",
                 fields: {
                     name: "Заголок",
                     description: "Описание",
@@ -69,6 +71,11 @@ let ru = {
             orders: {
                 create: "Создать запись",
                 update: "Обновить запись",
+                not_found: "Заказов нет",
+                filters: {
+                    master_select: "Выбрать мастера",
+                    status_select: "Выбрать статус",
+                },
                 fields: {
                     name: 'Имя владельца',
                     phone: 'Телефон',
@@ -81,7 +88,16 @@ let ru = {
                     status: 'Статус',
                 },
                 statuses: {
-                    NEW: 'Новый'
+                    NEW: 'Новый',
+                    CONFIRMED: 'Подтвержден',
+                    COMPLITED: 'Завершена',
+                    REJECTED: 'Отклонена',
+                    PENALTY: 'Не состоялась'
+                },
+                tooltip: {
+                    check: 'Подтвердить заказ',
+                    penalty: 'Клиент не пришел',
+                    rejected: 'Клиент отказался заранее',
                 }
             },
             settings: {
@@ -93,6 +109,15 @@ let ru = {
                 timezone: 'Временная зона',
                 lang: 'Язык',
             },
+            calendar: {
+                new_order: "Новый заказ",
+                new_action: "Новая акция",
+                popup: {
+                    orders: {
+                        title: 'Список заказов'
+                    }
+                }
+            }
         },
         titles: {
             home: {

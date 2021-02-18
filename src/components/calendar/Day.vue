@@ -1,7 +1,7 @@
 <template>
     <div :class="classObject" @click="captureClick" class="pointer">
         {{ day.format('D') }}
-        <ul class="event-list">
+        <ul class="event-list" v-if="count">
             <li>{{ count }}</li>
         </ul>
     </div>
@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         captureClick() {
-            this.$emit('daySelect', this.day.format('D'));
+            this.$emit('daySelect', this.day.format('y-MM-DD'));
             //this.$store.commit('eventFormPos', { x: event.clientX, y: event.clientY });
             //this.$store.commit('eventFormActive', true);
             //this.$store.commit('eventFormDate', this.day);

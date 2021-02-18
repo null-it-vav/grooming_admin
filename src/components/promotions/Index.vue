@@ -18,7 +18,7 @@
         :key="promotion.id"
         class="row mb-3"
     >
-      <div class="col-10 d-flex">
+      <div class="col-8 d-flex">
         <div class="mr-2">
           <b-avatar class="mr-3" size="4em" :src="promotion.image">
             <i class="fa fa-star fa-lg" v-if="!promotion.image"/>
@@ -36,12 +36,21 @@
           </div>
         </div>
       </div>
-      <div class="col-2 d-flex align-items-center">
+      <div class="col-4 d-flex align-items-center">
         <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(promotion)"/>
         <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deletePromotion(promotion.id)"/>
       </div>
     </div>
 
+
+    <div v-if="!page_load && promotions.data.length == 0" class="text-center">
+      <img src="~@/assets/not_found.svg"/>
+      <h4 class="mt-3">{{ $t('app.components.promotions.not_found') }}</h4>
+    </div>
+
+    <div v-if="page_load" class="d-flex">
+      <b-spinner class="m-auto my-5"></b-spinner>
+    </div>
 
     <b-pagination
         v-if="promotions.last_page > 1"
@@ -75,11 +84,16 @@ import {promotions,delete_promotion} from "@/api";
 export default {
   name: "Index",
   components: {Create,Update},
+  props: {
+    external_status: null
+  },
   data() {
     return {
       showCreatePopup: false,
       showUpdatePopup: false,
+      page_load: false,
       promotion: {},
+      status: "",
       promotions: {
         data: [],
         page: 1,
@@ -99,14 +113,17 @@ export default {
   },
   methods: {
     loadPromotions(){
+      this.page_load = true;
       promotions({
         page: this.promotions.page,
-        qty: this.promotions.per_page
+        qty: this.promotions.per_page,
+        status: this.external_status ? this.external_status : this.status
       }).then(response => {
         this.promotions.data = response.data.data.promotions.data
         this.promotions.total = response.data.data.promotions.total
         this.promotions.last_page = response.data.data.promotions.last_page
-      })
+        this.page_load = false;
+      }).catch((error) => { console.warn(error); this.page_load = false; })
     },
     openUpdatePopup(promotion){
       this.showUpdatePopup = true

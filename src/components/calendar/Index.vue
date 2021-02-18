@@ -2,10 +2,20 @@
   <div>
     <div class="row mb-2">
       <div class="col">
-        <a
-            class="btn btn-purpure fa fa-plus rounded-circle"
-        />
+
+
+<!--        <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" no-caret>-->
+<!--          <template #button-content>-->
+<!--            <a-->
+<!--                class="btn btn-purpure fa fa-plus rounded-circle"-->
+<!--            />-->
+<!--          </template>-->
+<!--          <b-dropdown-item >{{ $t('app.components.calendar.new_order') }}</b-dropdown-item>-->
+<!--          <b-dropdown-item >{{ $t('app.components.calendar.new_action') }}</b-dropdown-item>-->
+<!--        </b-dropdown>-->
+
       </div>
+
       <div class="mx-auto col  d-flex align-items-center">
 
         <i class="p-2 ml-auto fa fa-angle-left pointer" @click="calendarLeft" />
@@ -19,13 +29,13 @@
 
     <div id="calendar-area" class="mb-4">
       <div id="day-bar">
-        <div>Пн</div>
-        <div>Вт</div>
-        <div>Ср</div>
-        <div>Чт</div>
-        <div>Пт</div>
-        <div>Сб</div>
-        <div>Вс</div>
+        <div>{{ $t('base.days.0') }}</div>
+        <div>{{ $t('base.days.1') }}</div>
+        <div>{{ $t('base.days.2') }}</div>
+        <div>{{ $t('base.days.3') }}</div>
+        <div>{{ $t('base.days.4') }}</div>
+        <div>{{ $t('base.days.5') }}</div>
+        <div>{{ $t('base.days.6') }}</div>
       </div>
       <div id="calendar">
         <div
@@ -36,27 +46,37 @@
           <calendar-day
               v-for="day in week"
               :day="day"
-              @daySelect="daySelect"
+              @daySelect="openOrdersPopup"
               :count="monthOrders[year + '-'+ monthFormat(month) + '-' + day.format('D')]"
               :key="year + '-'+ monthFormat(month) + '-' + day.format('D')"
           />
         </div>
       </div>
     </div>
+
+    <orders-popup
+      v-if="showOrdersPopup"
+      :day="selectDay"
+      @closePopup="closeOrdersPopup"
+    />
   </div>
 </template>
 
 <script>
-
+import {orders} from "@/api";
 import CalendarDay from './Day';
+import {mapGetters} from "vuex";
+import OrdersPopup from "@/components/calendar/OrdersPopup";
 export default {
   name: "CalendarIndex",
   components: {
+    OrdersPopup,
     CalendarDay
   },
   data() {
     return {
       selectDay: '',
+      showOrdersPopup: false,
       year: (new Date()).getFullYear(),
       month: (new Date()).getMonth() + 1,
       monthOrders: [],
@@ -76,7 +96,35 @@ export default {
       }
     }
   },
+  created() {
+    this.loadOrders()
+  },
+  watch: {
+    'salon_selected.id': function(){
+      this.loadOrders()
+    },
+    'year': function () {
+      this.loadOrders()
+    },
+    'month': function () {
+      this.loadOrders()
+    }
+  },
   methods: {
+    openOrdersPopup(day){
+      this.showOrdersPopup = true
+      this.selectDay = day
+    },
+    closeOrdersPopup(){
+      this.showOrdersPopup = false
+    },
+    loadOrders(){
+      orders({
+        action: 'count-by-days',
+        date: this.year + ' -' + this.month,
+        salon_id: this.salon_selected.id,
+      }).then((r) => { this.monthOrders = r.data.data.count_by_days })
+    },
     monthFormat(m){
       if (m < 9) return "0"+m;
       return m;
@@ -104,6 +152,9 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      'salon_selected'
+    ]),
     days() {
       // Generating all days in current month
       let days = [];

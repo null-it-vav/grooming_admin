@@ -1,7 +1,7 @@
 <template>
   <div class="card p-4">
     <div class="row mb-2">
-      <div class="col-9 col">
+      <div class="col-md-3 col-6">
         <form-group
           type="select"
           :items="[
@@ -23,41 +23,57 @@
         </div>
       </div>
     </div>
-    <div
-        v-for="service in services.data"
-        :key="service.id"
-        class="row mb-3"
-    >
-      <div class="col-9 d-flex align-items-center">
-        <div class="mr-2">
-          <b-avatar class="mr-3" :src="service.image"></b-avatar>
-        </div>
 
-        <div>
-          <div>
-            <b>{{ service.name }}</b>
+    <div
+        v-if="!page_load"
+    >
+      <div
+          v-for="service in services.data"
+          :key="service.id"
+          class="row mb-3"
+      >
+        <div class="col-8 d-flex align-items-center">
+          <div class="mr-2">
+            <b-avatar class="mr-3" :src="service.image"></b-avatar>
           </div>
+
           <div>
-            {{ service.description }}
+            <div>
+              <b>{{ service.name }}</b>
+            </div>
+            <div class="d-none d-sm-block">
+              {{ service.description }}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-3 d-flex align-items-center">
-        <div class="ml-auto  d-none d-sm-block">
-          <button class="btn btn-dark rounded-circle fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
+        <div class="col-4 d-flex align-items-center">
+          <button class="ml-auto btn btn-dark rounded-circle fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
           <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
-        </div>
-        <div class="ml-auto d-block d-sm-none">
-          <b-dropdown variant="link" size="sm" toggle-class="text-decoration-none" no-caret>
-            <template #button-content>
-              <i class="btn btn-dark rounded-circle fa fa-align-justify"/>
-            </template>
-            <b-dropdown-item @click="openUpdatePopup(service)">{{ $t('base.update') }}</b-dropdown-item>
-            <b-dropdown-item @click="deleteService(service.id)">{{ $t('base.delete') }}</b-dropdown-item>
-          </b-dropdown>
+<!--          <div class="ml-auto  d-none d-sm-block">-->
+<!--           -->
+<!--          </div>-->
+<!--          <div class="ml-auto d-block d-sm-none">-->
+<!--            <b-dropdown variant="link" size="sm" toggle-class="text-decoration-none" no-caret>-->
+<!--              <template #button-content>-->
+<!--                <i class="btn btn-dark rounded-circle fa fa-align-justify"/>-->
+<!--              </template>-->
+<!--              <b-dropdown-item @click="openUpdatePopup(service)">{{ $t('base.update') }}</b-dropdown-item>-->
+<!--              <b-dropdown-item @click="deleteService(service.id)">{{ $t('base.delete') }}</b-dropdown-item>-->
+<!--            </b-dropdown>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
+
+    <div v-if="!page_load && services.data.length == 0" class="text-center">
+      <img src="~@/assets/not_found.svg" />
+      <h4 class="mt-3">{{ $t('app.components.services.not_found') }}</h4>
+    </div>
+
+    <div v-if="page_load" class="d-flex">
+      <b-spinner class="m-auto my-5"></b-spinner>
+    </div>
+
 
     <b-pagination
         v-if="services.last_page > 1"
@@ -104,6 +120,7 @@ export default {
       filter_type: null,
       showCreatePopup: false,
       showUpdatePopup: false,
+      page_load: false,
     }
   },
   created() {
@@ -119,6 +136,7 @@ export default {
   },
   methods: {
     loadServices(){
+      this.page_load = true;
       services({
         page: this.services.page,
         qty: this.services.per_page,
@@ -127,7 +145,8 @@ export default {
         this.services.data = response.data.data.services.data
         this.services.total = response.data.data.services.total
         this.services.last_page = response.data.data.services.last_page
-      })
+        this.page_load = false;
+      }).catch((error) => { console.warn(error); this.page_load = false })
     },
     closeCreatePopup(){
       this.loadServices()
