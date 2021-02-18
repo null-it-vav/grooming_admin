@@ -85,14 +85,14 @@ export default {
         if (this.success_error.success) {
           setTimeout(() => {
             this.success_error.success = false;
-          }, 2000);
+          }, 4000);
         }
       },
       'success_error.error': function (){
         if (this.success_error.error) {
           setTimeout(() => {
             this.success_error.error = false;
-          }, 2000);
+          }, 4000);
         }
       }
     },

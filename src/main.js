@@ -12,8 +12,10 @@ import VueI18n from 'vue-i18n'
 import VueMoment from 'vue-moment'
 import moment from 'moment'
 import 'moment/locale/ru'
+import VCalendar from 'v-calendar';
 
 Vue.use(FlagIcon);
+Vue.use(VCalendar);
 
 
 Vue.prototype.$moment = VueMoment;

@@ -109,3 +109,21 @@ export function update_promotion(id, payload){
         .then((response) => response)
 }
 
+export function orders(payload){
+    return axios.get(BASE_URL + "profile/orders" , {
+        params: payload
+    })
+        .then((response) => response)
+}
+
+export function create_orders(organization_id, payload){
+    return axios.post(BASE_URL + "clients/" + organization_id + '/orders' , payload)
+        .then((response) => response)
+}
+
+export function workingDiapasons(payload){
+    return axios.get(BASE_URL + "clients/" + payload.organization_id + '/masters/' + payload.master_id + '/working-diapasons' , {
+        params: payload
+    })
+        .then((response) => response)
+}

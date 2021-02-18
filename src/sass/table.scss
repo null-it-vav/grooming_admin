@@ -1,0 +1,45 @@
+table.table-adaptive {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+@media screen and (max-width: 770px) {
+  table.table-adaptive {
+    border: 0;
+  }
+
+
+
+  table.table-adaptive thead {
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  table.table-adaptive tr {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    margin-bottom: 30px;
+  }
+
+  table.table-adaptive td {
+    display: block;
+    text-align: right;
+    min-height: 48px;
+  }
+
+  table.table-adaptive td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    //text-transform: uppercase;
+  }
+
+  table.table-adaptive td:last-child {
+    border-bottom: 0;
+  }
+}

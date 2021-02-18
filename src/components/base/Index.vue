@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="main-panel">
-        <nav class="navbar navbar-expand-md navbar-light bg-faded shadow-sm fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top">
           <div class="container-fluid">
             <a href="#" class="navbar-brand">
               {{ $t('app.titles.' + $route.name) }}
@@ -88,6 +88,7 @@
         <div class="container">
           <div style="height: 100px; width: 100%;"></div>
           <router-view />
+          <div style="height: 100px; width: 100%;"></div>
         </div>
 
       </div>

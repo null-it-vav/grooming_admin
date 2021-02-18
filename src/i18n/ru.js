@@ -66,6 +66,24 @@ let ru = {
                     salon: 'Салон',
                 }
             },
+            orders: {
+                create: "Создать запись",
+                update: "Обновить запись",
+                fields: {
+                    name: 'Имя владельца',
+                    phone: 'Телефон',
+                    email: 'Email',
+                    nickname: 'Кличка питомца',
+                    comment: 'Комментарий',
+                    master: 'Мастер',
+                    date: 'Дата',
+                    time_start: 'Время',
+                    status: 'Статус',
+                },
+                statuses: {
+                    NEW: 'Новый'
+                }
+            },
             settings: {
                 name: 'Название',
                 phone: 'Телефон',
@@ -116,6 +134,8 @@ let ru = {
         create: 'Создать',
         update: 'Обновить',
         delete: 'Удалить',
+        service_type: "Тип услуги",
+        select: "Выбрать...",
         service_types: {
             select: 'Выбрать..',
             cat: 'Кошка',
@@ -131,7 +151,11 @@ let ru = {
             4: "Пт",
             5: "Сб",
             6: "Вс",
-        }
+        },
+        popup: {
+            error: 'Ошибка!',
+            data_not_update: 'Данные не обновлены!',
+        },
     }
 }
 

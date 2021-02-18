@@ -9,8 +9,8 @@
                     class="alert alert-warning alert-dismissible fade mb-0 show"
                     role="alert"
                 >
-                    <strong>Ошибка!</strong>&nbsp;
-                    <span>Данные не обновлены.</span>
+                    <strong>{{$t('base.popup.error')}}</strong>&nbsp;
+                    <span v-if="!show.msg">{{$t('base.popup.data_not_update')}}</span>
                     <div v-for="(m, k) in show.msg" :key="k">
                         {{ m }}
                     </div>
