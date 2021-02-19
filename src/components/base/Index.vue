@@ -1,8 +1,34 @@
 <template>
   <div :class="nav_open ? 'nav-open' : ''">
+    <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top">
+      <div class="container-fluid">
+        <a href="#" class="navbar-brand">
+          {{ $t('app.titles.' + $route.name) }}
+        </a>
+        <button
+            id="menuDropdown"
+            type="button"
+            data-target="nav-link dropdown"
+            aria-controls="navbarSupportedContent"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="navbar-toggler"
+            @click="nav_open = !nav_open"
+        >
+          <img src="~@/assets/open_panel.svg"/>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end">
+
+        </div>
+      </div>
+    </nav>
+
     <div class="wrapper">
+
       <div class="sidebar p-3">
         <div class="sidebar-wrapper">
+          <div style="height: 50px; width: 100%;"></div>
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
@@ -61,34 +87,10 @@
         </div>
       </div>
       <div class="main-panel">
-        <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top">
-          <div class="container-fluid">
-            <a href="#" class="navbar-brand">
-              {{ $t('app.titles.' + $route.name) }}
-            </a>
-            <button
-                id="menuDropdown"
-                type="button"
-                data-target="nav-link dropdown"
-                aria-controls="navbarSupportedContent"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="navbar-toggler m-2"
-                @click="nav_open = !nav_open"
-            >
-              <img src="~@/assets/open_panel.svg"/>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end">
-
-            </div>
-          </div>
-        </nav>
-
         <div class="container">
-          <div style="height: 100px; width: 100%;"></div>
+          <div style="height: 60px; width: 100%;"></div>
           <router-view />
-          <div style="height: 100px; width: 100%;"></div>
+          <div style="height: 60px; width: 100%;"></div>
         </div>
 
       </div>

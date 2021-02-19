@@ -56,7 +56,7 @@
           <form-group
               :label="$t('app.components.orders.fields.master')"
             type="select"
-            :items="masters.map(m => { return { value: m.id, text: m.name }})"
+            :items="masters_select"
             required
             :errors="errors"
             v-model="order.master_id"
@@ -164,8 +164,22 @@ export default {
         'auth',
       'salon_selected'
     ]),
+    masters_select(){
+      var data = [];
+      data.push({
+        value: null,
+        text: this.$t('base.select')
+      })
+
+      this.masters.forEach(m => {
+        data.push({ value: m.id, text: m.name })
+      })
+
+      return data
+    },
     times() {
-      return this.day_times.map(row => format('hh:mm', (new Date(row.time))))
+      return this.day_times.map(row => row.time)
+      // return this.day_times.map(row => format('hh:mm', (new Date(row.time))))
     },
     attributes() {
       return [
