@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-8 mb-4">
       <orders :day="day" />
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 mb-4">
       <promotions external_status="active"/>
     </div>
   </div>

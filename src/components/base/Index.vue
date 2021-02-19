@@ -61,29 +61,7 @@
         </div>
       </div>
       <div class="main-panel">
-        <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top">
-          <div class="container-fluid">
-            <a href="#" class="navbar-brand">
-              {{ $t('app.titles.' + $route.name) }}
-            </a>
-            <button
-                id="menuDropdown"
-                type="button"
-                data-target="nav-link dropdown"
-                aria-controls="navbarSupportedContent"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                class="navbar-toggler m-2"
-                @click="nav_open = !nav_open"
-            >
-              <img src="~@/assets/open_panel.svg"/>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end">
-
-            </div>
-          </div>
-        </nav>
+       
 
         <div class="container">
           <div style="height: 100px; width: 100%;"></div>
