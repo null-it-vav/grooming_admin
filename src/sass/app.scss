@@ -78,9 +78,9 @@
 }
 
 .wrapper {
-  position: relative;
-  top: 0;
-  height: 100vh;
+  //position: relative;
+  //top: 0;
+  //height: 100vh;
 }
 
 .sidebar {
@@ -110,6 +110,14 @@
   font-weight: 200;
   background-size: cover;
   background-position: 50%;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
 }
 
 .main-panel {

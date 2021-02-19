@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <vue-progress-bar></vue-progress-bar>
     <loading-overlay
         loader="dots"
