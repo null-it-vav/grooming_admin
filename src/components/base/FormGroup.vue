@@ -1,102 +1,157 @@
 <template>
-  <div class="form-group">
-    <label v-if="label">{{ label }}</label>
-    <input
-        v-if="type == 'text'"
-        type="text"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="form-control"
-        v-model="localValue"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-    />
-    <select
-        v-else-if="type == 'select'"
-        :required="required"
-        class="form-control"
-        v-model="localValue"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        :disabled="disabled"
-    >
-      <option v-for="(item,k) in items" :key="k" :value="item.text ? item.value : item">{{ item.text ? item.text : item }}</option>
-    </select>
-    <input
-        v-else-if="type == 'password'"
-        type="password"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="form-control"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-        v-model="localValue"
-    />
-    <input
-        v-else-if="type == 'number'"
-        type="number"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="form-control"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-        v-model="localValue"
-    />
-    <input
-        v-else-if="type == 'email'"
-        type="email"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="form-control"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-        v-model="localValue"
-    />
-    <input
-        v-else-if="type == 'date'"
-        type="date"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="form-control"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-        v-model="localValue"
-    />
-    <input
-        v-else-if="type == 'checkbox'"
-        type="checkbox"
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="custom-checkbox"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-        v-model="localValue"
-    />
+  <div class="mb-3">
+    <label v-if="label && group">{{ label }}</label>
+
     <div
-        v-else-if="type == 'photo'"
-        :class="(name in errors) ? 'is-invalid' : ''"
+        :class="[
+            (group ? 'input-group' : ''),
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+        ]"
     >
-      <b-form-file
-          type="file"
+      <label v-if="label && !group">{{ label }}</label>
+
+      <slot name="prepend">
+      </slot>
+      <input
+          v-if="type == 'text'"
+          type="text"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="form-control"
+          v-model="localValue"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+      />
+      <select
+          v-else-if="type == 'select'"
+          :required="required"
+          class="form-control"
+          v-model="localValue"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          :disabled="disabled"
+      >
+        <option v-for="(item,k) in items" :key="k" :value="item.text ? item.value : item">{{ item.text ? item.text : item }}</option>
+      </select>
+      <input
+          v-else-if="type == 'password'"
+          type="password"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="form-control"
           :name="name"
           :required="required"
           :disabled="disabled"
           v-model="localValue"
       />
+      <input
+          v-else-if="type == 'number'"
+          type="number"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="form-control"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+          v-model="localValue"
+      />
+      <input
+          v-else-if="type == 'email'"
+          type="email"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="form-control"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+          v-model="localValue"
+      />
+      <input
+          v-else-if="type == 'date'"
+          type="date"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="form-control"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+          v-model="localValue"
+      />
+      <input
+          v-else-if="type == 'checkbox'"
+          type="checkbox"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="custom-checkbox"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+          v-model="localValue"
+      />
+      <div
+          v-else-if="type == 'photo'"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+      >
+        <b-form-file
+            type="file"
+            :name="name"
+            :required="required"
+            :disabled="disabled"
+            v-model="localValue"
+        />
+      </div>
+
+      <textarea
+          v-else
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="form-control"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+          v-model="localValue"
+      />
+
+
+      <slot name="append">
+      </slot>
     </div>
-
-    <textarea
-        v-else
-        :class="(name in errors) ? 'is-invalid' : ''"
-        class="form-control"
-        :name="name"
-        :required="required"
-        :disabled="disabled"
-        v-model="localValue"
-    />
-
-
     <valid-sign
         :name="name"
+        :prepend_name="prepend_name"
+        :append_name="append_name"
+
         :invalid="errors"
     />
 
@@ -122,6 +177,11 @@ export default {
     validSign,
   },
   props: {
+    group: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     label: {
       type: String,
       default: ''
@@ -131,6 +191,14 @@ export default {
       default: ''
     },
     name: {
+      type: String,
+      default: ''
+    },
+    prepend_name: {
+      type: String,
+      default: ''
+    },
+    append_name: {
       type: String,
       default: ''
     },

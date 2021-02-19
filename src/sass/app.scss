@@ -239,3 +239,6 @@ a.list-group-item i{
 .custom-file-label::after:lang(ru) {
   content: 'Выбрать';
 }
+.nav-item a {
+  color: $purple;
+}

@@ -134,3 +134,9 @@ export function workingDiapasons(payload){
     })
         .then((response) => response)
 }
+
+
+export function save_settings(payload){
+    return axios.post(BASE_URL + "profile/settings", payload)
+        .then((response) => response)
+}

@@ -55,7 +55,7 @@
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
         <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>
-          <button class=" btn btn-dark btn-sm rounded-circle fa fa-pencil"/>
+          <button class=" btn btn-dark btn-sm rounded-circle fa fa-pencil" @click="openUpdatePopup(order)" />
           <button
               v-if="order.status == 'NEW'"
               v-b-tooltip="$t('app.components.orders.tooltip.check')"
@@ -102,6 +102,12 @@
         v-if="showCreatePopup"
         @closePopup="closeCreatePopup"
     />
+
+    <update
+      v-if="showUpdatePopup"
+      :order="order"
+      @closePopup="closeUpdatePopup"
+    />
   </div>
 </template>
 
@@ -109,11 +115,13 @@
 import {masters, orders, update_orders} from "@/api";
 import {mapGetters} from "vuex";
 import Create from "@/components/orders/Create";
+import Update from "@/components/orders/Update";
 import FormGroup from "@/components/base/FormGroup";
+import deepClone from "clonedeep";
 
 export default {
   name: "Index",
-  components: {FormGroup, Create},
+  components: {FormGroup, Create, Update},
   props: {
     day: {
       required: false
@@ -123,6 +131,7 @@ export default {
     return {
       page_load: false,
       showCreatePopup: false,
+      showUpdatePopup: false,
       orders: {
         data: [],
         page: 1,
@@ -130,6 +139,7 @@ export default {
         last_page: 1,
         total: 0,
       },
+      order: {},
       master_filter: null,
       status_filter: null,
       filter_start: null,
@@ -223,6 +233,14 @@ export default {
           .then(() => {
             this.loadOrders()
           })
+    },
+    openUpdatePopup(order){
+      this.showUpdatePopup = true
+      this.order = deepClone(order)
+    },
+    closeUpdatePopup(){
+      this.showUpdatePopup = false
+      this.loadOrders()
     }
   }
 }
