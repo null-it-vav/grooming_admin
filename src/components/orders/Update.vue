@@ -68,6 +68,7 @@
                 :locale="$i18n.locale"
                 v-model="select_date"
                 :attributes="attributes"
+                required
             >
               <template v-slot="{ inputValue, inputEvents }">
                 <label>{{$t('app.components.orders.fields.date')}}</label>
@@ -96,11 +97,12 @@
               :label="$t('base.service_type')"
               type="select"
               :items="[
-                  { value: null, text: $t('base.service_types.select') },
+                  { value: null, text: $t('base.service_types.select'), disabled: true },
                   { value: 'cat', text: $t('base.service_types.cat') },
                   { value: 'dog', text: $t('base.service_types.dog') },
                   { value: 'other', text: $t('base.service_types.other') }
               ]"
+              required
               :errors="{}"
               v-model="filter_type"
           />

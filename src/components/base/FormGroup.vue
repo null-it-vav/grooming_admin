@@ -40,7 +40,7 @@
           ]"
           :disabled="disabled"
       >
-        <option v-for="(item,k) in items" :key="k" :value="item.text ? item.value : item">{{ item.text ? item.text : item }}</option>
+        <option v-for="(item,k) in items" :key="k" :value="item.text ? item.value : item" :disabled="item.disabled">{{ item.text ? item.text : item }}</option>
       </select>
       <input
           v-else-if="type == 'password'"
