@@ -7,7 +7,7 @@ let ru = {
             },
             dashboard: {
                 title: "Dashboard",
-                orders_by_day_now: "Заказы на сегодня",
+                orders_by_day_now: "Записи на сегодня",
             },
             login: {
                 head_title: "CRM cистема для грумеров, которая поможет вам вывести бизнес на новый уровень.",
@@ -65,14 +65,14 @@ let ru = {
                     photo: 'Фото',
                     schedule: 'Часы работы',
                     description: 'Описание',
-                    profit: 'Процент прибыли от заказа',
+                    profit: 'Процент прибыли',
                     salon: 'Салон',
                 }
             },
             orders: {
                 create: "Создать запись",
                 update: "Обновить запись",
-                not_found: "Заказов нет",
+                not_found: "Записей нет",
                 filters: {
                     master_select: "Выбрать мастера",
                     status_select: "Выбрать статус",
@@ -99,6 +99,9 @@ let ru = {
                     check: 'Подтвердить заказ',
                     penalty: 'Клиент не пришел',
                     rejected: 'Клиент отказался заранее',
+                },
+                actions: {
+                    edit: 'Редактировать'
                 }
             },
             settings: {
@@ -123,11 +126,11 @@ let ru = {
                 wa_link: 'Ссылка на WhatsApp',
             },
             calendar: {
-                new_order: "Новый заказ",
+                new_order: "Новая запись",
                 new_action: "Новая акция",
                 popup: {
                     orders: {
-                        title: 'Список заказов'
+                        title: 'Список записей'
                     }
                 }
             }

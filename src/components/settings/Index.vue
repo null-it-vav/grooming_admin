@@ -238,7 +238,7 @@
             />
           </div>
         </div>
-        <div class="col-lg-12">
+        <div>
           <button type="submit" class="btn btn-success">{{ $t('base.save') }}</button>
         </div>
       </b-card>

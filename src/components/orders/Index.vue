@@ -27,7 +27,7 @@
         />
       </div>
 
-      <div class="col-lg-3">
+      <div class="col-lg-3 mb-3" v-if="!day">
         <date-range-select
           v-model="filter_date_range"
         />
@@ -64,27 +64,36 @@
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
         <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>
-          <button class=" btn btn-dark btn-sm rounded-circle fa fa-pencil" @click="openUpdatePopup(order)" v-if="auth.role == 'admin'"/>
-          <button
-              v-if="order.status == 'NEW'"
-              v-b-tooltip="$t('app.components.orders.tooltip.check')"
-              @click="set_status(order, 'approve')"
-              class="ml-2 btn btn-dark btn-sm rounded-circle fa fa-check"
-          />
 
-          <button
-              v-if="order.status == 'NEW'"
-              v-b-tooltip="$t('app.components.orders.tooltip.rejected')"
-              @click="set_status(order, 'rejected')"
-              class="ml-2 btn btn-dark btn-sm rounded-circle fa fa-times"
-          />
-
-          <button
-              v-if="order.status == 'CONFIRMED'"
-              v-b-tooltip="$t('app.components.orders.tooltip.penalty')"
-              @click="set_status(order, 'penalty')"
-              class="ml-2 btn btn-dark btn-sm rounded-circle fa fa-times"
-          />
+          <b-dropdown  variant="link" toggle-class="text-decoration-none" >
+            <template #button-content >
+              <i class="btn btn-dark btn-sm rounded-circle fa fa-align-justify"/>
+            </template>
+            <b-dropdown-item
+                v-if="auth.role == 'admin'"
+                @click="openUpdatePopup(order)"
+            >
+              {{ $t('app.components.orders.actions.edit') }}
+            </b-dropdown-item>
+            <b-dropdown-item
+                v-if="order.status == 'NEW'"
+                @click="set_status(order, 'approve')"
+            >
+              {{ $t('app.components.orders.tooltip.check') }}
+            </b-dropdown-item>
+            <b-dropdown-item
+                v-if="order.status == 'NEW'"
+                @click="set_status(order, 'rejected')"
+            >
+              {{ $t('app.components.orders.tooltip.rejected') }}
+            </b-dropdown-item>
+            <b-dropdown-item
+                v-if="order.status == 'CONFIRMED'"
+                @click="set_status(order, 'penalty')"
+            >
+              {{ $t('app.components.orders.tooltip.penalty') }}
+            </b-dropdown-item>
+          </b-dropdown>
         </td>
       </tr>
     </table>
@@ -271,6 +280,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+  .dropdown .dropdown-toggle {
+    padding: 0px !important;
+    margin: 0px !important;
+    box-shadow: none !important;
+  }
 </style>

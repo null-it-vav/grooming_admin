@@ -1,6 +1,10 @@
 table.table-adaptive {
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
+}
+table.table-adaptive td {
+
 }
 
 @media screen and (max-width: 770px) {

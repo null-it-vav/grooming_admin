@@ -1,8 +1,7 @@
 <template>
   <div class="row">
     <div
-        class="mb-4"
-        :class="(auth.role == 'admin' ? 'col-lg-8 ' : 'col-lg-12')"
+        class="mb-4 col-lg-12"
     >
       <orders :day="day" :title="$t('app.components.dashboard.orders_by_day_now')" />
     </div>
