@@ -2,6 +2,17 @@ let ru = {
     language: "Русский",
     app: {
         components: {
+            admin: {
+              organization: {
+                  list: "Список организаций",
+                  fields: {
+                      name: "Название",
+                      email: "Email",
+                      phone: "Телефон",
+                      created_at: "Создана",
+                  }
+              }
+            },
             main: {
                 selected_salon: "Выбранный салон"
             },

@@ -32,7 +32,8 @@
           <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
-                <b>{{ auth.organization.name }}</b>
+                <b v-if="auth.organization">{{ auth.organization.name }}</b>
+                <b v-else>{{ auth.email }}</b>
                 <br>
                 {{ auth.name }}
               </div>
@@ -42,12 +43,17 @@
           <hr>
           <div class="list-group border-none">
 
-            <router-link :to="{ name: 'home.dashboard' }" class="list-group-item">
+            <router-link
+                :to="{ name: 'home.dashboard' }" class="list-group-item"
+            >
               <i class="fa fa-sliders"/>
               <span class="mx-3">{{ $t('app.titles.home.dashboard') }}</span>
             </router-link>
 
-            <router-link :to="{ name: 'home.calendar' }" class="list-group-item">
+            <router-link
+                v-if="auth.role == 'admin' || auth.role == 'master'"
+                :to="{ name: 'home.calendar' }" class="list-group-item"
+            >
               <i class="fa fa-calendar"/>
               <span class="mx-3">{{ $t('app.titles.home.calendar') }}</span>
             </router-link>
@@ -60,7 +66,7 @@
               <span class="mx-3">{{ $t('app.titles.home.masters') }}</span>
             </router-link>
             <router-link
-
+                v-if="auth.role == 'admin' || auth.role == 'master'"
                 :to="{ name: 'home.orders' }" class="list-group-item"
             >
               <i class="fa fa-shopping-bag" />

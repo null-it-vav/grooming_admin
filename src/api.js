@@ -140,3 +140,10 @@ export function save_settings(payload){
     return axios.post(BASE_URL + "profile/settings", payload)
         .then((response) => response)
 }
+
+export function organizations(payload){
+    return axios.get(BASE_URL + 'organizations' , {
+        params: payload
+    })
+        .then((response) => response)
+}
