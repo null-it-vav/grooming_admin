@@ -77,6 +77,7 @@ const store = new Vuex.Store({
             commit('setStore', {key: 'auth', data: false});
             commit('setStore', {key: 'salons', data: []});
             localStorage.removeItem('user-token')
+            localStorage.removeItem('salon_selected')
         },
         getAuth: async function ({dispatch, commit, state}) { // eslint-disable-line
             await me().then((response) => {
@@ -86,23 +87,25 @@ const store = new Vuex.Store({
                 // eslint-disable-next-line no-debugger
                 // debugger;
 
-
-                var salon_id = localStorage.getItem('salon_selected')
-                if(salon_id){
-                    var salon = response.data.data.salons.find(salon => salon.id == salon_id)
-
-                    commit('setStore', {key: 'salon_selected', data: salon});
-                    localStorage.setItem('salon_selected', salon.id)
-                }else {
-                    if (response.data.data.salons.length && response.data.data.salons[0]){
-                        commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
-                        localStorage.setItem('salon_selected', response.data.data.salons[0].id)
+                if (response.data.data.user.salon_id){
+                    commit('setStore', {key: 'salon_selected', data: response.data.data.user.salon_id});
+                    localStorage.setItem('salon_selected', response.data.data.user.salon_id)
+                } else {
+                    var salon_id = localStorage.getItem('salon_selected')
+                    if(salon_id){
+                        var salon = response.data.data.salons.find(salon => salon.id == salon_id)
+                        commit('setStore', {key: 'salon_selected', data: salon});
+                        localStorage.setItem('salon_selected', salon.id)
+                    }else {
+                        if (response.data.data.salons.length && response.data.data.salons[0]){
+                            commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
+                            localStorage.setItem('salon_selected', response.data.data.salons[0].id)
+                        }
                     }
                 }
             })
         },
         setSalon({dispatch, commit, state},  salon_id ){// eslint-disable-line
-
             var salon = state.salons.find(salon => salon.id === salon_id)
             if (salon){
                 commit('setStore', {key: 'salon_selected', data: salon});

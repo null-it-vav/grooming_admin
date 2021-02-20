@@ -1,7 +1,10 @@
 <template>
   <div class="card p-4">
+    <div v-if="title">
+      <div class="card-title">{{ title }}</div>
+    </div>
     <div class="row mb-4">
-      <div class="col-lg-3">
+      <div class="col-lg-3"  v-if="auth.role == 'admin'">
         <form-group
             v-model="master_filter"
             :errors="{}"
@@ -24,7 +27,7 @@
         />
       </div>
 
-      <div class="ml-auto col-2 d-flex">
+      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin'">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -55,7 +58,7 @@
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
         <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>
-          <button class=" btn btn-dark btn-sm rounded-circle fa fa-pencil" @click="openUpdatePopup(order)" />
+          <button class=" btn btn-dark btn-sm rounded-circle fa fa-pencil" @click="openUpdatePopup(order)" v-if="auth.role == 'admin'"/>
           <button
               v-if="order.status == 'NEW'"
               v-b-tooltip="$t('app.components.orders.tooltip.check')"
@@ -125,6 +128,9 @@ export default {
   props: {
     day: {
       required: false
+    },
+    title: {
+      required: false
     }
   },
   data() {
@@ -169,6 +175,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'auth',
       'salon_selected'
     ]),
     masters_list: function (){

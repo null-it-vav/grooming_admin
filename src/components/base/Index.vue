@@ -34,7 +34,7 @@
               <div>
                 <b>{{ auth.organization.name }}</b>
                 <br>
-                {{ auth.organization.email }}
+                {{ auth.name }}
               </div>
               <i class="fa fa-sign-out pointer" @click="logout"/>
             </li>
@@ -52,33 +52,51 @@
               <span class="mx-3">{{ $t('app.titles.home.calendar') }}</span>
             </router-link>
 
-            <router-link :to="{ name: 'home.masters' }" class="list-group-item">
+            <router-link
+                v-if="auth.role == 'admin'"
+                :to="{ name: 'home.masters' }" class="list-group-item"
+            >
               <i class="fa fa-user"/>
               <span class="mx-3">{{ $t('app.titles.home.masters') }}</span>
             </router-link>
-            <router-link :to="{ name: 'home.orders' }" class="list-group-item">
+            <router-link
+
+                :to="{ name: 'home.orders' }" class="list-group-item"
+            >
               <i class="fa fa-shopping-bag" />
               <span class="mx-3">{{ $t('app.titles.home.orders') }}</span>
             </router-link>
-            <router-link :to="{ name: 'home.salons' }" class="list-group-item">
+            <router-link
+                v-if="auth.role == 'admin'"
+                :to="{ name: 'home.salons' }" class="list-group-item"
+            >
               <i class="fa fa-map-marker" />
               <span class="mx-3">{{ $t('app.titles.home.salons') }}</span>
             </router-link>
-            <router-link :to="{ name: 'home.services' }" class="list-group-item">
+            <router-link
+                v-if="auth.role == 'admin'"
+                :to="{ name: 'home.services' }" class="list-group-item"
+            >
               <i class="fa fa-briefcase"/>
               <span class="mx-3">{{ $t('app.titles.home.services') }}</span>
             </router-link>
-            <router-link :to="{ name: 'home.promotions' }" class="list-group-item">
+            <router-link
+                v-if="auth.role == 'admin'"
+                :to="{ name: 'home.promotions' }" class="list-group-item"
+            >
               <i class="fa fa-bullhorn"/>
               <span class="mx-3">{{ $t('app.titles.home.promotions') }}</span>
             </router-link>
-            <router-link :to="{ name: 'home.settings' }" class="list-group-item">
+            <router-link
+                v-if="auth.role == 'admin'"
+                :to="{ name: 'home.settings' }" class="list-group-item"
+            >
               <i class="fa fa-cogs"/>
               <span class="mx-3">{{ $t('app.titles.home.settings') }}</span>
             </router-link>
           </div>
           <hr>
-          <div class="form-group">
+          <div class="form-group" v-if="auth.role == 'admin'">
             <label>{{ $t('app.components.main.selected_salon') }}</label>
             <select class="form-control" @change="setSalon" v-model="selected_salon">
               <option v-for="(salon, k) in salons" :value="salon.id" :key="k">{{ salon.address }}</option>

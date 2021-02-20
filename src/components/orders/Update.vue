@@ -1,6 +1,6 @@
 <template>
   <base-popup
-      :caption="$t('app.components.orders.create')"
+      :caption="$t('app.components.orders.update')"
       @closePopup="closePopup"
       :success_error="success_error"
       dialogSize="modal-xl"
@@ -113,7 +113,7 @@
         </div>
         <div class="col-lg-12 d-flex mt-2">
           <button type="submit" class="m-auto btn btn-success">
-            {{$t('base.create')}}
+            {{$t('base.update')}}
           </button>
         </div>
       </form>
@@ -124,7 +124,7 @@
 <script>
 import BasePopup from "@/components/base/Popup";
 import FormGroup from "@/components/base/FormGroup";
-import {masters, services, workingDiapasons, create_orders} from "@/api";
+import {masters, services, workingDiapasons, update_order} from "@/api";
 import {mapGetters} from "vuex";
 import format from "date-format";
 
@@ -221,7 +221,7 @@ export default {
   components: {FormGroup, BasePopup},
   methods: {
     submit(){
-      create_orders(this.auth.organization.id, this.order)
+      update_order(this.order.id, this.order)
           .then(() => {
             this.success_error.success = true
             setTimeout(() => {

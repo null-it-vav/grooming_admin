@@ -6,7 +6,8 @@ let ru = {
                 selected_salon: "Выбранный салон"
             },
             dashboard: {
-                title: "Dashboard"
+                title: "Dashboard",
+                orders_by_day_now: "Заказы на сегодня",
             },
             login: {
                 head_title: "CRM cистема для грумеров, которая поможет вам вывести бизнес на новый уровень.",
