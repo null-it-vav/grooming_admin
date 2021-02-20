@@ -27,6 +27,12 @@
         />
       </div>
 
+      <div class="col-lg-3">
+        <date-range-select
+          v-model="filter_date_range"
+        />
+      </div>
+
       <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' && create_new">
         <div class="ml-auto">
           <a
@@ -121,10 +127,11 @@ import Create from "@/components/orders/Create";
 import Update from "@/components/orders/Update";
 import FormGroup from "@/components/base/FormGroup";
 import deepClone from "clonedeep";
+import DateRangeSelect from "@/components/base/DateRangeSelect";
 
 export default {
   name: "Index",
-  components: {FormGroup, Create, Update},
+  components: {DateRangeSelect, FormGroup, Create, Update},
   props: {
     day: {
       required: false
@@ -154,10 +161,17 @@ export default {
       status_filter: null,
       filter_start: null,
       filter_end: null,
+      filter_date_range: null,
       masters: [],
     }
   },
   watch: {
+    'filter_date_range': function (){
+      this.filter_start = this.filter_date_range.start
+
+      this.filter_end = this.filter_date_range.end
+      this.loadOrders()
+    },
     'orders.page': function(){
       this.loadOrders()
     },
