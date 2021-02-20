@@ -6,7 +6,7 @@
     <template v-slot:body>
       <index
         :day="day"
-
+        :create_new="false"
       />
     </template>
   </base-popup>

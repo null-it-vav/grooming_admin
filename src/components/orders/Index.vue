@@ -27,7 +27,7 @@
         />
       </div>
 
-      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin'">
+      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' && create_new">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -131,6 +131,10 @@ export default {
     },
     title: {
       required: false
+    },
+    create_new: {
+      required: false,
+      default: true
     }
   },
   data() {
