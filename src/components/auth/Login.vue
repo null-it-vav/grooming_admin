@@ -47,7 +47,7 @@
                     <form-group
                         type="text"
                         name="email"
-                        :label="$t('app.components.login.username')"
+                        :label="$t('app.components.login.email')"
                         v-model="email"
                         :errors="errors"
                     />
