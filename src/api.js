@@ -147,3 +147,8 @@ export function organizations(payload){
     })
         .then((response) => response)
 }
+
+export function create_demo(payload){
+    return axios.post(BASE_URL + "create-demo", payload)
+        .then((response) => response)
+}

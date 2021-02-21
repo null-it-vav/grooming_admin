@@ -79,31 +79,41 @@ const store = new Vuex.Store({
             localStorage.removeItem('user-token')
             localStorage.removeItem('salon_selected')
         },
-        getAuth: async function ({dispatch, commit, state}) { // eslint-disable-line
-            await me().then((response) => {
-                commit('setStore', {key: 'auth', data: response.data.data.user});
-                commit('setStore', {key: 'salons', data: response.data.data.salons});
+        // eslint-disable-next-line no-unused-vars
+        getAuth: async function ({dispatch, commit, state}) {
+            const token = localStorage.getItem('user-token')
 
-                // eslint-disable-next-line no-debugger
-                // debugger;
+            if (token) {
+                await me().then((response) => {
+                    commit('setStore', {key: 'auth', data: response.data.data.user});
+                    commit('setStore', {key: 'salons', data: response.data.data.salons});
 
-                if (response.data.data.user.salon_id){
-                    commit('setStore', {key: 'salon_selected', data: response.data.data.user.salon_id});
-                    localStorage.setItem('salon_selected', response.data.data.user.salon_id)
-                } else {
-                    var salon_id = localStorage.getItem('salon_selected')
-                    if(salon_id){
-                        var salon = response.data.data.salons.find(salon => salon.id == salon_id)
-                        commit('setStore', {key: 'salon_selected', data: salon});
-                        localStorage.setItem('salon_selected', salon.id)
-                    }else {
-                        if (response.data.data.salons.length && response.data.data.salons[0]){
-                            commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
-                            localStorage.setItem('salon_selected', response.data.data.salons[0].id)
+                    // eslint-disable-next-line no-debugger
+                    // debugger;
+
+                    if (response.data.data.user.salon_id){
+                        commit('setStore', {key: 'salon_selected', data: response.data.data.user.salon_id});
+                        localStorage.setItem('salon_selected', response.data.data.user.salon_id)
+                    } else {
+                        var salon_id = localStorage.getItem('salon_selected')
+                        if(salon_id){
+                            var salon = response.data.data.salons.find(salon => salon.id == salon_id)
+                            commit('setStore', {key: 'salon_selected', data: salon});
+                            localStorage.setItem('salon_selected', salon.id)
+                        }else {
+                            if (response.data.data.salons.length && response.data.data.salons[0]){
+                                commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
+                                localStorage.setItem('salon_selected', response.data.data.salons[0].id)
+                            }
                         }
                     }
-                }
-            })
+                })
+                    .catch((error) => {
+                        if (error.response.status == 401){
+                            dispatch('clearAuth');
+                        }
+                    })
+            }
         },
         setSalon({dispatch, commit, state},  salon_id ){// eslint-disable-line
             var salon = state.salons.find(salon => salon.id === salon_id)

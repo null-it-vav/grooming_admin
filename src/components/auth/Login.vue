@@ -6,37 +6,85 @@
       <div class="row">
         <div class="col-lg-8 text-center">
           <img class=" my-5 logo" src='~@/assets/grooming_box.svg' />
-          <div class="d-none d-md-block">
+          <div class="d-none d-lg-block">
             <div class="text-white">{{ $t('app.components.login.head_title') }}</div>
-            <div>
-              <img src="~@/assets/auth/mobiles.png"/>
+            <div >
+              <img class="mw-100" src="~@/assets/auth/mobiles.png"/>
             </div>
           </div>
         </div>
 
         <div class="col-lg-4 d-flex align-items-center justify-content-center">
-          <div class="card shadow p-5 w-100">
+          <div class="card shadow p-1 p-md-3 w-100">
             <div class="card-body">
               <h5 class="card-title">{{ $t('app.components.login.title') }}</h5>
               <div class="card-text">
                 <form
                     @submit.prevent="submit"
                 >
-                  <div class="mb-3">
-                    <label for="login" class="form-label">{{ $t('app.components.login.username') }}</label>
-                    <input autocomplete="username" required type="email" class="form-control" id="login" v-model="email">
+                  <div v-if="type == 'auth'">
+                    <form-group
+                        type="text"
+                        name="email"
+                        :label="$t('app.components.login.email')"
+                        v-model="email"
+                        :errors="errors"
+                    />
+
+                    <form-group
+                        type="password"
+                        name="password"
+                        :label="$t('app.components.login.password')"
+                        v-model="password"
+                        :errors="errors"
+                    />
+
+                    <div class="mb-3">
+                      <button type="submit" class="btn btn-purpure btn-block">{{ $t('app.components.login.login') }}</button>
+                    </div>
                   </div>
-                  <div class="mb-3">
-                    <label for="password" class="form-label">{{ $t('app.components.login.password') }} </label>
-                    <input autocomplete="current-password" required class="form-control" id="password" type="password" v-model="password" />
+                  <div v-if="type == 'reset'">
+                    <form-group
+                        type="text"
+                        name="email"
+                        :label="$t('app.components.login.username')"
+                        v-model="email"
+                        :errors="errors"
+                    />
+                    <div class="mb-3">
+                      <button type="submit" class="btn btn-purpure btn-block">{{ $t('app.components.login.reset') }}</button>
+                    </div>
                   </div>
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-purpure btn-block">{{ $t('app.components.login.login') }}</button>
+
+                  <div v-if="type == 'get_demo'">
+                    <form-group
+                        type="text"
+                        name="email"
+                        :label="$t('app.components.login.email')"
+                        v-model="email"
+                        :errors="errors"
+                    />
+                    <div class="mb-3">
+                      <button type="submit" class="btn btn-purpure btn-block">{{ $t('app.components.login.get_demo_button') }}</button>
+                    </div>
                   </div>
-                  <div class="text-center">
-                    <a>{{ $t('app.components.login.reset_password') }}</a>
+
+                  <div class="text-center" v-if="type == 'auth'">
+                    <a class="pointer" @click="type = 'reset'">{{ $t('app.components.login.reset_password') }}</a>
+                  </div>
+                  <div class="text-center" v-if="type == 'reset'">
+                    <a class="pointer" @click="type = 'auth'">{{ $t('app.components.login.auth') }}</a>
                   </div>
                 </form>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="text-center" v-if="type != 'get_demo'">
+                <a class="pointer text-danger" @click="type = 'get_demo'">{{ $t('app.components.login.get_demo') }}</a>
+              </div>
+
+              <div class="text-center" v-if="type == 'get_demo'">
+                <a class="pointer text-danger" @click="type = 'auth'">{{ $t('app.components.login.login_exist') }}</a>
               </div>
             </div>
           </div>
@@ -48,16 +96,19 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { login } from '@/api'
+import { login, create_demo } from '@/api'
 import store from "@/store/app";
+import FormGroup from "@/components/base/FormGroup";
 
 export default {
   name: "Login",
+  components: {FormGroup},
   data(){
     return {
       email: 'email1@mail.ru',
       password: '123456',
-      errors: {}
+      errors: {},
+      type: "auth"
     }
   },
   computed: {
@@ -74,6 +125,23 @@ export default {
   },
   methods: {
     submit(){
+      if (this.type == 'auth'){
+        this.login();
+      }
+      if (this.type == 'get_demo'){
+        this.createDemo()
+      }
+    },
+    createDemo(){
+      create_demo({email: this.email})
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((e) => {
+            this.errors = e.response.data.errors;
+          })
+    },
+    login(){
       const data = {
         email: this.email,
         password: this.password,
