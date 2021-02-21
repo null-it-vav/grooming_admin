@@ -5,6 +5,7 @@ import store from '../store/app';
 Vue.use(VueRouter);
 
 const Login = () => import( '../components/auth/Login.vue');
+const SetPassword = () => import( '../components/auth/SetPassword.vue');
 const BaseIndex = () => import( '../components/base/Index.vue');
 const DashboardIndex = () => import( '../components/dashboard/Index');
 const CalendarIndex = () => import( '../components/calendar/Index');
@@ -24,6 +25,11 @@ const routes = [
         path: '/',
         name: 'login',
         component: Login,
+    },
+    {
+        path: '/set-password',
+        name: 'set-password',
+        component: SetPassword,
     },
     {
         path: '/home',

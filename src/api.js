@@ -7,6 +7,17 @@ export function login(payload){
         .then((response) => response)
 }
 
+export function reset_password(payload){
+    return axios.post(BASE_URL + 'reset-password', payload)
+        .then((response) => response)
+}
+
+export function set_password(payload){
+    return axios.post(BASE_URL + 'set-password', payload)
+        .then((response) => response)
+}
+
+
 export function logout(){
     return axios.post(BASE_URL + 'logout')
         .then((response) => response)

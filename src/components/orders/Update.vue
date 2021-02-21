@@ -108,10 +108,18 @@
           />
           <div v-for="s in services" :key="s.id" class="mb-2">
             <div class="d-flex">
-              <b-checkbox :value="s.id" v-model="order.services" size="sm"  switch/>
+              <b-checkbox :value="s.id" v-model="services_select" size="sm"  switch/>
               {{s.name}}
             </div>
           </div>
+
+          <form-group
+              :label="$t('app.components.orders.fields.total_price')"
+              v-model="order.total_price"
+              type="number"
+              name="total_price"
+              :errors="errors"
+          />
         </div>
         <div class="col-lg-12 d-flex mt-2">
           <button type="submit" class="m-auto btn btn-success">
@@ -150,8 +158,10 @@ export default {
         msg: null
       },
       day_times: [],
-      filter_type: null,
+      filter_type: this.order.type,
       services: [],
+      services_select: [],
+      old_date: this.order.date
     }
   },
   computed: {
@@ -211,7 +221,7 @@ export default {
       this.loadByDay()
     },
     'filter_type': function (){
-      this.order.services = [];
+      this.services_select = [];
       this.loadServices()
     }
   },
@@ -219,13 +229,31 @@ export default {
     this.loadMasters()
     this.loadDates()
     this.loadByDay()
+    this.loadServices()
+
+    this.order.services.forEach(row => {
+      this.services_select.push(row.id)
+    })
   },
   components: {FormGroup, BasePopup},
   methods: {
     submit(){
-      update_order(this.order.id, this.order)
+      var data = {};
+      data.name = this.order.name
+      data.phone = this.order.phone
+      data.email = this.order.email
+      data.nickname = this.order.nickname
+      data.comment = this.order.comment
+      data.master_id = this.order.master_id
+      data.date = this.order.date
+      data.time_start = this.order.time_start
+      data.total_price = this.order.total_price
+      data.services = this.services_select
+
+      update_order(this.order.id, data)
           .then(() => {
             this.success_error.success = true
+            this.errors = {}
             setTimeout(() => {
               this.closePopup()
             }, 2000);
@@ -279,8 +307,13 @@ export default {
         day: this.order.date,
         without_order_id: this.order.id
       }).then(response => {
-
         this.day_times = response.data
+
+        if (this.old_date == this.order.date){
+          this.day_times.unshift({
+            time: this.order.time_start
+          })
+        }
       })
     },
     allowedDates(val) {

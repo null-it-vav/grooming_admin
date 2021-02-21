@@ -102,7 +102,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { login, create_demo } from '@/api'
+import { login, create_demo, reset_password } from '@/api'
 import store from "@/store/app";
 import FormGroup from "@/components/base/FormGroup";
 import MessageSuccessError from "@/components/base/SuccessError";
@@ -157,6 +157,28 @@ export default {
       if (this.type == 'get_demo'){
         this.createDemo()
       }
+      if (this.type == 'reset'){
+        this.resetPassword()
+      }
+    },
+    resetPassword(){
+      reset_password({email: this.email})
+          .then((response) => {
+            if (response.data.msg) this.success_error.msg = [response.data.msg]
+
+            this.success_error.success = true
+            setTimeout(() => {
+              this.type = 'auth'
+            }, 2000);
+          })
+          .catch((e) => {
+            if (e.response.status == 403){
+              this.success_error.error = true
+              this.success_error.msg = [e.response.data.message]
+            }else {
+              this.errors = e.response.data.errors;
+            }
+          })
     },
     createDemo(){
       create_demo({email: this.email})

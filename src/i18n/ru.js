@@ -35,13 +35,16 @@ let ru = {
                 username: "Логин",
                 email: "Email",
                 password: "Пароль",
+                password_confirmation: "Повторите пароль",
                 login: "Войти",
                 reset: "Восстановить",
                 reset_password: "Забыли пароль?",
+                reset_password_form: "Восстановить пароль",
                 auth: "Вспомнили логин и пароль?",
                 get_demo: "Получить демо доступ",
                 get_demo_button: "Получить демо",
                 login_exist: "У меня есть данные для входа",
+                url_invalid: "Ссылка для восстановления неверная!"
             },
             services: {
                 create: "Создать услугу",
@@ -113,6 +116,7 @@ let ru = {
                     date: 'Дата',
                     time_start: 'Время',
                     status: 'Статус',
+                    total_price: 'Итого, цена',
                 },
                 statuses: {
                     NEW: 'Новый',
@@ -220,6 +224,7 @@ let ru = {
             5: "Сб",
             6: "Вс",
         },
+        data_update: 'Данные обновлены.',
         popup: {
             error: 'Ошибка!',
             data_not_update: 'Данные не обновлены!',

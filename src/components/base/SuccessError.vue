@@ -10,7 +10,7 @@
                     role="alert"
                 >
                     <strong>{{$t('base.popup.error')}}</strong>&nbsp;
-                    <span v-if="!show.msg">{{$t('base.popup.data_not_update')}}</span>
+                    <span v-if="show.msg.length == 0">{{$t('base.popup.data_not_update')}}</span>
                     <div v-for="(m, k) in show.msg" :key="k">
                         {{ m }}
                     </div>
@@ -35,7 +35,11 @@
                     class="alert alert-success alert-dismissible fade mb-0 show"
                     role="alert"
                 >
-                    {{ success_message ? success_message : 'Данные обновлены.' }}
+                    <strong  v-if="show.msg.length == 0">{{ success_message ? success_message : $t('base.data_update') }}</strong>&nbsp;
+                    <div v-for="(m, k) in show.msg" :key="k">
+                      {{ m }}
+                    </div>
+
                     <button
                         type="button"
                         class="close"
