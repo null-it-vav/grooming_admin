@@ -3,16 +3,25 @@ let ru = {
     app: {
         components: {
             admin: {
-              organization: {
+              organizations: {
+                  create: "Создать организацию",
                   list: "Список организаций",
+                  after_create: "После создания учетные данные будут отправлены на указанную почту",
                   fields: {
                       name: "Название",
                       email: "Email",
                       phone: "Телефон",
                       created_at: "Создана",
+                      org_name: "Название",
+                      user_name: "ФИО",
+                      user_email: "Email",
+                      user_phone: "Телефон",
+                      org_timezone: "Таймзона",
+                      org_lang: "Язык",
                   }
               }
             },
+
             main: {
                 selected_salon: "Выбранный салон"
             },

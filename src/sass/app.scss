@@ -15,6 +15,8 @@
 @import "calendar";
 
 @import "table";
+@import "~vue-select/dist/vue-select.css";
+
 
 .page-item.active .page-link {
   background-color: $purple !important;
@@ -245,4 +247,21 @@ a.list-group-item i{
 
 .card-footer {
   background-color: rgba(0,0,0,0);
+}
+
+.vs__dropdown-toggle {
+  height: calc(1.6em + 0.75rem) !important;
+  border: none !important;
+  padding: 0 0 4px !important;
+}
+
+.vs--single.vs--open .vs__selected {
+  padding-top: 3px;
+}
+
+.v-select {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
 }

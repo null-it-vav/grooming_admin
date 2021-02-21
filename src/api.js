@@ -142,11 +142,18 @@ export function save_settings(payload){
 }
 
 export function organizations(payload){
-    return axios.get(BASE_URL + 'organizations' , {
+    return axios.get(BASE_URL + 'profile/organizations' , {
         params: payload
     })
         .then((response) => response)
 }
+
+
+export function create_organization(payload){
+    return axios.post(BASE_URL + 'profile/organizations' , payload)
+        .then((response) => response)
+}
+
 
 export function create_demo(payload){
     return axios.post(BASE_URL + "create-demo", payload)

@@ -13,12 +13,17 @@ import VueMoment from 'vue-moment'
 import moment from 'moment'
 import 'moment/locale/ru'
 import VCalendar from 'v-calendar';
+import vSelect from 'vue-select'
 
+
+Vue.component('v-select', vSelect)
 Vue.use(FlagIcon);
 Vue.use(VCalendar);
 
 
 Vue.prototype.$moment = VueMoment;
+
+
 Vue.use(VueMoment, {
   moment,
 })
