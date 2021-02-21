@@ -1,5 +1,5 @@
 <template>
-  <div :class="this.class">
+  <div :class="custom_class ? custom_class : 'mb-3'">
     <label v-if="label && group">{{ label }}</label>
 
     <div
@@ -177,6 +177,11 @@ export default {
     validSign,
   },
   props: {
+    custom_class: {
+      type: String,
+      default: null,
+      required: false
+    },
     group: {
       type: Boolean,
       default: false,
@@ -208,9 +213,8 @@ export default {
       default: null
     },
     errors: {
-      type: Object,
-      // eslint-disable-next-line vue/require-valid-default-prop
-      default: {}
+      required: false,
+      default: function () { return {} },
     },
     required: {
       required: false

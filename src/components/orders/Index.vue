@@ -7,7 +7,6 @@
       <div class="col-lg-3"  v-if="auth.role == 'admin'">
         <form-group
             v-model="master_filter"
-            :errors="{}"
             type="select"
             :items="masters_list"
         />
@@ -15,7 +14,6 @@
       <div class="col-lg-2">
         <form-group
             v-model="status_filter"
-            :errors="{}"
             type="select"
             :items="[
                 {value: null, text: $t('app.components.orders.filters.status_select')},
@@ -106,7 +104,7 @@
     <div class="row" v-if="orders.last_page > 1">
       <div class="col-lg-2 d-flex">
         <form-group
-            class="align-items-center mb-0"
+            custom_class="align-items-center mb-0"
           type="select"
           :items="[5,10,15]"
           v-model="orders.per_page"

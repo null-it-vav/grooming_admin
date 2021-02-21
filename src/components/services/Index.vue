@@ -10,7 +10,7 @@
               { value: 'dog', text: $t('base.service_types.dog') },
               { value: 'other', text: $t('base.service_types.other') }
           ]"
-          :errors="{}"
+
           v-model="filter_type"
         />
       </div>

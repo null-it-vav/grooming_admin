@@ -103,7 +103,7 @@
                   { value: 'other', text: $t('base.service_types.other') }
               ]"
               required
-              :errors="{}"
+
               v-model="filter_type"
           />
           <div v-for="s in services" :key="s.id" class="mb-2">

@@ -104,7 +104,7 @@
                   { value: 'dog', text: $t('base.service_types.dog') },
                   { value: 'other', text: $t('base.service_types.other') }
               ]"
-              :errors="{}"
+
               v-model="filter_type"
           />
           <div v-for="s in services" :key="s.id" class="mb-2">
