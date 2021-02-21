@@ -108,9 +108,10 @@ let ru = {
                 statuses: {
                     NEW: 'Новый',
                     CONFIRMED: 'Подтвержден',
-                    COMPLITED: 'Завершена',
+                    COMPLETED: 'Завершена',
                     REJECTED: 'Отклонена',
-                    PENALTY: 'Не состоялась'
+                    PENALTY: 'Не состоялась',
+
                 },
                 tooltip: {
                     check: 'Подтвердить заказ',
@@ -214,6 +215,7 @@ let ru = {
             error: 'Ошибка!',
             data_not_update: 'Данные не обновлены!',
         },
+        total: 'Всего'
     }
 }
 

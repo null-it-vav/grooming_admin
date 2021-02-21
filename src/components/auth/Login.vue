@@ -90,6 +90,12 @@
           </div>
         </div>
       </div>
+
+      <div class="col-lg-12 mb-2 alert position-fixed fixed-bottom">
+        <message-success-error
+            :show="success_error"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -99,16 +105,22 @@ import { mapGetters } from 'vuex';
 import { login, create_demo } from '@/api'
 import store from "@/store/app";
 import FormGroup from "@/components/base/FormGroup";
+import MessageSuccessError from "@/components/base/SuccessError";
 
 export default {
   name: "Login",
-  components: {FormGroup},
+  components: {MessageSuccessError, FormGroup},
   data(){
     return {
       email: 'email1@mail.ru',
       password: '123456',
       errors: {},
-      type: "auth"
+      type: "auth",
+      success_error: {
+        success: false,
+        error: false,
+        msg: []
+      },
     }
   },
   computed: {
@@ -120,6 +132,20 @@ export default {
     'auth': function (){
       if (this.auth.id){
         this.$router.push({ name: 'home.dashboard' });
+      }
+    },
+    'success_error.success': function (){
+      if (this.success_error.success) {
+        setTimeout(() => {
+          this.success_error.success = false;
+        }, 4000);
+      }
+    },
+    'success_error.error': function (){
+      if (this.success_error.error) {
+        setTimeout(() => {
+          this.success_error.error = false;
+        }, 4000);
       }
     }
   },
@@ -135,10 +161,19 @@ export default {
     createDemo(){
       create_demo({email: this.email})
           .then((response) => {
-            console.log(response)
+            if (response.data.msg) this.success_error.msg = [response.data.msg]
+            this.success_error.success = true
+            setTimeout(() => {
+              this.type = 'auth'
+            }, 2000);
           })
           .catch((e) => {
-            this.errors = e.response.data.errors;
+            if (e.response.status == 403){
+              this.success_error.error = true
+              this.success_error.msg = [e.response.data.message]
+            }else {
+              this.errors = e.response.data.errors;
+            }
           })
     },
     login(){

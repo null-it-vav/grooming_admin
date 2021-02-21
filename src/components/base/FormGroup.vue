@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-3">
+  <div :class="this.class">
     <label v-if="label && group">{{ label }}</label>
 
     <div
@@ -207,7 +207,11 @@ export default {
       type: String | Number | File,
       default: null
     },
-    errors: {},
+    errors: {
+      type: Object,
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: {}
+    },
     required: {
       required: false
     },

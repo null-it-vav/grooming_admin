@@ -56,6 +56,7 @@ export default {
     name: 'MessageSuccessError',
     props: {
         success_message: null,
+        error_message: null,
         show: {
             type: Object,
             default() {

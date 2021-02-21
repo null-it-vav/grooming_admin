@@ -4,10 +4,10 @@
         class="mb-4 col-lg-12"
         v-if="auth.role == 'admin' || auth.role == 'master'"
     >
-      <orders :day="day" :title="$t('app.components.dashboard.orders_by_day_now')" />
+      <orders :qty="5" :day="day" :title="$t('app.components.dashboard.orders_by_day_now')" />
     </div>
     <div
-        class="col-lg-4 mb-4"
+        class="col-lg-6 mb-4"
         v-if="auth.role == 'admin'"
     >
       <promotions external_status="active"/>

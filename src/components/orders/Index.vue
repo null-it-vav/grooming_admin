@@ -52,7 +52,7 @@
           <th>{{$t('app.components.orders.fields.comment')}}</th>
           <th v-if="!master_filter">{{$t('app.components.orders.fields.master')}}</th>
           <th v-if="!status_filter">{{$t('app.components.orders.fields.status')}}</th>
-          <th></th>
+          <th width="60px"></th>
         </tr>
       </thead>
       <tr v-for="(order, k) in orders.data" :key="k">
@@ -64,8 +64,7 @@
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
         <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>
-
-          <b-dropdown  variant="link" toggle-class="text-decoration-none" >
+          <b-dropdown  variant="link" toggle-class="text-decoration-none">
             <template #button-content >
               <i class="btn btn-dark btn-sm rounded-circle fa fa-align-justify"/>
             </template>
@@ -103,18 +102,29 @@
       <h4 class="mt-3">{{ $t('app.components.orders.not_found') }}</h4>
     </div>
 
-    <div v-if="page_load" class="d-flex">
-      <b-spinner class="m-auto my-5"></b-spinner>
-    </div>
 
-    <b-pagination
-        v-if="orders.last_page > 1"
-        v-model="orders.page"
-        :total-rows="orders.total"
-        :per-page="orders.per_page"
-        aria-controls="my-table"
-        class="m-auto"
-    ></b-pagination>
+    <div class="row" v-if="orders.last_page > 1">
+      <div class="col-lg-2 d-flex">
+        <form-group
+            class="align-items-center mb-0"
+          type="select"
+          :items="[5,10,15]"
+          v-model="orders.per_page"
+        />
+      </div>
+      <div class="col-lg-8 d-flex">
+        <b-pagination
+            v-model="orders.page"
+            :total-rows="orders.total"
+            :per-page="orders.per_page"
+            aria-controls="my-table"
+            class="m-auto"
+        ></b-pagination>
+      </div>
+      <div class="col-lg-2 d-flex align-items-center">
+        <div class="ml-auto text-secondary">{{ $t('base.total') }} {{ this.orders.total }}</div>
+      </div>
+    </div>
 
     <create
         v-if="showCreatePopup"
@@ -145,6 +155,9 @@ export default {
     day: {
       required: false
     },
+    qty: {
+      required: false
+    },
     title: {
       required: false
     },
@@ -161,7 +174,7 @@ export default {
       orders: {
         data: [],
         page: 1,
-        per_page: 15,
+        per_page: this.qty ? this.qty : 15,
         last_page: 1,
         total: 0,
       },
@@ -194,6 +207,9 @@ export default {
     },
     'status_filter': function (){
       this.loadOrders()
+    },
+    'orders.per_page': function (){
+      this.loadOrders()
     }
   },
   created() {
@@ -225,8 +241,8 @@ export default {
   methods: {
     loadOrders(){
       this.page_load = true;
-      this.orders.data = [];
-      this.orders.total = 0;
+      // this.orders.data = [];
+      // this.orders.total = 0;
 
       orders({
         page: this.orders.page,
