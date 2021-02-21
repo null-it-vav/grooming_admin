@@ -112,8 +112,8 @@ export default {
   components: {MessageSuccessError, FormGroup},
   data(){
     return {
-      email: 'email1@mail.ru',
-      password: '123456',
+      email: '',
+      password: '',
       errors: {},
       type: "auth",
       success_error: {
