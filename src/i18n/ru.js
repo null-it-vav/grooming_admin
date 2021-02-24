@@ -21,7 +21,6 @@ let ru = {
                   }
               }
             },
-
             main: {
                 selected_salon: "Выбранный салон"
             },
@@ -102,6 +101,7 @@ let ru = {
                 create: "Создать запись",
                 update: "Обновить запись",
                 not_found: "Записей нет",
+                how_match: "Итоговая сумма заказа:",
                 filters: {
                     master_select: "Выбрать мастера",
                     status_select: "Выбрать статус",
@@ -126,13 +126,12 @@ let ru = {
                     PENALTY: 'Не состоялась',
 
                 },
-                tooltip: {
+                actions: {
+                    edit: 'Редактировать',
                     check: 'Подтвердить заказ',
                     penalty: 'Клиент не пришел',
                     rejected: 'Клиент отказался заранее',
-                },
-                actions: {
-                    edit: 'Редактировать'
+                    end: 'Выполнено'
                 }
             },
             settings: {
@@ -163,6 +162,12 @@ let ru = {
                     orders: {
                         title: 'Список записей'
                     }
+                }
+            },
+            user: {
+                fields: {
+                    telegram_id: 'Telegram id, указав его вы сможете получать уведомления о записях',
+                    get_telegram_id: 'Для получения id напишите нашему боту команду /start: '
                 }
             }
         },

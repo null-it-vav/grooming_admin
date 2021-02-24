@@ -76,19 +76,25 @@
                 v-if="order.status == 'NEW'"
                 @click="set_status(order, 'approve')"
             >
-              {{ $t('app.components.orders.tooltip.check') }}
+              {{ $t('app.components.orders.actions.check') }}
             </b-dropdown-item>
             <b-dropdown-item
                 v-if="order.status == 'NEW'"
                 @click="set_status(order, 'rejected')"
             >
-              {{ $t('app.components.orders.tooltip.rejected') }}
+              {{ $t('app.components.orders.actions.rejected') }}
             </b-dropdown-item>
             <b-dropdown-item
                 v-if="order.status == 'CONFIRMED'"
                 @click="set_status(order, 'penalty')"
             >
-              {{ $t('app.components.orders.tooltip.penalty') }}
+              {{ $t('app.components.orders.actions.penalty') }}
+            </b-dropdown-item>
+            <b-dropdown-item
+                v-if="order.status == 'CONFIRMED'"
+                @click="set_end(order)"
+            >
+              {{ $t('app.components.orders.actions.end') }}
             </b-dropdown-item>
           </b-dropdown>
         </td>
@@ -281,6 +287,10 @@ export default {
           .then(() => {
             this.loadOrders()
           })
+    },
+    set_end(order){
+      var years = prompt(this.$t('app.components.orders.how_match'), 0);
+      console.log(order, years)
     },
     openUpdatePopup(order){
       this.showUpdatePopup = true

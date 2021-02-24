@@ -28,6 +28,12 @@ export function me(){
         .then((response) => response)
 }
 
+export function me_save_settings(payload){
+    return axios.post(BASE_URL + 'profile/me/settings', payload)
+        .then((response) => response)
+}
+
+
 export function masters(payload){
     return axios.get(BASE_URL + "profile/masters", {
         params: payload

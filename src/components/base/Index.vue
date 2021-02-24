@@ -37,7 +37,11 @@
                 <br>
                 {{ auth.name }}
               </div>
-              <i class="fa fa-sign-out pointer" @click="logout"/>
+              <div>
+                <i class="fa fa-sign-out pointer" @click="logout"/> <br>
+                <i class="fa fa-cog pointer" @click="showUserSettingsPopup = true"/>
+              </div>
+
             </li>
           </ul>
           <hr>
@@ -119,6 +123,11 @@
 
       </div>
     </div>
+
+    <user-settings-popup
+      v-if="showUserSettingsPopup"
+      @closePopup="closeUserSettingsPopup"
+    />
   </div>
 </template>
 
@@ -126,11 +135,14 @@
 import { logout } from "@/api";
 import {mapGetters} from "vuex";
 import store from "@/store/app";
+import UserSettingsPopup from "@/components/user/UserSettingsPopup";
 
 export default {
   name: "DashboardIndex",
+  components: {UserSettingsPopup},
   data() {
     return {
+      showUserSettingsPopup: false,
       nav_open: false,
       selected_salon: localStorage.getItem('salon_selected')
     }
@@ -144,6 +156,9 @@ export default {
   methods: {
     setSalon(){
       store.dispatch('setSalon', this.selected_salon)
+    },
+    closeUserSettingsPopup(){
+      this.showUserSettingsPopup = false
     },
     logout(){
       logout()
