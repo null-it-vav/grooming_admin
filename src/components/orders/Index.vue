@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import {masters, orders, update_orders} from "@/api";
+import {masters, orders, update_order} from "@/api";
 import {mapGetters} from "vuex";
 import Create from "@/components/orders/Create";
 import Update from "@/components/orders/Update";
@@ -281,7 +281,7 @@ export default {
       this.loadOrders()
     },
     set_status(order, status){
-      update_orders(order.id, {
+      update_order(order.id, {
         action: 'set-'+status
       })
           .then(() => {

@@ -1,5 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container text-center my-5">
+    <div class="my-5">
+      <img src="~@/assets/404.svg"/>
+    </div>
+
     <h1>Oops! An Error Occurred</h1>
     <h2>The server returned a 404 page not found.</h2>
 

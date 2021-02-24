@@ -1,104 +1,104 @@
 let ru = {
-    language: "Русский",
+    language: "English",
     app: {
         components: {
             admin: {
               organizations: {
-                  create: "Создать организацию",
-                  list: "Список организаций",
-                  after_create: "После создания учетные данные будут отправлены на указанную почту",
+                  create: "Create organization",
+                  list: "Organizations",
+                  after_create: "After creating organization data will be sent to email",
                   fields: {
-                      name: "Название",
+                      name: "Name",
                       email: "Email",
-                      phone: "Телефон",
-                      created_at: "Создана",
-                      org_name: "Название",
-                      user_name: "ФИО",
+                      phone: "Phone",
+                      created_at: "Created",
+                      org_name: "Organization name",
+                      user_name: "User",
                       user_email: "Email",
-                      user_phone: "Телефон",
-                      org_timezone: "Таймзона",
-                      org_lang: "Язык",
+                      user_phone: "Phone",
+                      org_timezone: "Timezone",
+                      org_lang: "Lang",
                   }
               }
             },
             main: {
-                selected_salon: "Выбранный салон"
+                selected_salon: "Salon"
             },
             dashboard: {
                 title: "Dashboard",
-                orders_by_day_now: "Записи на сегодня",
+                orders_by_day_now: "Entries for today",
             },
             login: {
-                head_title: "CRM cистема для грумеров, которая поможет вам вывести бизнес на новый уровень.",
-                title: "Панель управления",
-                username: "Логин",
+                head_title: "CRM for groomer, help you take your business to the next level.",
+                title: "Login",
+                username: "Login",
                 email: "Email",
-                password: "Пароль",
-                password_confirmation: "Повторите пароль",
-                login: "Войти",
-                reset: "Восстановить",
-                reset_password: "Забыли пароль?",
-                reset_password_form: "Восстановить пароль",
-                auth: "Вспомнили логин и пароль?",
-                get_demo: "Получить демо доступ",
-                get_demo_button: "Получить демо",
-                login_exist: "У меня есть данные для входа",
-                url_invalid: "Ссылка для восстановления неверная!"
+                password: "Password",
+                password_confirmation: "Password confirmation",
+                login: "Singin",
+                reset: "Reset",
+                reset_password: "Reset password?",
+                reset_password_form: "Reset password",
+                auth: "Remembered login and password??",
+                get_demo: "Get demo account",
+                get_demo_button: "Get demo",
+                login_exist: "I have login and password",
+                url_invalid: "Reset password url incorrect."
             },
             services: {
-                create: "Создать услугу",
-                update: "Обновить услугу",
-                not_found: "Услуги не заполнены",
+                create: "Create services",
+                update: "Update services",
+                not_found: "Services list is empty",
                 field: {
-                    name: 'Название',
-                    description: 'Описание',
-                    price: 'Цена, от',
-                    type: 'Тип',
-                    duration: 'Продолжительность, мин',
-                    image: 'Фото',
+                    name: 'Name',
+                    description: 'Description',
+                    price: 'Price, from',
+                    type: 'Type',
+                    duration: 'Duration, m.',
+                    image: 'Photo',
                 }
             },
             salons: {
-                create: "Создать салон",
-                update: "Обновить салон",
+                create: "Create salon",
+                update: "Update salon",
                 fields: {
-                    address: 'Адрес'
+                    address: 'Address'
                 }
             },
             promotions: {
-                create: "Создать акцию",
-                update: "Обновить акцию",
-                not_found: "Акций нет",
+                create: "Create promotions",
+                update: "Update promotions",
+                not_found: "Promotions list is empty",
                 fields: {
-                    name: "Заголок",
-                    description: "Описание",
-                    start: "Дата начала",
-                    finish: "Дата конца",
+                    name: "Title",
+                    description: "Description",
+                    start: "Start",
+                    finish: "Finish",
                 },
                 statuses: {
-                    expect: "Ожидает",
-                    active: "Активна",
-                    inactive: "Завершена",
+                    expect: "Expect",
+                    active: "Active",
+                    inactive: "Inactive",
                 }
             },
             masters: {
-                create: "Создать мастера",
-                update: "Обновить мастера",
+                create: "Create master",
+                update: "Update master",
                 fields: {
-                    name: 'ФИО',
+                    name: 'User name',
                     email: 'Email',
-                    password: 'Пароль для входа',
-                    password_confirmation: "Подтвердите пароль",
-                    position: 'Должность',
-                    photo: 'Фото',
-                    schedule: 'Часы работы',
-                    description: 'Описание',
-                    profit: 'Процент прибыли',
-                    salon: 'Салон',
+                    password: 'Password',
+                    password_confirmation: "Password confirmation",
+                    position: 'Position',
+                    photo: 'Photo',
+                    schedule: 'Schedule',
+                    description: 'Description',
+                    profit: 'Profit',
+                    salon: 'Salon',
                 }
             },
             orders: {
-                create: "Создать запись",
+                create: "Create запись",
                 update: "Обновить запись",
                 not_found: "Записей нет",
                 how_match: "Итоговая сумма заказа:",
@@ -167,9 +167,7 @@ let ru = {
             user: {
                 fields: {
                     telegram_id: 'Telegram id, указав его вы сможете получать уведомления о записях',
-                    get_telegram_id: 'Для получения id напишите нашему боту команду /start: ',
-                    email_notifications: 'Получать уведомления на почту',
-                    telegram_notifications: 'Получать уведомления в Telegram',
+                    get_telegram_id: 'Для получения id напишите нашему боту команду /start: '
                 }
             }
         },

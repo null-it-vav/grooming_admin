@@ -24,6 +24,7 @@ export default {
   components: {
     LoadingOverlay,
   },
+
   data() {
     return {
       started: false,
@@ -49,7 +50,10 @@ export default {
       this.loading(value);
     }
   },
-  created() {},
+  created() {
+    // localStorage.setItem('locale', window.navigator.language.slice(0, 2))
+    this.$root.$i18n.locale = window.navigator.language.slice(0, 2)
+  },
   methods: {
     ...mapMutations([
       'setStore',

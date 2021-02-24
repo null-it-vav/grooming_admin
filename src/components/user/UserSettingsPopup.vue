@@ -9,6 +9,23 @@
           class="row"
       >
         <div class="col-lg-6">
+          <b-checkbox
+            v-model="auth.receive_telegram_notif"
+            size="sm"
+            switch
+          >
+            {{$t('app.components.user.fields.telegram_notifications')}}
+          </b-checkbox>
+          <br>
+          <b-checkbox
+              v-model="auth.receive_email_notif"
+              size="sm"
+              switch
+          >
+            {{$t('app.components.user.fields.email_notifications')}}
+          </b-checkbox>
+        </div>
+        <div class="col-lg-6" v-if="auth.receive_telegram_notif">
           <form-group
               type="number"
               :label="$t('app.components.user.fields.telegram_id')"
@@ -55,7 +72,9 @@ name: "UserSettingsPopup",
   methods: {
     submit(){
       var data = {
-        telegram_chat_id: this.auth.telegram_chat_id
+        telegram_chat_id: this.auth.telegram_chat_id,
+        receive_telegram_notif: this.auth.receive_telegram_notif ? 1 : 0,
+        receive_email_notif: this.auth.receive_email_notif ? 1 : 0,
       }
       me_save_settings(data)
           .then(() => {

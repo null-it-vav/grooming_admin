@@ -42,41 +42,55 @@ const routes = [
                 path: '/dashboard',
                 name: 'home.dashboard',
                 component: DashboardIndex,
+                meta: { needAuth: true },
             },
             {
                 path: '/calendar',
                 name: 'home.calendar',
-                component: CalendarIndex
+                component: CalendarIndex,
+                meta: { roles: ['admin', 'master'], needAuth: true },
             },
             {
                 path: '/masters',
                 name: 'home.masters',
-                component: MastersIndex
+                component: MastersIndex,
+                meta: { roles: ['admin'], needAuth: true },
             },
             {
                 path: '/orders',
                 name: 'home.orders',
-                component: OrdersIndex
+                component: OrdersIndex,
+                meta: { roles: ['admin', 'master'], needAuth: true },
+            },
+            {
+                path: '/orders/:order_id?',
+                name: 'home.orders',
+                component: OrdersIndex,
+                meta: { roles: ['admin', 'master'], needAuth: true },
             },
             {
                 path: '/salons',
                 name: 'home.salons',
-                component: SalonsIndex
+                component: SalonsIndex,
+                meta: { roles: ['admin'], needAuth: true },
             },
             {
                 path: '/services',
                 name: 'home.services',
-                component: ServicesIndex
+                component: ServicesIndex,
+                meta: { roles: ['admin'], needAuth: true },
             },
             {
                 path: '/promotions',
                 name: 'home.promotions',
-                component: PromotionsIndex
+                component: PromotionsIndex,
+                meta: { roles: ['admin'], needAuth: true },
             },
             {
                 path: '/settings',
                 name: 'home.settings',
-                component: SettingsIndex
+                component: SettingsIndex,
+                meta: { roles: ['admin'], needAuth: true },
             },
         ]
     },
@@ -96,14 +110,37 @@ const router = new VueRouter({
 router.afterEach((to, from) => {
     if (!store.getters.auth) {
         store.dispatch('getAuth').then(() => {
-        });
+
+        })
+            .catch((error) => {
+                if (error?.response?.status == 401){
+                    window.location.href = '/'
+                }else {
+                    console.warn(error)
+                }
+            })
+    }
+    if (to.meta.roles){
+        var redirect = true
+        to.meta.roles.forEach(role => {
+            if (role == store.getters.auth.role){
+                redirect = false
+            }
+        })
+        //проверка прошла но роли нет
+        if (redirect)
+            window.location.href = '/dashboard'
     }
 });
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.needAuth) && !store.getters.auth) {
         store.dispatch('getAuth').then(() => {
-            next()
+            if (!store.getters.auth) {
+                window.location.href = '/'
+            }else {
+                next()
+            }
         }).catch((error) => {
             if (error?.response?.status == 401){
                 window.location.href = '/'

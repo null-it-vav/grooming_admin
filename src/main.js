@@ -5,6 +5,7 @@ import store from './store/app';
 import VueProgressBar from 'vue-progressbar';
 import { BootstrapVue } from 'bootstrap-vue'
 import ru from "./i18n/ru";
+import en from "./i18n/en";
 import axios from './bootstrap';
 import "./sass/app.scss";
 import FlagIcon from 'vue-flag-icon'
@@ -57,7 +58,8 @@ const i18n = new VueI18n({
   locale: 'ru', // установка локализации по умолчанию
   messages: {
     ru: ru,
-    gb: {language: "English",},
+    gb: en,
+    en: en,
     it: {language: "Italiano",},
     es: {language: "Español",},
   } // установка сообщений локализаций
