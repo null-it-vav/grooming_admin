@@ -31,7 +31,7 @@
         />
       </div>
 
-      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' & create_new & salons">
+      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' & create_new & (salons.length > 0)">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <table class="table table-bordered table-adaptive" v-if="orders.data.length">
+    <table class="table table-bordered table-adaptive" v-if="orders.data.length > 0">
       <thead>
         <tr>
           <th>{{$t('app.components.orders.fields.name')}}</th>
@@ -252,7 +252,7 @@ export default {
       orders({
         page: this.orders.page,
         qty: this.orders.per_page,
-        salon_id: this.salon_selected.id,
+        salon_id: this.salon_selected?.id,
         status: this.status_filter,
         master_id: this.master_filter,
         start: this.filter_start ? this.filter_start : this.day,
@@ -272,7 +272,7 @@ export default {
       masters({
         page: 1,
         qty: 999,
-        salon_id: this.salon_selected.id
+        salon_id: this.salon_selected?.id
       }).then(response => {
         this.masters = response.data.data.masters.data
       })

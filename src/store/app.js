@@ -90,7 +90,7 @@ const store = new Vuex.Store({
                     commit('setStore', {key: 'salons', data: response.data.data.salons});
 
                     // eslint-disable-next-line no-debugger
-                    // debugger;
+                    //debugger;
 
                     if (response.data.data.user.salon_id){
                         commit('setStore', {key: 'salon_selected', data: response.data.data.user.salon_id});
@@ -99,21 +99,26 @@ const store = new Vuex.Store({
                         var salon_id = localStorage.getItem('salon_selected')
                         if(salon_id){
                             var salon = response.data.data.salons.find(salon => salon.id == salon_id)
-                            commit('setStore', {key: 'salon_selected', data: salon});
-                            localStorage.setItem('salon_selected', salon.id)
+                            if (salon) {
+                                commit('setStore', {key: 'salon_selected', data: salon});
+                                localStorage.setItem('salon_selected', salon.id)
+                            }else {
+                                //салон удалили
+                                localStorage.removeItem('salon_selected')
+                                //если есть еще салоны - выбрать первый из списка
+                                if (response.data.data.salons.length > 0 && response.data.data.salons[0]){
+                                    commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
+                                    localStorage.setItem('salon_selected', response.data.data.salons[0].id)
+                                }
+                            }
                         }else {
-                            if (response.data.data.salons.length && response.data.data.salons[0]){
+                            if (response.data.data.salons.length > 0 && response.data.data.salons[0]){
                                 commit('setStore', {key: 'salon_selected', data: response.data.data.salons[0]});
                                 localStorage.setItem('salon_selected', response.data.data.salons[0].id)
                             }
                         }
                     }
                 })
-                    .catch((error) => {
-                        if (error.response.status == 401){
-                            dispatch('clearAuth');
-                        }
-                    })
             }
         },
         setSalon({dispatch, commit, state},  salon_id ){// eslint-disable-line

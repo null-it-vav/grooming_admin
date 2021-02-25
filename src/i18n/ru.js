@@ -61,6 +61,7 @@ let ru = {
             salons: {
                 create: "Создать салон",
                 update: "Обновить салон",
+                create_first: "Создайте свой первый салон!",
                 fields: {
                     address: 'Адрес'
                 }

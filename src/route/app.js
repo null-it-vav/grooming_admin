@@ -64,7 +64,7 @@ const routes = [
             },
             {
                 path: '/orders/:order_id?',
-                name: 'home.orders',
+                name: 'home.order.show',
                 component: OrdersIndex,
                 meta: { roles: ['admin', 'master'], needAuth: true },
             },
@@ -146,6 +146,7 @@ router.beforeEach((to, from, next) => {
                 window.location.href = '/'
             }else {
                 console.warn(error)
+                next()
             }
         })
     } else {

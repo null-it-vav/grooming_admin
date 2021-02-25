@@ -55,7 +55,7 @@
             </router-link>
 
             <router-link
-                v-if="(auth.role == 'admin' || auth.role == 'master') & salons"
+                v-if="(auth.role == 'admin' || auth.role == 'master') & (salons.length > 0)"
                 :to="{ name: 'home.calendar' }" class="list-group-item"
             >
               <i class="fa fa-calendar"/>
@@ -63,14 +63,14 @@
             </router-link>
 
             <router-link
-                v-if="auth.role == 'admin' & salons"
+                v-if="auth.role == 'admin' & (salons.length > 0)"
                 :to="{ name: 'home.masters' }" class="list-group-item"
             >
               <i class="fa fa-user"/>
               <span class="mx-3">{{ $t('app.titles.home.masters') }}</span>
             </router-link>
             <router-link
-                v-if="(auth.role == 'admin' || auth.role == 'master') & salons"
+                v-if="(auth.role == 'admin' || auth.role == 'master') & (salons.length > 0)"
                 :to="{ name: 'home.orders' }" class="list-group-item"
             >
               <i class="fa fa-shopping-bag" />
@@ -106,7 +106,7 @@
             </router-link>
           </div>
           <hr>
-          <div class="form-group" v-if="auth.role == 'admin' & salons">
+          <div class="form-group" v-if="auth.role == 'admin' & (salons.length > 0)">
             <label>{{ $t('app.components.main.selected_salon') }}</label>
             <select class="form-control" @change="setSalon" v-model="selected_salon">
               <option v-for="(salon, k) in salons" :value="salon.id" :key="k">{{ salon.address }}</option>
@@ -150,8 +150,14 @@ export default {
   computed: {
     ...mapGetters([
       'auth',
-      'salons'
-    ])
+      'salons',
+        'salon_selected'
+    ]),
+  },
+  watch: {
+    'salon_selected': function (){
+      this.selected_salon = localStorage.getItem('salon_selected')
+    }
   },
   methods: {
     setSalon(){

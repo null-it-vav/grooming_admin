@@ -70,6 +70,15 @@ export function salon_update(id, payload){
         .then((response) => response)
 }
 
+export function delete_salon(id){
+    var payload = {
+        _method: 'delete'
+    }
+
+    return axios.post(BASE_URL + "profile/salons/" + id , payload)
+        .then((response) => response)
+}
+
 
 export function services(payload){
     return axios.get(BASE_URL + "profile/services", {
