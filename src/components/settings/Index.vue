@@ -124,6 +124,8 @@
                 type="text"
                 v-model="settings.text"
                 :errors="errors"
+                name="text"
+                required
             />
 
             <form-group
