@@ -38,6 +38,7 @@ import BasePopup from "@/components/base/Popup";
 import {Loader} from 'google-maps'
 import FormGroup from "@/components/base/FormGroup";
 import {salon_create} from "@/api";
+import store from "@/store/app";
 
 export default {
   name: "Create",
@@ -87,6 +88,7 @@ export default {
       }
       salon_create(this.salon).then(() => {
         this.success_error.success = true
+        store.dispatch('getAuth').then(() => {})
         setTimeout(() => {
           this.closePopup()
         }, 2000);
