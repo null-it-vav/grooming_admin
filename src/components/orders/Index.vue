@@ -31,7 +31,7 @@
         />
       </div>
 
-      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' && create_new">
+      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' & create_new & salons">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -223,7 +223,8 @@ export default {
   computed: {
     ...mapGetters([
       'auth',
-      'salon_selected'
+      'salon_selected',
+      'salons'
     ]),
     masters_list: function (){
       var data = [];
