@@ -17,6 +17,7 @@
       <input
           v-if="type == 'text'"
           type="text"
+          :placeholder="placeholder"
           :class="[
             (name in errors) ? 'is-invalid' : '',
             (prepend_name in errors) ? 'is-invalid' : '',
@@ -76,6 +77,7 @@
           :required="required"
           :disabled="disabled"
           v-model="localValue"
+          :placeholder="placeholder"
       />
       <input
           v-else-if="type == 'email'"
@@ -90,21 +92,52 @@
           :required="required"
           :disabled="disabled"
           v-model="localValue"
+          :placeholder="placeholder"
       />
-      <input
+<!--      <input-->
+<!--          v-else-if="type == 'date'"-->
+<!--          type="date"-->
+<!--          :class="[-->
+<!--            (name in errors) ? 'is-invalid' : '',-->
+<!--            (prepend_name in errors) ? 'is-invalid' : '',-->
+<!--            (append_name in errors) ? 'is-invalid' : '',-->
+<!--          ]"-->
+<!--          class="form-control"-->
+<!--          :name="name"-->
+<!--          :required="required"-->
+<!--          :disabled="disabled"-->
+<!--          v-model="localValue"-->
+<!--          :placeholder="placeholder"-->
+<!--      />-->
+
+      <v-date-picker
           v-else-if="type == 'date'"
-          type="date"
+          mode="date"
           :class="[
-            (name in errors) ? 'is-invalid' : '',
-            (prepend_name in errors) ? 'is-invalid' : '',
-            (append_name in errors) ? 'is-invalid' : '',
-          ]"
-          class="form-control"
+                  (name in errors) ? 'is-invalid' : '',
+                  (prepend_name in errors) ? 'is-invalid' : '',
+                  (append_name in errors) ? 'is-invalid' : '',
+                ]"
           :name="name"
           :required="required"
           :disabled="disabled"
-          v-model="localValue"
-      />
+          :model-config="{
+            type: 'string',
+            mask: 'YYYY-MM-DD',
+          }"
+      >
+        <template v-slot="{ inputValue, inputEvents }">
+          <div class="d-flex align-items-center">
+            <input
+                class="form-control"
+                :value="inputValue"
+                v-on="inputEvents"
+            />
+          </div>
+        </template>
+
+      </v-date-picker>
+
       <input
           v-else-if="type == 'checkbox'"
           type="checkbox"
@@ -118,6 +151,7 @@
           :required="required"
           :disabled="disabled"
           v-model="localValue"
+          :placeholder="placeholder"
       />
       <div
           v-else-if="type == 'photo'"
@@ -148,6 +182,7 @@
           :required="required"
           :disabled="disabled"
           v-model="localValue"
+          :placeholder="placeholder"
       />
 
 
@@ -224,6 +259,9 @@ export default {
       default: function () { return {} },
     },
     required: {
+      required: false
+    },
+    placeholder: {
       required: false
     },
     items: Array,

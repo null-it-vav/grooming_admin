@@ -134,6 +134,7 @@
                 name="tg_link"
                 prepend_name="show_tg_link"
                 v-model="settings.tg_link"
+                placeholder="https://t.me/..."
                 type="text"
                 :errors="errors"
             >
@@ -153,6 +154,7 @@
                 name="wa_link"
                 prepend_name="show_wa_link"
                 v-model="settings.wa_link"
+                placeholder="https://api.whatsapp.com/send?phone="
                 type="text"
                 :errors="errors"
             >
