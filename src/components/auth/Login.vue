@@ -216,7 +216,12 @@ export default {
 
           })
           .catch((e) => {
-            this.errors = e.response.data.errors;
+            if (e.response.status == 403){
+              this.success_error.error = true
+              this.success_error.msg = [this.$t('base.validation.auth_403')]
+            }else {
+              this.errors = e.response.data.errors;
+            }
           })
     }
   }

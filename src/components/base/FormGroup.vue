@@ -125,6 +125,7 @@
             type: 'string',
             mask: 'YYYY-MM-DD',
           }"
+          v-model="localValue"
       >
         <template v-slot="{ inputValue, inputEvents }">
           <div class="d-flex align-items-center">
