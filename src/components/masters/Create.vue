@@ -126,7 +126,7 @@
 <script>
 import BasePopup from "@/components/base/Popup";
 import FormGroup from "@/components/base/FormGroup";
-import {create_masters} from "@/api";
+import {create_master} from "@/api";
 import {mapGetters} from "vuex";
 
 export default {
@@ -194,7 +194,7 @@ export default {
 
 
 
-      create_masters(data)
+      create_master(data)
           .then(() => {
             this.success_error.success = true
             setTimeout(() => {

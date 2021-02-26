@@ -4,7 +4,7 @@
       <div class="card-title">{{ title }}</div>
     </div>
     <div class="row mb-4">
-      <div class="col-lg-3"  v-if="auth.role == 'admin'">
+      <div class="col-lg-3"  v-if="auth.role_list.includes('admin')">
         <form-group
             v-model="master_filter"
             type="select"
@@ -31,7 +31,7 @@
         />
       </div>
 
-      <div class="ml-auto col-2 d-flex" v-if="auth.role == 'admin' & create_new & (salons.length > 0)">
+      <div class="ml-auto col-2 d-flex" v-if="auth.role_list.includes('admin') & create_new & (salons.length > 0)">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -67,7 +67,7 @@
               <i class="btn btn-dark btn-sm rounded-circle fa fa-align-justify"/>
             </template>
             <b-dropdown-item
-                v-if="auth.role == 'admin'"
+                v-if="auth.role_list.includes('admin')"
                 @click="openUpdatePopup(order)"
             >
               {{ $t('app.components.orders.actions.edit') }}

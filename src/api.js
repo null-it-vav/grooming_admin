@@ -40,7 +40,7 @@ export function masters(payload){
     }).then((response) => response)
 }
 
-export function create_masters(payload){
+export function create_master(payload){
     return axios.post(BASE_URL + "profile/masters", payload)
         .then((response) => response)
 }

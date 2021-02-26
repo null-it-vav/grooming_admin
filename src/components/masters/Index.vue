@@ -17,6 +17,9 @@
               class="btn btn-purpure rounded-circle fa fa-plus"
               @click="showCreatePopup = true"
           />
+          <a class="btn btn-purpure rounded ml-2" @click="setMeMaster()">
+            {{ $t('app.components.masters.set_me_master') }}
+          </a>
         </div>
       </div>
     </div>
@@ -73,7 +76,7 @@
 </template>
 
 <script>
-import { masters, delete_master } from "@/api";
+import { masters, delete_master, create_master } from "@/api";
 import {mapGetters} from "vuex";
 import Create from "@/components/masters/Create";
 import Update from "@/components/masters/Update";
@@ -137,6 +140,22 @@ export default {
     }
   },
   methods: {
+    setMeMaster(){
+      create_master({
+        action: 'attach-yourself',
+        salon_id: this.salon_selected.id,
+      })
+          .then(() => {
+            this.success_error.success = true
+            this.loadMasters()
+          })
+          .catch(error => {
+            this.success_error.error = true
+            if (error.response.status == 403){
+              this.success_error.msg = [error.response?.data.message]
+            }
+          })
+    },
     loadMasters(){
       masters({
         page: this.masters.page,

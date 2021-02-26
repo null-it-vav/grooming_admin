@@ -87,6 +87,7 @@ let ru = {
                 update: "Обновить мастера",
                 show_deleted: "Показать удаленных",
                 confirm_delete: "Вы уверены что хотите удалить мастера?",
+                set_me_master: "Я - мастер",
                 fields: {
                     name: 'ФИО',
                     email: 'Email',

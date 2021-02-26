@@ -92,7 +92,7 @@ const store = new Vuex.Store({
                     // eslint-disable-next-line no-debugger
                     //debugger;
 
-                    if (response.data.data.user.salon_id){
+                    if (response.data.data.user.salon_id & !response.data.data.user.role_list.includes('admin')){
                         commit('setStore', {key: 'salon_selected', data: response.data.data.user.salon_id});
                         localStorage.setItem('salon_selected', response.data.data.user.salon_id)
                     } else {

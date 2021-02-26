@@ -2,19 +2,19 @@
   <div class="row">
     <div
         class="mb-4 col-lg-12"
-        v-if="auth.role == 'admin' || auth.role == 'master'"
+        v-if="auth.role_list.includes('admin') || auth.role_list.includes('master')"
     >
       <orders :qty="5" :day="day" :title="$t('app.components.dashboard.orders_by_day_now')" />
     </div>
     <div
         class="col-lg-6 mb-4"
-        v-if="auth.role == 'admin'"
+        v-if="auth.role_list.includes('admin')"
     >
       <promotions external_status="active"/>
     </div>
     <div
       class="col-lg-12"
-      v-if="auth.role == 'super-admin'"
+      v-if="auth.role_list.includes('super-admin')"
     >
       <organizations-list
       />
