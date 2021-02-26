@@ -85,6 +85,8 @@ let ru = {
             masters: {
                 create: "Создать мастера",
                 update: "Обновить мастера",
+                show_deleted: "Показать удаленных",
+                confirm_delete: "Вы уверены что хотите удалить мастера?",
                 fields: {
                     name: 'ФИО',
                     email: 'Email',
@@ -238,7 +240,7 @@ let ru = {
             error: 'Ошибка!',
             data_not_update: 'Данные не обновлены!',
         },
-        total: 'Всего'
+        total: 'Всего',
     }
 }
 

@@ -151,7 +151,7 @@ export default {
     ...mapGetters([
       'auth',
       'salons',
-        'salon_selected'
+      'salon_selected'
     ]),
   },
   watch: {

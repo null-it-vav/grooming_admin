@@ -52,6 +52,15 @@ export function update_masters(id, payload){
         .then((response) => response)
 }
 
+export function delete_master(id){
+    var payload = {
+        _method: 'delete'
+    }
+
+    return axios.post(BASE_URL + "profile/masters/" + id, payload)
+        .then((response) => response)
+}
+
 export function salons(payload){
     return axios.get(BASE_URL + "profile/salons", {
         params: payload
