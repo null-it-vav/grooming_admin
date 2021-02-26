@@ -123,7 +123,7 @@ router.afterEach((to, from) => {
     if (to.meta.roles){
         var redirect = true
         to.meta.roles.forEach(role => {
-            if (role == store.getters.auth.role){
+            if (store.getters.auth.role_list.includes(role)){
                 redirect = false
             }
         })
