@@ -17,7 +17,7 @@
               class="btn btn-purpure rounded-circle fa fa-plus"
               @click="showCreatePopup = true"
           />
-          <a class="btn btn-purpure rounded ml-2" @click="setMeMaster()" v-if="!auth.role_list.includes('admin')">
+          <a class="btn btn-purpure rounded ml-2" @click="setMeMaster()" v-if="auth.role_list.includes('admin') & !auth.role_list.includes('master')">
             {{ $t('app.components.masters.set_me_master') }}
           </a>
         </div>

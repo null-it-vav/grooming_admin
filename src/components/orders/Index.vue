@@ -4,7 +4,7 @@
       <div class="card-title">{{ title }}</div>
     </div>
     <div class="row mb-4">
-      <div class="col-lg-3"  v-if="auth.role_list.includes('admin')">
+      <div class="col-lg-3" v-if="auth.role_list.includes('admin')">
         <form-group
             v-model="master_filter"
             type="select"
