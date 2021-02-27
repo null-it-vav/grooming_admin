@@ -17,7 +17,7 @@
               class="btn btn-purpure rounded-circle fa fa-plus"
               @click="showCreatePopup = true"
           />
-          <a class="btn btn-purpure rounded ml-2" @click="setMeMaster()">
+          <a class="btn btn-purpure rounded ml-2" @click="setMeMaster()" v-if="!auth.role_list.includes('admin')">
             {{ $t('app.components.masters.set_me_master') }}
           </a>
         </div>
@@ -111,6 +111,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'auth',
       'salon_selected'
     ])
   },
@@ -189,9 +190,8 @@ export default {
             })
             .catch(error => {
               this.success_error.error = true
-              if (error.response.status == 403){
-                this.success_error.msg = [error.response?.data.message]
-              }
+              if (error.response?.data.msg)
+                this.success_error.msg = [error.response?.data.msg]
             })
     }
   }
