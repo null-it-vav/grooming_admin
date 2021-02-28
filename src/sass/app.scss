@@ -17,17 +17,17 @@
 @import "table";
 @import "~vue-select/dist/vue-select.css";
 
-.popup-open {
-  overflow-y: hidden;
-  position: fixed;
-
-  @media (min-width: 991px) {
-    .main-panel {
-      padding-left: 260px;
-      width: 100vw;
-    }
-  }
-}
+//.popup-open {
+//  overflow-y: hidden;
+//  position: fixed;
+//
+//  @media (min-width: 991px) {
+//    .main-panel {
+//      padding-left: 260px;
+//      width: 100vw;
+//    }
+//  }
+//}
 
 .modal-dialog {
   margin-top: 60px !important;
