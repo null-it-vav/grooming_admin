@@ -51,6 +51,30 @@
                         v-model="email"
                         :errors="errors"
                     />
+
+                    <div
+                        class="mb-3"
+                    >
+                      <div
+                          class="d-flex"
+                          :class="('g-recaptcha-response' in errors) ? 'is-invalid' : ''"
+                      >
+                        <vue-recaptcha
+                            class="m-auto"
+                            loadRecaptchaScript
+                            ref="recaptcha"
+                            :sitekey="'6LcL4msaAAAAAIPE_7o7n7rzI3_ZY7h077uTKsYF'"
+                            @verify="setRecaptcha"
+                            @expired="onCaptchaExpired"></vue-recaptcha>
+
+                      </div>
+                      <valid-sign
+                          name="g-recaptcha-response"
+                          :invalid="errors"
+                      />
+                    </div>
+
+
                     <div class="mb-3">
                       <button type="submit" class="btn btn-purpure btn-block">{{ $t('app.components.login.reset') }}</button>
                     </div>
@@ -106,10 +130,12 @@ import { login, create_demo, reset_password } from '@/api'
 import store from "@/store/app";
 import FormGroup from "@/components/base/FormGroup";
 import MessageSuccessError from "@/components/base/SuccessError";
+import VueRecaptcha from 'vue-recaptcha';
+import ValidSign from "@/components/base/validSign";
 
 export default {
   name: "Login",
-  components: {MessageSuccessError, FormGroup},
+  components: {ValidSign, MessageSuccessError, FormGroup, VueRecaptcha},
   data(){
     return {
       email: '',
@@ -121,6 +147,7 @@ export default {
         error: false,
         msg: []
       },
+      recaptchaToken: null,
     }
   },
   computed: {
@@ -147,9 +174,20 @@ export default {
           this.success_error.error = false;
         }, 4000);
       }
+    },
+    'email': function (){
+      this.onCaptchaExpired();
     }
   },
   methods: {
+    onCaptchaExpired () {
+      if (this.type == 'reset') {
+        this.$refs.recaptcha.reset()
+      }
+    },
+    setRecaptcha(recaptchaToken){
+      this.recaptchaToken = recaptchaToken;
+    },
     submit(){
       if (this.type == 'auth'){
         this.login();
@@ -162,7 +200,10 @@ export default {
       }
     },
     resetPassword(){
-      reset_password({email: this.email})
+      reset_password({
+        email: this.email,
+        'g-recaptcha-response': this.recaptchaToken
+      })
           .then((response) => {
             if (response.data.msg) this.success_error.msg = [response.data.msg]
 
