@@ -11,13 +11,10 @@
           role="document"
       >
         <div
-            class="modal-content edu-program"
+            class="modal-content"
         >
           <div class="modal-header">
-            <h5
-                id="exampleModalLabel"
-                class="modal-title ml-4"
-            >
+            <h5 class="modal-title ml-4">
               {{ caption }}
             </h5>
             <button
