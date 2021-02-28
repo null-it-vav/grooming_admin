@@ -259,6 +259,7 @@ import deepClone from 'clonedeep';
 import {mapGetters} from "vuex";
 import {save_settings} from "@/api";
 import MessageSuccessError from "@/components/base/SuccessError";
+import store from "@/store/app";
 
 export default {
   name: "Index",
@@ -344,6 +345,7 @@ export default {
         .then(() => {
           this.success_error.success = true
           this.errors = {}
+          store.dispatch('getAuth').then(() => {})
         })
         .catch((error) => {
           if (error.response?.data?.errors) this.errors = error.response?.data?.errors

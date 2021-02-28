@@ -114,7 +114,10 @@ router.afterEach((to, from) => {
         })
             .catch((error) => {
                 if (error?.response?.status == 401){
-                    window.location.href = '/'
+
+                    store.dispatch('clearAuth').then(() => {
+                        window.location.href = '/'
+                    })
                 }else {
                     console.warn(error)
                 }
@@ -137,12 +140,16 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some((record) => record.meta.needAuth) && !store.getters.auth) {
         store.dispatch('getAuth').then(() => {
             if (!store.getters.auth) {
+                // eslint-disable-next-line no-debugger
+                // debugger;
                 window.location.href = '/'
             }else {
                 next()
             }
         }).catch((error) => {
             if (error?.response?.status == 401){
+                // eslint-disable-next-line no-debugger
+                // debugger;
                 window.location.href = '/'
             }else {
                 console.warn(error)

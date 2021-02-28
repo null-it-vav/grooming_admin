@@ -79,6 +79,8 @@ const store = new Vuex.Store({
             localStorage.removeItem('user-token')
             localStorage.removeItem('salon_selected')
             window.location.href = '/'
+            // eslint-disable-next-line no-debugger
+            // debugger;
         },
         // eslint-disable-next-line no-unused-vars
         getAuth: async function ({dispatch, commit, state}) {

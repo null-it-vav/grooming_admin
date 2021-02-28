@@ -96,6 +96,12 @@
             >
               {{ $t('app.components.orders.actions.end') }}
             </b-dropdown-item>
+            <b-dropdown-item
+                v-if="auth.role_list.includes('admin')"
+                @click="deleteOrder(order)"
+            >
+              {{ $t('app.components.orders.actions.delete') }}
+            </b-dropdown-item>
           </b-dropdown>
         </td>
       </tr>
@@ -144,7 +150,7 @@
 </template>
 
 <script>
-import {masters, orders, update_order} from "@/api";
+import {masters, orders, update_order, delete_order} from "@/api";
 import {mapGetters} from "vuex";
 import Create from "@/components/orders/Create";
 import Update from "@/components/orders/Update";
@@ -288,6 +294,14 @@ export default {
           .then(() => {
             this.loadOrders()
           })
+    },
+    deleteOrder(order){
+      delete_order(order.id).then(() => {
+        this.loadOrders()
+      })
+      .catch((error) => {
+        console.warn(error)
+      })
     },
     set_end(order){
       var years = prompt(this.$t('app.components.orders.how_match'), 0);

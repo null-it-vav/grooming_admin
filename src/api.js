@@ -162,6 +162,14 @@ export function update_order(order_id,payload){
         .then((response) => response)
 }
 
+export function delete_order(order_id){
+
+    return axios.post(BASE_URL + "profile/orders/" + order_id , {
+        _method: "DELETE"
+    })
+        .then((response) => response)
+}
+
 
 export function workingDiapasons(payload){
     return axios.get(BASE_URL + "clients/" + payload.organization_id + '/masters/' + payload.master_id + '/working-diapasons' , {
