@@ -1,6 +1,6 @@
 <template>
   <div :class="nav_open ? 'nav-open' : ''">
-    <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top" v-show="!$store.state.popup">
+    <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top">
       <div class="container-fluid">
         <a href="#" class="navbar-brand">
           {{ $t('app.titles.' + $route.name) }}
@@ -155,6 +155,12 @@ export default {
     ]),
   },
   watch: {
+    // eslint-disable-next-line no-unused-vars
+    $route (to, from){
+      if (this.nav_open){
+        this.nav_open = false;
+      }
+    },
     'salon_selected': function (){
       this.selected_salon = localStorage.getItem('salon_selected')
     },

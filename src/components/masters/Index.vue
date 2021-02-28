@@ -2,7 +2,7 @@
   <div class="card p-4">
 
     <div class="row ">
-      <div class="col-md-2 mb-4">
+      <div class="col-lg-2 mb-4">
         <b-checkbox
           switch
           size="sm"
@@ -11,13 +11,13 @@
           {{ $t('app.components.masters.show_deleted') }}
         </b-checkbox>
       </div>
-      <div class="ml-auto col-md-2 mb-4">
+      <div class="ml-auto col-lg-4 mb-4">
         <div class="ml-auto d-flex">
           <a
-              class="btn btn-purpure rounded-circle fa fa-plus m-0 m-md-auto"
+              class="btn btn-purpure rounded-circle fa fa-plus m-0 ml-lg-auto"
               @click="showCreatePopup = true"
           />
-          <a class="btn btn-purpure rounded ml-auto ml-md-2" @click="setMeMaster()" v-if="auth.role_list.includes('admin') & !auth.role_list.includes('master')">
+          <a class="btn btn-purpure rounded ml-auto ml-lg-2" @click="setMeMaster()" v-if="auth.role_list.includes('admin') & !auth.role_list.includes('master')">
             {{ $t('app.components.masters.set_me_master') }}
           </a>
         </div>
@@ -28,7 +28,7 @@
         :key="master.id"
         class="row border-bottom mt-2"
     >
-      <div class="col-md-9 d-flex mb-3 mb-md-1">
+      <div class="col-lg-8 d-flex mb-3 mb-md-1">
         <div class="mr-2">
           <b-avatar class="mr-3" :src="master.photo"></b-avatar>
         </div>
@@ -42,17 +42,17 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3 d-flex align-items-center mb-3 mb-md-1">
+      <div class="col-lg-4 d-flex align-items-center mb-3 mb-md-1">
         <b-checkbox
             v-model="master.active"
             switch
-            class="ml-md-2"
+            class="ml-lg-auto"
             @change="setActive(master)"
         >
           {{ $t('app.components.masters.active') }}
         </b-checkbox>
 
-        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(master)"/>
+        <button class="btn btn-dark rounded-circle ml-auto ml-lg-2 fa fa-pencil fa-lg" @click="openUpdatePopup(master)"/>
         <button v-if="!master.deleted_at" class="btn btn-dark rounded-circle ml-2 fa fa-trash fa-lg" @click="deleteMater(master)"/>
       </div>
     </div>

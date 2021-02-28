@@ -20,7 +20,15 @@
 .popup-open {
   overflow-y: hidden;
   position: fixed;
+
+  @media (min-width: 991px) {
+    .main-panel {
+      padding-left: 260px;
+      width: 100vw;
+    }
+  }
 }
+
 
 .page-item.active .page-link {
   background-color: $purple !important;
