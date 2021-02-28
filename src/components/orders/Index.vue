@@ -74,7 +74,7 @@
             </b-dropdown-item>
             <b-dropdown-item
                 v-if="order.status == 'NEW'"
-                @click="set_status(order, 'approve')"
+                @click="set_status(order, 'confirmed')"
             >
               {{ $t('app.components.orders.actions.check') }}
             </b-dropdown-item>
@@ -304,8 +304,15 @@ export default {
       })
     },
     set_end(order){
-      var years = prompt(this.$t('app.components.orders.how_match'), 0);
-      console.log(order, years)
+      var total = prompt(this.$t('app.components.orders.how_match'), 0);
+
+      update_order(order.id, {
+        action: 'set-completed',
+        total: total
+      })
+          .then(() => {
+            this.loadOrders()
+          })
     },
     openUpdatePopup(order){
       this.showUpdatePopup = true
