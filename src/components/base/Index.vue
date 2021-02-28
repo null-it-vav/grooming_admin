@@ -1,6 +1,6 @@
 <template>
   <div :class="nav_open ? 'nav-open' : ''">
-    <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-faded shadow-sm fixed-top" v-show="!$store.state.popup">
       <div class="container-fluid">
         <a href="#" class="navbar-brand">
           {{ $t('app.titles.' + $route.name) }}
