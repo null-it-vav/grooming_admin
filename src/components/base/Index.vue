@@ -24,8 +24,7 @@
       </div>
     </nav>
 
-    <div class="wrapper">
-
+    <div class="wrapper" :style="($store.state.popup) ? 'position: fixed; z-index: 1050' : ''">
       <div class="sidebar p-3">
         <div class="sidebar-wrapper">
           <div style="height: 50px; width: 100%;"></div>
