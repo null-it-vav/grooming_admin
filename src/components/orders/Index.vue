@@ -31,7 +31,7 @@
         />
       </div>
 
-      <div class="ml-auto col-2 d-flex" v-if="auth.role_list.includes('admin') & create_new & (salons.length > 0)">
+      <div class="ml-auto col-3 d-flex" v-if="auth.role_list.includes('admin') & create_new & (salons.length > 0)">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"

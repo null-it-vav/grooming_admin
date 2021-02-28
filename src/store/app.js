@@ -14,6 +14,7 @@ const store = new Vuex.Store({
             local: 0,
             global: 0,
         },
+        popup: false,
     },
     mutations: {
         auth(state, {data}) {

@@ -88,6 +88,7 @@ let ru = {
                 show_deleted: "Показать удаленных",
                 confirm_delete: "Вы уверены что хотите удалить мастера?",
                 set_me_master: "Я - мастер",
+                active: 'Активен',
                 fields: {
                     name: 'ФИО',
                     email: 'Email',

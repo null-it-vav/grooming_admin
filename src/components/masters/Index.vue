@@ -1,8 +1,8 @@
 <template>
   <div class="card p-4">
 
-    <div class="row mb-4">
-      <div class="col-2">
+    <div class="row ">
+      <div class="col-md-2 mb-4">
         <b-checkbox
           switch
           size="sm"
@@ -11,13 +11,13 @@
           {{ $t('app.components.masters.show_deleted') }}
         </b-checkbox>
       </div>
-      <div class="ml-auto col-2 d-flex">
-        <div class="ml-auto">
+      <div class="ml-auto col-md-2 mb-4">
+        <div class="ml-auto d-flex">
           <a
-              class="btn btn-purpure rounded-circle fa fa-plus"
+              class="btn btn-purpure rounded-circle fa fa-plus m-0 m-md-auto"
               @click="showCreatePopup = true"
           />
-          <a class="btn btn-purpure rounded ml-2" @click="setMeMaster()" v-if="auth.role_list.includes('admin') & !auth.role_list.includes('master')">
+          <a class="btn btn-purpure rounded ml-auto ml-md-2" @click="setMeMaster()" v-if="auth.role_list.includes('admin') & !auth.role_list.includes('master')">
             {{ $t('app.components.masters.set_me_master') }}
           </a>
         </div>
@@ -26,9 +26,9 @@
     <div
         v-for="master in masters.data"
         :key="master.id"
-        class="row mb-3"
+        class="row border-bottom mt-2"
     >
-      <div class="col-10 d-flex">
+      <div class="col-md-9 d-flex mb-3 mb-md-1">
         <div class="mr-2">
           <b-avatar class="mr-3" :src="master.photo"></b-avatar>
         </div>
@@ -42,7 +42,16 @@
           </div>
         </div>
       </div>
-      <div class="col-2 d-flex align-items-center">
+      <div class="col-md-3 d-flex align-items-center mb-3 mb-md-1">
+        <b-checkbox
+            v-model="master.active"
+            switch
+            class="ml-md-2"
+            @change="setActive(master)"
+        >
+          {{ $t('app.components.masters.active') }}
+        </b-checkbox>
+
         <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(master)"/>
         <button v-if="!master.deleted_at" class="btn btn-dark rounded-circle ml-2 fa fa-trash fa-lg" @click="deleteMater(master)"/>
       </div>
@@ -76,7 +85,7 @@
 </template>
 
 <script>
-import { masters, delete_master, create_master } from "@/api";
+import {masters, delete_master, create_master, update_masters} from "@/api";
 import {mapGetters} from "vuex";
 import Create from "@/components/masters/Create";
 import Update from "@/components/masters/Update";
@@ -141,6 +150,37 @@ export default {
     }
   },
   methods: {
+    setActive(master){
+      this.errors = {};
+      var data = new FormData()
+      data.append('name', master.name)
+      data.append('description', master.description)
+      data.append('email', master.email)
+
+      data.append('position', master.position)
+      data.append('salon_id', master.salon_id)
+      data.append('profit', master.profit)
+      data.append('active', master.active ? 1 : 0)
+
+
+
+      for (var day in master.schedule){
+        data.append('schedule['+day+'][active]', master.schedule[day].active ? 1 : 0)
+        data.append('schedule['+day+'][start]', master.schedule[day].start)
+        data.append('schedule['+day+'][end]', master.schedule[day].end)
+      }
+
+
+
+
+      update_masters(master.id, data)
+          .then(() => {
+            this.success_error.success = true
+          }).catch((error) => {
+            this.success_error.error = true
+            console.warn(error)
+          })
+    },
     setMeMaster(){
       create_master({
         action: 'attach-yourself',

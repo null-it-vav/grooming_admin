@@ -8,24 +8,25 @@
           @submit.prevent="submit"
           class="row"
       >
-        <div class="col-lg-6">
-          <b-checkbox
-            v-model="auth.receive_telegram_notif"
-            size="sm"
-            switch
-          >
-            {{$t('app.components.user.fields.telegram_notifications')}}
-          </b-checkbox>
-          <br>
+        <div class="col-lg-6 mb-3">
           <b-checkbox
               v-model="auth.receive_email_notif"
               size="sm"
               switch
+              class="mb-3"
           >
             {{$t('app.components.user.fields.email_notifications')}}
           </b-checkbox>
+
+          <b-checkbox
+              v-model="auth.receive_telegram_notif"
+              size="sm"
+              switch
+          >
+            {{$t('app.components.user.fields.telegram_notifications')}}
+          </b-checkbox>
         </div>
-        <div class="col-lg-6" v-if="auth.receive_telegram_notif">
+        <div class="col-lg-6 mb-3" v-if="auth.receive_telegram_notif">
           <form-group
               type="number"
               :label="$t('app.components.user.fields.telegram_id')"

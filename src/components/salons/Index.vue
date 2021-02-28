@@ -2,7 +2,7 @@
   <div class="card p-4">
     <div class="row mb-4">
 
-      <div class="ml-auto col-2 d-flex">
+      <div class="ml-auto col-3 d-flex">
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -18,7 +18,7 @@
           :key="salon.id"
           class="row mb-3"
       >
-        <div class="col-10 d-flex">
+        <div class="col-9 col-md-10 d-flex">
           <div>
             <div>
               <b>{{ salon.address }}</b>
@@ -28,9 +28,9 @@
             </div>
           </div>
         </div>
-        <div class="col-2 d-flex align-items-center">
-          <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(salon)"/>
-          <button class="btn btn-dark rounded-circle ml-2 fa fa-trash fa-lg" @click="deleteSalon(salon)"/>
+        <div class="col-3 col-md-2 d-md-flex align-items-center">
+          <button class="btn btn-dark rounded-circle ml-auto mb-2 mb-md-0 fa fa-pencil fa-lg" @click="openUpdatePopup(salon)"/>
+          <button class="btn btn-dark rounded-circle ml-md-2 fa fa-trash fa-lg" @click="deleteSalon(salon)"/>
         </div>
       </div>
     </div>

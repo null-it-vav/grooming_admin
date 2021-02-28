@@ -157,6 +157,16 @@ export default {
   watch: {
     'salon_selected': function (){
       this.selected_salon = localStorage.getItem('salon_selected')
+    },
+    '$store.state.popup': function (){
+
+      const body = document.getElementsByTagName('body')[0];
+      if (this.$store.state.popup) {
+        body.classList.add('popup-open');
+      }else {
+        body.classList.remove('popup-open');
+      }
+
     }
   },
   methods: {
