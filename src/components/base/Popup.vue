@@ -6,7 +6,7 @@
         aria-hidden="true"
     >
       <div
-          class="modal-dialog"
+          class="modal-dialog modal-dialog-scrollable"
           :class="dialogSize ? dialogSize : 'modal-xl'"
           role="document"
       >

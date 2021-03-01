@@ -18,6 +18,7 @@ let ru = {
                       user_phone: "Телефон",
                       org_timezone: "Таймзона",
                       org_lang: "Язык",
+                      demo: 'Демо'
                   }
               }
             },

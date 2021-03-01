@@ -30,9 +30,9 @@
       <div
           v-for="service in services.data"
           :key="service.id"
-          class="row mb-3"
+          class="row mb-3 border-bottom pb-3 pb-md-1"
       >
-        <div class="col-8 d-flex align-items-center">
+        <div class="col-md-8 mb-3 d-flex align-items-center">
           <div class="mr-2">
             <b-avatar class="mr-3" :src="service.image"></b-avatar>
           </div>
@@ -46,21 +46,9 @@
             </div>
           </div>
         </div>
-        <div class="col-4 d-flex align-items-center">
-          <button class="ml-auto btn btn-dark rounded-circle fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
-          <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
-<!--          <div class="ml-auto  d-none d-sm-block">-->
-<!--           -->
-<!--          </div>-->
-<!--          <div class="ml-auto d-block d-sm-none">-->
-<!--            <b-dropdown variant="link" size="sm" toggle-class="text-decoration-none" no-caret>-->
-<!--              <template #button-content>-->
-<!--                <i class="btn btn-dark rounded-circle fa fa-align-justify"/>-->
-<!--              </template>-->
-<!--              <b-dropdown-item @click="openUpdatePopup(service)">{{ $t('base.update') }}</b-dropdown-item>-->
-<!--              <b-dropdown-item @click="deleteService(service.id)">{{ $t('base.delete') }}</b-dropdown-item>-->
-<!--            </b-dropdown>-->
-<!--          </div>-->
+        <div class="col-md-4 d-flex align-items-center">
+          <button class="ml-md-auto btn btn-dark rounded-circle fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
+          <button class="ml-md-2 ml-auto btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
         </div>
       </div>
     </div>

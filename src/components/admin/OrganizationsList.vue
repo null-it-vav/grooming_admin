@@ -22,6 +22,7 @@
           <th>{{$t('app.components.admin.organizations.fields.email')}}</th>
           <th>{{$t('app.components.admin.organizations.fields.phone')}}</th>
           <th>{{$t('app.components.admin.organizations.fields.created_at') }}</th>
+          <th>{{$t('app.components.admin.organizations.fields.demo') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +34,7 @@
           <td :data-label="$t('app.components.admin.organizations.fields.email')">{{ organization.email }}</td>
           <td :data-label="$t('app.components.admin.organizations.fields.phone')">{{ organization.phone }}</td>
           <td :data-label="$t('app.components.admin.organizations.fields.created_at')">{{ organization.created_at | moment("YYYY-MM-DD") }}</td>
+          <td :data-label="$t('app.components.admin.organizations.fields.demo')">{{ organization.demo ? 'Да' : 'Нет'}}</td>
         </tr>
       </tbody>
     </table>

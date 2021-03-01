@@ -16,9 +16,9 @@
     <div
         v-for="promotion in promotions.data"
         :key="promotion.id"
-        class="row mb-3"
+        class="row mb-3 pb-3 border-bottom"
     >
-      <div class="col-8 d-flex">
+      <div class="col-md-8 d-flex mb-2 mb-md-0">
         <div class="mr-2">
           <b-avatar class="mr-3" size="4em" :src="promotion.image">
             <i class="fa fa-star fa-lg" v-if="!promotion.image"/>
@@ -36,9 +36,9 @@
           </div>
         </div>
       </div>
-      <div class="col-4 d-flex align-items-center">
-        <button class="btn btn-dark rounded-circle ml-auto fa fa-pencil fa-lg" @click="openUpdatePopup(promotion)"/>
-        <button class="ml-2 btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deletePromotion(promotion.id)"/>
+      <div class="col-md-4 d-flex align-items-center">
+        <button class="btn btn-dark rounded-circle ml-md-auto fa fa-pencil fa-lg" @click="openUpdatePopup(promotion)"/>
+        <button class="ml-md-2 ml-auto btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deletePromotion(promotion.id)"/>
       </div>
     </div>
 

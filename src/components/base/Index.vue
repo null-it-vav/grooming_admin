@@ -167,9 +167,9 @@ export default {
 
       const body = document.getElementsByTagName('body')[0];
       if (this.$store.state.popup) {
-        body.classList.add('popup-open');
+        body.classList.add('modal-open');
       }else {
-        body.classList.remove('popup-open');
+        body.classList.remove('modal-open');
       }
 
     }
