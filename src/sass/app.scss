@@ -33,6 +33,10 @@
   margin-top: 60px !important;
 }
 
+.modal-dialog-scrollable {
+  max-height: calc(100% - 1rem - 60px);
+}
+
 .page-item.active .page-link {
   background-color: $purple !important;
   border-color: $purple !important;
