@@ -34,14 +34,15 @@
               </slot>
             </div>
 
-            <message-success-error
-                class="mt-2"
-                :show="success_error"
-            />
+
           </div>
 
           <div class="modal-footerd-flex justify-content-center">
             <slot name="footer">
+              <message-success-error
+                  class="mt-2"
+                  :show="success_error"
+              />
             </slot>
           </div>
         </div>

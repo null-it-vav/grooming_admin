@@ -15,11 +15,12 @@ import moment from 'moment'
 import 'moment/locale/ru'
 import VCalendar from 'v-calendar';
 import vSelect from 'vue-select'
-
+import { Cropper } from 'vue-advanced-cropper'
 
 Vue.component('v-select', vSelect)
 Vue.use(FlagIcon);
 Vue.use(VCalendar);
+Vue.use(Cropper);
 
 
 Vue.prototype.$moment = VueMoment;

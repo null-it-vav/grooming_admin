@@ -108,8 +108,9 @@
               type="photo"
               :errors="errors"
               name="photo"
+              :square="true"
               v-model="master.photo"
-
+              @set_crop_image="set_crop_image"
           />
         </div>
 
@@ -142,6 +143,7 @@ export default {
       times: [
         "01:00", "02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00", "24:00"
       ],
+      photo_crop: null,
       master: {
         name: '',
         description: '',
@@ -169,6 +171,9 @@ export default {
     ])
   },
   methods: {
+    set_crop_image(data){
+      this.photo_crop = data;
+    },
     closePopup() {
       this.$emit('closePopup');
     },
@@ -182,8 +187,11 @@ export default {
       data.append('position', this.master.position)
       data.append('salon_id', this.salon_selected.id)
       data.append('profit', this.master.profit)
-      data.append('photo', this.master.photo)
 
+      if (this.photo_crop)
+        data.append('photo', this.photo_crop)
+      else
+        data.append('photo', this.master.photo)
 
       for (var day in this.master.schedule){
         data.append('schedule['+day+'][active]', this.master.schedule[day].active ? 1 : 0)

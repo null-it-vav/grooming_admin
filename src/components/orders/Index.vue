@@ -11,7 +11,7 @@
             :items="masters_list"
         />
       </div>
-      <div class="col-lg-2">
+      <div class="col-lg-3 col-xl-2">
         <form-group
             v-model="status_filter"
             type="select"

@@ -28,7 +28,7 @@
       <div class="sidebar p-3">
         <div class="sidebar-wrapper">
           <div style="height: 50px; width: 100%;"></div>
-          <ul class="list-group">
+          <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <b v-if="auth.organization">{{ auth.organization.name }}</b>
@@ -40,9 +40,21 @@
                 <i class="fa fa-sign-out pointer" @click="logout"/> <br>
                 <i class="fa fa-cog pointer" @click="showUserSettingsPopup = true"/>
               </div>
-
             </li>
           </ul>
+
+          <div
+              class="card p-3"
+              v-if="auth.organization.demo"
+          >
+            <div>
+              {{ $t('base.demo') }} id: <span class="text-danger">{{ auth.organization.id }}</span>
+            </div>
+            <div>
+              <i>{{$t('base.demo_tooltip')}}</i>
+            </div>
+          </div>
+
           <hr>
           <div class="list-group border-none">
 

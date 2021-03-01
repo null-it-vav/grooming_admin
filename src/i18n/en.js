@@ -95,7 +95,8 @@ let ru = {
                     description: 'Description',
                     profit: 'Profit',
                     salon: 'Salon',
-                }
+                },
+                need_photo_size: 'The image must be square (400px * 400px recommended)'
             },
             orders: {
                 create: "Create запись",

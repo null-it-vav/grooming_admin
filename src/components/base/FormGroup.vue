@@ -163,6 +163,7 @@
           ]"
       >
         <b-form-file
+            accept="image/*"
             type="file"
             :name="name"
             :required="required"
@@ -194,7 +195,6 @@
         :name="name"
         :prepend_name="prepend_name"
         :append_name="append_name"
-
         :invalid="errors"
     />
 
@@ -202,11 +202,22 @@
         v-if="type == 'photo'"
     >
       <b-img
-          v-if="url"
+          v-if="url && !square"
           :src="url"
           fluid
           class="my-3 mx-auto"
       />
+
+      <cropper
+          v-if="square && url"
+          class="my-3 cropper"
+          :src="url"
+          :stencil-props="{
+            aspectRatio: 12/12
+          }"
+          @change="change"
+      ></cropper>
+
     </div>
   </div>
 </template>
@@ -262,6 +273,10 @@ export default {
     required: {
       required: false
     },
+    square: {
+      required: false,
+      default: function () { return null;}
+    },
     placeholder: {
       required: false
     },
@@ -290,20 +305,63 @@ export default {
     },
   },
   methods: {
+    // eslint-disable-next-line no-unused-vars
+    change({coordinates, canvas}){
+      // var file = this.srcToFile(canvas.toDataURL(), 'photo', 'image/png');
+      // var file = new File([canvas.toBlob()], 'photo', {type:'image/png'})
+      // var img = canvas.toDataURL();
+      // var file = this.dataURItoBlob(img);
+
+
+      canvas.toBlob((blob) => {
+        var file = new File([blob], "crop.png", { type: "image/png" })
+        this.$emit('set_crop_image', file)
+      }, 'image/png');
+
+    },
+    dataURItoBlob(dataURI) {
+      var byteString;
+      if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+      else
+        byteString = unescape(dataURI.split(',')[1]);
+      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ia], {type:mimeString});
+    },
     handleInput(val){
       this.$emit('input', val)
     },
     tmpImage(){
       if (this.localValue) {
         if (this.errors[this.name]) delete this.errors[this.name]
-
         this.url = URL.createObjectURL(this.localValue)
         this.handleInput(this.localValue)
+
+        // if (this.url && this.square != null){
+        //   let img = new Image();
+        //   img.onload = () => {
+        //     if (img.width != img.height){
+        //       if (!this.errors[this.name]) this.$set(this.errors, this.name, [])
+        //       this.errors[this.name].push(this.$t('base.validation.image.square'))
+        //
+        //       this.$set(this.errors, this.name, this.errors[this.name])
+        //       this.set_null()
+        //     }
+        //   }
+        //   img.src = this.url;
+        // }
       }else{
-        this.url = null;
-        this.localValue = null;
-        this.handleInput(this.localValue)
+        this.set_null()
       }
+    },
+    set_null(){
+      this.url = null;
+      this.localValue = null;
+      this.handleInput(this.localValue)
     }
   }
 }

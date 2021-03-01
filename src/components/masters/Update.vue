@@ -128,8 +128,9 @@
               :errors="errors"
               name="photo"
               v-model="new_photo"
+              @set_crop_image="set_crop_image"
+              :square="true"
           />
-
           <b-img
               v-if="!new_photo && master.photo"
               :src="master.photo"
@@ -165,6 +166,7 @@ export default {
   data() {
     return {
       new_photo: null,
+      new_photo_crop: null,
       errors: {},
       success_error: {
         success: false,
@@ -186,6 +188,9 @@ export default {
     closePopup() {
       this.$emit('closePopup');
     },
+    set_crop_image(data){
+      this.new_photo_crop = data;
+    },
     submit(){
       this.errors = {};
       var data = new FormData()
@@ -203,8 +208,8 @@ export default {
       data.append('salon_id', this.master.salon_id)
       data.append('profit', this.master.profit)
 
-      if (this.new_photo)
-        data.append('photo', this.new_photo)
+      if (this.new_photo_crop)
+        data.append('photo', this.new_photo_crop)
 
 
       for (var day in this.master.schedule){

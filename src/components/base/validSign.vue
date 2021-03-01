@@ -47,6 +47,11 @@ export default {
       default: () => ({})
     }
   },
+  watch: {
+    // 'invalid.photo': function (){
+    //   this.$forceUpdate();
+    // }
+  },
   data() {
     return {
 
