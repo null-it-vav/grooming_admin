@@ -33,7 +33,7 @@ try {
 
 const axios = require('axios');
 
-axios.defaults.baseURL = 'https://api.null-it.ru';
+axios.defaults.baseURL = 'https://demo-api.grooming-box.com';
 
 const token = localStorage.getItem('user-token')
 if (token) {
