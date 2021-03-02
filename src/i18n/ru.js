@@ -56,7 +56,7 @@ let ru = {
                     price: 'Цена, от',
                     type: 'Тип',
                     duration: 'Продолжительность, мин',
-                    image: 'Фото (png или jpg, до 1 мб)',
+                    image: 'Фото (png до 1 мб)',
                 }
             },
             salons: {
@@ -72,7 +72,7 @@ let ru = {
                 update: "Обновить акцию",
                 not_found: "Акций нет",
                 fields: {
-                    name: "Заголок",
+                    name: "Заголовок",
                     description: "Описание",
                     start: "Дата начала",
                     finish: "Дата конца",
@@ -198,6 +198,7 @@ let ru = {
         }
     },
     base: {
+        file_size: "Размер файла: {size} мб",
         demo: "Демо",
         demo_tooltip: "Укажите данный id в приложении Gav&Love для демо режима",
         are_you_sure_delete: "Вы точно хотите удалить?",

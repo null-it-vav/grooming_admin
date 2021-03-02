@@ -110,6 +110,7 @@
               name="photo"
               :cropped="12/12"
               v-model="master.photo"
+              accept="image/png"
               @set_crop_image="set_crop_image"
           />
         </div>

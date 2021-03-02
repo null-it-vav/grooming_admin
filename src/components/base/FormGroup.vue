@@ -163,7 +163,7 @@
           ]"
       >
         <b-form-file
-            accept="image/*"
+            :accept="accept"
             type="file"
             :name="name"
             :required="required"
@@ -210,7 +210,7 @@
 
       <cropper
           v-if="cropped && url"
-          class="my-3 cropper"
+          class="cropper mt-3"
           :src="url"
           :stencil-props="{
             aspectRatio: cropped
@@ -218,6 +218,9 @@
           @change="change"
       ></cropper>
 
+      <div v-if="cropped && crop_file_size_mb">
+        {{ $t('base.file_size', {size : crop_file_size_mb}) }}
+      </div>
     </div>
   </div>
 </template>
@@ -273,6 +276,10 @@ export default {
     required: {
       required: false
     },
+    accept: {
+      required: false,
+      default: function () { return "*";}
+    },
     cropped: {
       required: false,
       default: function () { return 1;}
@@ -288,6 +295,7 @@ export default {
       localValue: this.value,
       tmpImageSrc: null,
       url: null,
+      crop_file_size_mb: 0,
     }
   },
   watch: {
@@ -315,6 +323,8 @@ export default {
 
       canvas.toBlob((blob) => {
         var file = new File([blob], "crop.png", { type: "image/png" })
+        console.log(file.size);
+        this.crop_file_size_mb = Math.round(file.size / 1024 / 1024 * 10) / 10
         this.$emit('set_crop_image', file)
       }, 'image/png');
 
@@ -340,7 +350,6 @@ export default {
         if (this.errors[this.name]) delete this.errors[this.name]
         this.url = URL.createObjectURL(this.localValue)
         this.handleInput(this.localValue)
-
         // if (this.url && this.square != null){
         //   let img = new Image();
         //   img.onload = () => {
@@ -359,6 +368,7 @@ export default {
       }
     },
     set_null(){
+      this.crop_file_size_mb = 0
       this.url = null;
       this.localValue = null;
       this.handleInput(this.localValue)

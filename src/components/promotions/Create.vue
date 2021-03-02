@@ -12,27 +12,6 @@
       >
         <div class="col-lg-6">
           <form-group
-              :label="$t('app.components.promotions.fields.name')"
-              type="text"
-              name="name"
-              required
-              v-model="promotion.name"
-              :errors="errors"
-          />
-        </div>
-        <div class="col-lg-6">
-          <form-group
-              :label="$t('app.components.promotions.fields.description')"
-              type="text"
-              name="description"
-              required
-              v-model="promotion.description"
-              :errors="errors"
-          />
-        </div>
-
-        <div class="col-lg-6">
-          <form-group
               :label="$t('app.components.promotions.fields.start')"
               type="date"
               name="start"
@@ -54,14 +33,37 @@
         </div>
         <div class="col-lg-6">
           <form-group
+              :label="$t('app.components.promotions.fields.name')"
+              type="text"
+              name="name"
+              required
+              v-model="promotion.name"
+              :errors="errors"
+          />
+        </div>
+        <div class="col-lg-6">
+          <form-group
+              :label="$t('app.components.promotions.fields.description')"
+              type="text"
+              name="description"
+              required
+              v-model="promotion.description"
+              :errors="errors"
+          />
+        </div>
+        <div class="col-lg-6">
+          <form-group
               :label="$t('app.components.services.field.image')"
               type="photo"
               :errors="errors"
               name="image"
+              accept="image/png"
               v-model="promotion.image"
+              @set_crop_image="set_crop_image"
+              :cropped="4/3"
           />
         </div>
-        <div class="col-lg-12 d-flex">
+        <div class="col-lg-12 mt-md-5 d-flex">
           <button type="submit" class="m-auto btn btn-success">
             {{ $t('base.create') }}
           </button>
@@ -93,6 +95,7 @@ export default {
         success: false,
         error: false
       },
+      new_image_crop: null,
     }
   },
   created() {
@@ -100,6 +103,9 @@ export default {
   },
   components: {FormGroup, BasePopup},
   methods: {
+    set_crop_image(data){
+      this.new_image_crop = data;
+    },
     submit(){
       var data = new FormData()
       data.append('name', this.promotion.name)
@@ -107,8 +113,12 @@ export default {
       data.append('start', this.promotion.start)
       data.append('finish', this.promotion.finish)
 
-      if (this.promotion.image)
-        data.append('image', this.promotion.image)
+      if (this.new_image_crop) {
+        data.append('image', this.new_image_crop)
+      }else {
+        if (this.promotion.image) data.append('image', this.promotion.image)
+      }
+
 
       create_promotion(data)
           .then(() => {

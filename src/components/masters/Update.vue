@@ -128,6 +128,7 @@
               :errors="errors"
               name="photo"
               v-model="new_photo"
+              accept="image/png"
               @set_crop_image="set_crop_image"
               :cropped="12/12"
           />

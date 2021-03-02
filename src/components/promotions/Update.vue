@@ -63,13 +63,14 @@
               v-model="new_image"
               @set_crop_image="set_crop_image"
               :cropped="4/3"
+              accept="image/png"
           />
 
           <b-img
               v-if="!new_image && promotion.image"
               :src="promotion.image"
               fluid
-              class="my-3 mx-auto"
+              class="mb-3 mx-auto"
           />
 
         </div>
