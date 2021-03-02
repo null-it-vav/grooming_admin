@@ -15,6 +15,7 @@ const SalonsIndex = () => import( '../components/salons/Index');
 const ServicesIndex = () => import( '../components/services/Index');
 const PromotionsIndex = () => import( '../components/promotions/Index');
 const SettingsIndex = () => import( '../components/settings/Index');
+const AdminUsers = () => import( '../components/admin/Users');
 
 
 
@@ -43,6 +44,12 @@ const routes = [
                 name: 'home.dashboard',
                 component: DashboardIndex,
                 meta: { needAuth: true },
+            },
+            {
+                path: '/admin-users',
+                name: 'home.admin.users',
+                component: AdminUsers,
+                meta: { needAuth: true, roles: ['super-admin'] },
             },
             {
                 path: '/calendar',

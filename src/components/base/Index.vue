@@ -45,7 +45,7 @@
 
           <div
               class="card p-3"
-              v-if="auth.organization.demo"
+              v-if="auth.organization && auth.organization.demo"
           >
             <div>
               {{ $t('base.demo') }} id: <span class="text-danger">{{ auth.organization.id }}</span>
@@ -63,6 +63,13 @@
             >
               <i class="fa fa-sliders"/>
               <span class="mx-3">{{ $t('app.titles.home.dashboard') }}</span>
+            </router-link>
+
+            <router-link
+                :to="{ name: 'home.admin.users' }" class="list-group-item"
+            >
+              <i class="fa fa-users"/>
+              <span class="mx-3">{{ $t('app.titles.home.admin.users') }}</span>
             </router-link>
 
             <router-link
@@ -146,7 +153,7 @@
 import { logout } from "@/api";
 import {mapGetters} from "vuex";
 import store from "@/store/app";
-import UserSettingsPopup from "@/components/user/UserSettingsPopup";
+import UserSettingsPopup from "@/components/users/UserSettingsPopup";
 
 export default {
   name: "DashboardIndex",

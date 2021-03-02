@@ -202,3 +202,10 @@ export function create_demo(payload){
     return axios.post(BASE_URL + "create-demo", payload)
         .then((response) => response)
 }
+
+export function admin_users(payload){
+    return axios.get(BASE_URL + 'profile/users' , {
+        params: payload
+    })
+        .then((response) => response)
+}

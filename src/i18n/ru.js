@@ -7,6 +7,7 @@ let ru = {
                   create: "Создать организацию",
                   list: "Список организаций",
                   after_create: "После создания учетные данные будут отправлены на указанную почту",
+                  select: "Выбрать организацию",
                   fields: {
                       name: "Название",
                       email: "Email",
@@ -20,6 +21,13 @@ let ru = {
                       org_lang: "Язык",
                       demo: 'Демо'
                   }
+              }
+            },
+            users: {
+              fields: {
+                  name: 'ФИО',
+                  email: 'Email',
+                  organization_name: 'Организация',
               }
             },
             main: {
@@ -184,6 +192,9 @@ let ru = {
         titles: {
             home: {
                 dashboard: 'Dashboard',
+                admin: {
+                    users: 'Пользователи'
+                },
                 calendar: 'Календарь',
                 masters: 'Мастера',
                 orders: 'Записи',
