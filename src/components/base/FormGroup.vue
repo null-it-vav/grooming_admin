@@ -202,18 +202,18 @@
         v-if="type == 'photo'"
     >
       <b-img
-          v-if="url && !square"
+          v-if="url && !cropped"
           :src="url"
           fluid
           class="my-3 mx-auto"
       />
 
       <cropper
-          v-if="square && url"
+          v-if="cropped && url"
           class="my-3 cropper"
           :src="url"
           :stencil-props="{
-            aspectRatio: 12/12
+            aspectRatio: cropped
           }"
           @change="change"
       ></cropper>
@@ -273,9 +273,9 @@ export default {
     required: {
       required: false
     },
-    square: {
+    cropped: {
       required: false,
-      default: function () { return null;}
+      default: function () { return 1;}
     },
     placeholder: {
       required: false

@@ -61,6 +61,8 @@
               :errors="errors"
               name="image"
               v-model="new_image"
+              @set_crop_image="set_crop_image"
+              :cropped="4/3"
           />
 
           <b-img
@@ -101,7 +103,8 @@ export default {
         success: false,
         error: false
       },
-      new_image: null
+      new_image: null,
+      new_image_crop: null,
     }
   },
   created() {
@@ -109,6 +112,9 @@ export default {
   },
   components: {FormGroup, BasePopup},
   methods: {
+    set_crop_image(data){
+      this.new_image_crop = data;
+    },
     submit(){
       var data = new FormData()
       data.append('name', this.promotion.name)
@@ -116,7 +122,10 @@ export default {
       data.append('start', this.promotion.start)
       data.append('finish', this.promotion.finish)
 
-      if (this.new_image)
+      console.log(this.new_image_crop.size / 1024 / 1024)
+      if (this.new_image_crop)
+        data.append('image', this.new_image_crop)
+      else
         data.append('image', this.new_image)
 
       update_promotion(this.promotion.id, data)

@@ -129,7 +129,7 @@
               name="photo"
               v-model="new_photo"
               @set_crop_image="set_crop_image"
-              :square="true"
+              :cropped="12/12"
           />
           <b-img
               v-if="!new_photo && master.photo"

@@ -108,7 +108,7 @@
               type="photo"
               :errors="errors"
               name="photo"
-              :square="true"
+              :cropped="12/12"
               v-model="master.photo"
               @set_crop_image="set_crop_image"
           />
