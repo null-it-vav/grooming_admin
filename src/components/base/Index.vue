@@ -45,7 +45,7 @@
 
           <div
               class="card p-3"
-              v-if="auth.organization.demo"
+              v-if="auth.organization && auth.organization.demo"
           >
             <div>
               {{ $t('base.demo') }} id: <span class="text-danger">{{ auth.organization.id }}</span>
