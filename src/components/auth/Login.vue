@@ -102,15 +102,6 @@
                 </form>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="text-center" v-if="type != 'get_demo'">
-                <a class="pointer text-danger" @click="type = 'get_demo'">{{ $t('app.components.login.get_demo') }}</a>
-              </div>
-
-              <div class="text-center" v-if="type == 'get_demo'">
-                <a class="pointer text-danger" @click="type = 'auth'">{{ $t('app.components.login.login_exist') }}</a>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -126,7 +117,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { login, create_demo, reset_password } from '@/api'
+import { login, reset_password } from '@/api'
 import store from "@/store/app";
 import FormGroup from "@/components/base/FormGroup";
 import MessageSuccessError from "@/components/base/SuccessError";
@@ -221,24 +212,24 @@ export default {
             }
           })
     },
-    createDemo(){
-      create_demo({email: this.email})
-          .then((response) => {
-            if (response.data.msg) this.success_error.msg = [response.data.msg]
-            this.success_error.success = true
-            setTimeout(() => {
-              this.type = 'auth'
-            }, 2000);
-          })
-          .catch((e) => {
-            if (e.response.status == 403){
-              this.success_error.error = true
-              this.success_error.msg = [e.response.data.message]
-            }else {
-              this.errors = e.response.data.errors;
-            }
-          })
-    },
+    // createDemo(){
+    //   create_demo({email: this.email})
+    //       .then((response) => {
+    //         if (response.data.msg) this.success_error.msg = [response.data.msg]
+    //         this.success_error.success = true
+    //         setTimeout(() => {
+    //           this.type = 'auth'
+    //         }, 2000);
+    //       })
+    //       .catch((e) => {
+    //         if (e.response.status == 403){
+    //           this.success_error.error = true
+    //           this.success_error.msg = [e.response.data.message]
+    //         }else {
+    //           this.errors = e.response.data.errors;
+    //         }
+    //       })
+    // },
     login(){
       const data = {
         email: this.email,
