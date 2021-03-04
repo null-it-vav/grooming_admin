@@ -7,7 +7,7 @@
         <div class="col-lg-8 text-center">
           <img class=" my-5 logo" src='~@/assets/grooming_box.svg' />
           <div class="d-none d-lg-block">
-            <div class="text-white">{{ $t('app.components.login.head_title') }}</div>
+            <div class="m-auto text-white w-50 fs-18">{{ $t('app.components.login.head_title') }}</div>
             <div >
               <img class="mw-100" src="~@/assets/auth/mobiles.png"/>
             </div>
@@ -279,6 +279,9 @@ export default {
 .page {
   min-width: 100vw;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #6200E8 50%, #fff 50%);
+  background: linear-gradient(to bottom, #87baef 50%, #fff 50%);
+}
+.fs-18 {
+  font-size: 18px;
 }
 </style>
