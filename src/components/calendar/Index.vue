@@ -47,9 +47,10 @@
               v-for="day in week"
               :day="day"
               @daySelect="openOrdersPopup"
-              :count="monthOrders[year + '-'+ monthFormat(month) + '-' + monthFormat(day.format('D'))]"
-              :key="year + '-'+ monthFormat(month) + '-' + monthFormat(day.format('D'))"
-              :attr-day="year + '-'+ monthFormat(month) + '-' + monthFormat(day.format('D'))"
+              :month_select="month"
+              :count="monthOrders[year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))]"
+              :key="year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))"
+              :attr-day="year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))"
           />
         </div>
       </div>

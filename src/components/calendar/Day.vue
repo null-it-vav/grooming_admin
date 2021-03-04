@@ -1,9 +1,11 @@
 <template>
-    <div :class="classObject" @click="captureClick" class="pointer">
-        {{ day.format('D') }}
-        <ul class="event-list pointer" v-if="count > 0">
-            <li>{{ count }} <i class="fa fa-eye"/></li>
-        </ul>
+    <div :class="classObject" >
+        <div v-if="month_select == day.format('M')" @click="captureClick" class="pointer w-100 h-100">
+          {{ day.format('D') }}
+          <ul class="event-list pointer" v-if="count > 0">
+              <li>{{ count }} <i class="fa fa-eye"/></li>
+          </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -14,6 +16,10 @@ export default {
             default: null,
         },
         count: {
+            type: Number,
+            default: 0
+        },
+        month_select: {
             type: Number,
             default: 0
         }
@@ -30,8 +36,6 @@ export default {
                 day: true,
                 today,
                 past: this.day.isSameOrBefore(this.$moment(), 'day') && !today,
-                // active: eventFormDate.isSame(this.day, 'day') && eventFormActive
-                active: false
             };
         }
     },
