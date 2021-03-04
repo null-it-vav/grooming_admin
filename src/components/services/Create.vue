@@ -79,6 +79,8 @@
               name="image"
               v-model="service.image"
               required
+              :cropped="4/3"
+              @set_crop_image="set_crop_image"
           />
         </div>
         <div class="col-lg-12 d-flex">
@@ -112,13 +114,17 @@ export default {
       success_error: {
         success: false,
         error: false
-      }
+      },
+      new_image_crop: null,
     }
   },
   components: {FormGroup, BasePopup},
   methods: {
     closePopup(){
       this.$emit('closePopup');
+    },
+    set_crop_image(data){
+      this.new_image_crop = data;
     },
     submit(){
       this.errors = {};
@@ -128,7 +134,9 @@ export default {
       data.append('price', this.service.price)
       data.append('type', this.service.type)
       data.append('duration', this.service.duration)
-      data.append('image', this.service.image)
+
+      if (this.new_image_crop)
+        data.append('image', this.new_image_crop)
 
       create_service(data)
           .then(() => {

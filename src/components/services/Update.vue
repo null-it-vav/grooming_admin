@@ -78,6 +78,8 @@
               :errors="errors"
               name="image"
               v-model="new_image"
+              :cropped="4/3"
+              @set_crop_image="set_crop_image"
           />
 
           <b-img
@@ -122,6 +124,7 @@ export default {
     return {
       errors:{},
       new_image: null,
+      new_image_crop: null,
       success_error: {
         success: false,
         error: false
@@ -133,6 +136,9 @@ export default {
     closePopup(){
       this.$emit('closePopup');
     },
+    set_crop_image(data){
+      this.new_image_crop = data;
+    },
     submit(){
       var data = new FormData()
       data.append('name', this.service.name)
@@ -141,8 +147,8 @@ export default {
       data.append('type', this.service.type)
       data.append('duration', this.service.duration)
 
-      if (this.new_image)
-        data.append('image', this.new_image)
+      if (this.new_image_crop)
+        data.append('image', this.new_image_crop)
 
       update_service(this.service.id, data)
           .then(() => {

@@ -1,105 +1,119 @@
 let ru = {
-    language: "English",
+    language: "Русский",
     app: {
         components: {
             admin: {
-              organizations: {
-                  create: "Create organization",
-                  list: "Organizations",
-                  after_create: "After creating organization data will be sent to email",
-                  fields: {
-                      name: "Name",
-                      email: "Email",
-                      phone: "Phone",
-                      created_at: "Created",
-                      org_name: "Organization name",
-                      user_name: "User",
-                      user_email: "Email",
-                      user_phone: "Phone",
-                      org_timezone: "Timezone",
-                      org_lang: "Lang",
-                  }
-              }
+                organizations: {
+                    create: "Создать организацию",
+                    list: "Список организаций",
+                    after_create: "После создания учетные данные будут отправлены на указанную почту",
+                    select: "Выбрать организацию",
+                    fields: {
+                        name: "Название",
+                        email: "Email",
+                        phone: "Телефон",
+                        created_at: "Создана",
+                        org_name: "Название",
+                        user_name: "ФИО",
+                        user_email: "Email",
+                        user_phone: "Телефон",
+                        org_timezone: "Таймзона",
+                        org_lang: "Язык",
+                        demo: 'Демо'
+                    }
+                }
+            },
+            users: {
+                fields: {
+                    name: 'ФИО',
+                    email: 'Email',
+                    organization_name: 'Организация',
+                }
             },
             main: {
-                selected_salon: "Salon"
+                selected_salon: "Выбранный салон"
             },
             dashboard: {
                 title: "Dashboard",
-                orders_by_day_now: "Entries for today",
+                orders_by_day_now: "Записи на сегодня",
             },
             login: {
-                head_title: "CRM for groomer, help you take your business to the next level.",
-                title: "Login",
-                username: "Login",
+                head_title: "CRM cистема для грумеров, которая поможет вам вывести бизнес на новый уровень.",
+                title: "Панель управления",
+                username: "Логин",
                 email: "Email",
-                password: "Password",
-                password_confirmation: "Password confirmation",
-                login: "Singin",
-                reset: "Reset",
-                reset_password: "Reset password?",
-                reset_password_form: "Reset password",
-                auth: "Remembered login and password??",
-                get_demo: "Get demo account",
-                get_demo_button: "Get demo",
-                login_exist: "I have login and password",
-                url_invalid: "Reset password url incorrect."
+                password: "Пароль",
+                password_confirmation: "Повторите пароль",
+                login: "Войти",
+                reset: "Восстановить",
+                reset_password: "Забыли пароль?",
+                reset_password_form: "Восстановить пароль",
+                auth: "Вспомнили логин и пароль?",
+                get_demo: "Получить демо доступ",
+                get_demo_button: "Получить демо",
+                login_exist: "У меня есть данные для входа",
+                url_invalid: "Ссылка для восстановления неверная!"
             },
             services: {
-                create: "Create services",
-                update: "Update services",
-                not_found: "Services list is empty",
+                create: "Создать услугу",
+                update: "Обновить услугу",
+                not_found: "Услуги не заполнены",
                 field: {
-                    name: 'Name',
-                    description: 'Description',
-                    price: 'Price, from',
-                    type: 'Type',
-                    duration: 'Duration, m.',
-                    image: 'Photo',
+                    name: 'Название',
+                    description: 'Описание',
+                    price: 'Цена, от',
+                    type: 'Тип',
+                    duration: 'Продолжительность, мин',
+                    image: 'Фото (png до 1 мб)',
                 }
             },
             salons: {
-                create: "Create salon",
-                update: "Update salon",
+                create: "Создать салон",
+                update: "Обновить салон",
+                create_first: "Создайте свой первый салон!",
                 fields: {
-                    address: 'Address'
+                    address: 'Адрес'
                 }
             },
             promotions: {
-                create: "Create promotions",
-                update: "Update promotions",
-                not_found: "Promotions list is empty",
+                create: "Создать акцию",
+                update: "Обновить акцию",
+                not_found: "Акций нет",
                 fields: {
-                    name: "Title",
-                    description: "Description",
-                    start: "Start",
-                    finish: "Finish",
+                    name: "Заголовок",
+                    description: "Описание",
+                    start: "Дата начала",
+                    finish: "Дата конца",
                 },
                 statuses: {
-                    expect: "Expect",
-                    active: "Active",
-                    inactive: "Inactive",
+                    expect: "Ожидает",
+                    active: "Активна",
+                    inactive: "Завершена",
                 }
             },
             masters: {
-                create: "Create master",
-                update: "Update master",
+                create: "Создать мастера",
+                update: "Обновить мастера",
+                show_deleted: "Показать удаленных",
+                confirm_delete: "Вы уверены что хотите удалить мастера?",
+                set_me_master: "Я - мастер",
+                active: 'Активен',
                 fields: {
-                    name: 'User name',
+                    name: 'ФИО',
                     email: 'Email',
-                    password: 'Password',
-                    password_confirmation: "Password confirmation",
-                    position: 'Position',
-                    photo: 'Photo',
-                    schedule: 'Schedule',
-                    description: 'Description',
-                    profit: 'Profit',
-                    salon: 'Salon',
+                    password: 'Пароль для входа',
+                    password_confirmation: "Подтвердите пароль",
+                    position: 'Должность',
+                    photo: 'Фото (png или jpg, до 1 мб)',
+                    schedule: 'Часы работы',
+                    description: 'Описание',
+                    profit: 'Процент прибыли',
+                    salon: 'Салон',
                 },
-                need_photo_size: 'The image must be square (400px * 400px recommended)'
+                need_photo_size: 'Изображение должно быть квадратное (рекомендуемое 400px на 400px)'
             },
             orders: {
-                create: "Create запись",
+                create: "Создать запись",
                 update: "Обновить запись",
                 not_found: "Записей нет",
                 how_match: "Итоговая сумма заказа:",
@@ -132,7 +146,8 @@ let ru = {
                     check: 'Подтвердить заказ',
                     penalty: 'Клиент не пришел',
                     rejected: 'Клиент отказался заранее',
-                    end: 'Выполнено'
+                    end: 'Выполнено',
+                    delete: 'Удалить'
                 }
             },
             settings: {
@@ -151,8 +166,8 @@ let ru = {
                 lang: 'Язык',
                 notif_before: 'Уведомление о предстоящем сеансе, мин',
                 notif_after: 'Уведомление после визита через, дней',
-                text: 'Текст на главной страницы приложения',
-                image: 'Фото на главной страницы приложения',
+                text: 'Текст на главной странице приложения',
+                image: 'Фото на главной странице приложения (png или jpg, до 1 мб)',
                 tg_link: 'Ссылка на Telegram',
                 wa_link: 'Ссылка на WhatsApp',
             },
@@ -168,13 +183,18 @@ let ru = {
             user: {
                 fields: {
                     telegram_id: 'Telegram id, указав его вы сможете получать уведомления о записях',
-                    get_telegram_id: 'Для получения id напишите нашему боту команду /start: '
+                    get_telegram_id: 'Для получения id напишите нашему боту команду /start: ',
+                    email_notifications: 'Получать уведомления на почту',
+                    telegram_notifications: 'Получать уведомления в Telegram',
                 }
             }
         },
         titles: {
             home: {
                 dashboard: 'Dashboard',
+                admin: {
+                    users: 'Пользователи'
+                },
                 calendar: 'Календарь',
                 masters: 'Мастера',
                 orders: 'Записи',
@@ -189,11 +209,17 @@ let ru = {
         }
     },
     base: {
+        file_size: "Размер файла: {size} мб",
+        demo: "Демо",
+        demo_tooltip: "Укажите данный id в приложении Gav&Love для демо режима",
         are_you_sure_delete: "Вы точно хотите удалить?",
         validation: {
             auth_403: '«Пожалуйста, проверьте правильность написания логина и пароля.»',
             file_to_large: "Файл слишком большой",
-            address_not_found: "Адрес не определился"
+            address_not_found: "Адрес не определился",
+            image: {
+                square: "Выбранное вами изображение должно быть квадратное"
+            }
         },
         months: {
             1: "Январь",
@@ -236,7 +262,7 @@ let ru = {
             error: 'Ошибка!',
             data_not_update: 'Данные не обновлены!',
         },
-        total: 'Всего'
+        total: 'Всего',
     }
 }
 
