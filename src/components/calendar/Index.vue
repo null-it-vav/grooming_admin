@@ -126,7 +126,7 @@ export default {
       }).then((r) => { this.monthOrders = r.data.data.count_by_days })
     },
     monthFormat(m){
-      if (m < 9) return "0"+m;
+      if (m < 10) return "0"+m;
       return m;
     },
     calendarLeft() {
