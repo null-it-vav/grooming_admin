@@ -49,6 +49,7 @@
               @daySelect="openOrdersPopup"
               :count="monthOrders[year + '-'+ monthFormat(month) + '-' + day.format('D')]"
               :key="year + '-'+ monthFormat(month) + '-' + day.format('D')"
+              :attr-day="year + '-'+ monthFormat(month) + '-' + day.format('D')"
           />
         </div>
       </div>
