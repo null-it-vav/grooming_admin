@@ -1,7 +1,7 @@
 <template>
     <div :class="classObject" @click="captureClick" class="pointer">
         {{ day.format('D') }}
-        <ul class="event-list pointer" v-if="count">
+        <ul class="event-list pointer" v-if="count > 0">
             <li>{{ count }} <i class="fa fa-eye"/></li>
         </ul>
     </div>
