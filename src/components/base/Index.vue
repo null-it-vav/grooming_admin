@@ -66,6 +66,7 @@
             </router-link>
 
             <router-link
+                v-if="(auth.role_list.includes('super-admin'))"
                 :to="{ name: 'home.admin.users' }" class="list-group-item"
             >
               <i class="fa fa-users"/>
