@@ -54,7 +54,6 @@
         </div>
       </div>
     </div>
-
     <orders-popup
       v-if="showOrdersPopup"
       :day="selectDay"
