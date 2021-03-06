@@ -123,11 +123,14 @@ export default {
       data.append('start', this.promotion.start)
       data.append('finish', this.promotion.finish)
 
-      console.log(this.new_image_crop.size / 1024 / 1024)
       if (this.new_image_crop)
         data.append('image', this.new_image_crop)
-      else
-        data.append('image', this.new_image)
+      else {
+        if (this.new_image) {
+          data.append('image', this.new_image)
+        }
+      }
+
 
       update_promotion(this.promotion.id, data)
           .then(() => {
