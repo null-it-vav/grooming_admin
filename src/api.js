@@ -198,6 +198,8 @@ export function create_organization(payload){
 }
 
 
+
+
 export function create_demo(payload){
     return axios.post(BASE_URL + "create-demo", payload)
         .then((response) => response)
@@ -207,5 +209,10 @@ export function admin_users(payload){
     return axios.get(BASE_URL + 'profile/users' , {
         params: payload
     })
+        .then((response) => response)
+}
+
+export function admin_user_save(user_id, payload){
+    return axios.post(BASE_URL + 'profile/users/' + user_id , payload)
         .then((response) => response)
 }

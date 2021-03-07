@@ -1,5 +1,12 @@
 <template>
   <div class="card p-4">
+
+    <div class="col-lg-12 mb-2 alert position-fixed fixed-bottom">
+      <message-success-error
+          :show="success_error"
+      />
+    </div>
+
     <div class="row mb-3">
       <div class="col-lg-3">
         <form-group
@@ -22,12 +29,35 @@
           <th>{{$t('app.components.users.fields.name')}}</th>
           <th>{{$t('app.components.users.fields.email')}}</th>
           <th>{{$t('app.components.users.fields.organization_name')}}</th>
+          <th></th>
         </tr>
       </thead>
       <tr v-for="(user, k) in users.data" :key="k">
         <td :data-label="$t('app.components.users.fields.name')">{{user.name}}</td>
         <td :data-label="$t('app.components.users.fields.email')">{{user.email}}</td>
-        <td :data-label="$t('app.components.users.fields.organization_name')">{{user.organization ? user.organization.name : ''}}</td>
+        <td :data-label="$t('app.components.users.fields.organization_name')">
+          <form-group
+            v-model="user.organization_id"
+            :errors="{}"
+            type="select"
+            :group="true"
+            :items="organizations_list"
+            v-if="!user.role_list.includes('super-admin')"
+          >
+            <template v-slot:append>
+              <div class="input-group-append">
+                <span class="input-group-text pointer" @click="save_org_id(user)">
+                  <i class="fa fa-floppy-o"></i>
+                </span>
+              </div>
+            </template>
+          </form-group>
+        </td>
+        <td>
+          <div v-for="(role, k) in user.role_list" :key="k">
+            {{ roles[role] }}
+          </div>
+        </td>
       </tr>
     </table>
 
@@ -58,12 +88,13 @@
 </template>
 
 <script>
-import {admin_users, organizations} from "@/api";
+import {admin_users, organizations, admin_user_save} from "@/api";
 import FormGroup from "@/components/base/FormGroup";
+import MessageSuccessError from "@/components/base/SuccessError";
 
 export default {
   name: "AdminUsers",
-  components: {FormGroup},
+  components: {MessageSuccessError, FormGroup},
   data() {
     return {
       user: {},
@@ -84,7 +115,16 @@ export default {
         per_page: 500,
         last_page: 1,
         total: 0,
-      }
+      },
+      roles: {
+        'super-admin': 'Супер админ',
+        'admin': "Админ",
+        'master': "Мастер"
+      },
+      success_error: {
+        success: false,
+        error: false
+      },
     }
   },
   created() {
@@ -119,8 +159,35 @@ export default {
     'filters.organization_id': function(){
       this.getUsers()
     },
+    'success_error.success': function (){
+      if (this.success_error.success) {
+        setTimeout(() => {
+          this.success_error.success = false;
+        }, 4000);
+      }
+    },
+    'success_error.error': function (){
+      if (this.success_error.error) {
+        setTimeout(() => {
+          this.success_error.error = false;
+        }, 4000);
+      }
+    }
   },
   methods: {
+    save_org_id(user){
+      admin_user_save(user.id, {
+        _method: 'patch',
+        action: 'set-organization',
+        organization_id: user.organization_id
+      }).then(() => {
+        this.success_error.success = true
+        this.getUsers()
+      }).catch((error) => {
+        this.success_error.error = true
+        console.error(error)
+      })
+    },
     loadOrganizations() {
       organizations({
         page: this.organizations.page,
