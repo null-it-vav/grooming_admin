@@ -282,7 +282,7 @@ export default {
     },
     cropped: {
       required: false,
-      default: function () { return 1;}
+      default: function () { return null;}
     },
     placeholder: {
       required: false
