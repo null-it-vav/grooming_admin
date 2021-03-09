@@ -162,7 +162,7 @@
               <div class="master-next ml-auto">
                 <img src="https://api.null-it.ru/images/button_next.svg"/>
               </div>
-            </div>
+            </div>#app
             <div class="master-description">
               {{ master.description }}
             </div>
@@ -522,9 +522,9 @@ label {
 }
 #app {
   margin: auto;
-  width: 400px;
+  width: 100%;
   height: 100vh;
-  border: 1px solid gray;
+  border: 0;
   border-radius: 4px;
   overflow: hidden;
   background: url("https://api.null-it.ru/images/bg.svg");
