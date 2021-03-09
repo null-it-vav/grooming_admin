@@ -263,6 +263,36 @@ let ru = {
             data_not_update: 'Данные не обновлены!',
         },
         total: 'Всего',
+    },
+    form: {
+        services_types: {
+          cat: "Кошка",
+          dog: "Собака",
+          other: "Другое",
+        },
+        services: "Услуги",
+        services_no_select: "Услуга не выбрана",
+        services_selected: "выбрано",
+        select: "Выбрать",
+        remove: "Убрать",
+        select_services: "Выберите услуги",
+        next: "Далее",
+        select_salon: "Выбор салона",
+        address: 'Адрес',
+        select_master: 'Выбрать мастера',
+        information: 'Информация',
+        select_visit_date: "Выбрать дату посещения",
+        select_visit_time: "Выбрать время посещения",
+        order: {
+            name: "Ваше имя:",
+            nickname: "Кличка питомца:",
+            phone: "Номер телефона:",
+            email: "Электронная почта:",
+            comment: "Комментарий:",
+        },
+        send: "Отправить заявку",
+        request_send: "Заявка отправлена",
+        will_contact: "Мы свяжемся с вами для уточнения деталей приема",
     }
 }
 

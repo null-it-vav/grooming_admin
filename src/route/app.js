@@ -17,6 +17,7 @@ const PromotionsIndex = () => import( '../components/promotions/Index');
 const SettingsIndex = () => import( '../components/settings/Index');
 const AdminUsers = () => import( '../components/admin/Users');
 
+const form = () => import('../components/form/index')
 
 
 const Error404 = () => import( '../components/base/404.vue');
@@ -26,6 +27,11 @@ const routes = [
         path: '/',
         name: 'login',
         component: Login,
+    },
+    {
+        path: '/form',
+        name: 'form',
+        component: form,
     },
     {
         path: '/set-password',

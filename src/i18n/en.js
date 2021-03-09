@@ -1,4 +1,4 @@
-let ru = {
+let en = {
     language: "Русский",
     app: {
         components: {
@@ -263,7 +263,37 @@ let ru = {
             data_not_update: 'Данные не обновлены!',
         },
         total: 'Всего',
+    },
+    form: {
+        services_types: {
+            cat: "Cat",
+            dog: "Dog",
+            other: "other",
+        },
+        services: "Services",
+        services_no_select: "Services no select",
+        services_selected: "selected",
+        select: "Select",
+        remove: "Remove",
+        select_services: "Select services",
+        next: "Next",
+        select_salon: "Select salon",
+        address: 'Address',
+        select_master: 'Select master',
+        information: 'Information',
+        select_visit_date: "Select visit date",
+        select_visit_time: "Select visit time",
+        order: {
+            name: "Name:",
+            nickname: "Pet nickname:",
+            phone: "Phone:",
+            email: "Email:",
+            comment: "Comment:",
+        },
+        send: "Send",
+        request_send: "Request send",
+        will_contact: "We will contact you to clarify the details of the appointment",
     }
 }
 
-export default ru
+export default en
