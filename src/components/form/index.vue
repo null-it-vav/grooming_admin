@@ -52,7 +52,8 @@
               <div
                   v-for="(service,k) in services.filter(el => el.type === service_type)"
                   :key="k"
-                  class="service_select"
+                  class="service_select pointer"
+                  @click="selectServiceCard(service)"
               >
                 <div
                     class="img"
@@ -60,7 +61,9 @@
                 >
 
                 </div>
-                <div class="service_select_content">
+                <div
+                    class="service_select_content"
+                >
                   <div class="service_select_content_title"><b>{{ service.name }}</b></div>
                   <div class="service_select_content_content">
                     <div class="service_select_content_description">
@@ -73,7 +76,6 @@
                       <div class="ml-auto">
                         <a
                             class="btn-select-service"
-                            @click="selectService(service)"
                             v-if="!services_select.includes(service.id)"
                         >
                           {{ $t('form.select') }}
@@ -81,7 +83,6 @@
                         <a
                             v-else
                             class="btn-select-service remove"
-                            @click="removeService(service)"
                         >
                           {{ $t('form.remove') }}
                         </a>
@@ -146,7 +147,10 @@
           <div style="width: 44px"></div>
         </div>
         <div class="scroll_items">
-          <div v-for="(master, k) in salon_select.masters" class="master pointer" @click="setMaster(master)" :key="k">
+          <div
+              v-for="(master, k) in salon_select.masters"  @click="setMaster(master)"
+              :key="k"
+          >
             <div class="d-flex">
               <div>
                 <img :src="master.photo" class="avatar"/>
@@ -206,8 +210,8 @@
                                       }"
                 >
                   <template v-slot="{ inputValue, togglePopover }">
-                    <span v-if="!inputValue"  @click.stop="togglePopover()">{{ $t('form.select_visit_date') }}</span>
-                    <span v-else  v-on="inputEvents">{{ inputValue }}</span>
+                    <span v-if="!inputValue"  @click="togglePopover()">{{ $t('form.select_visit_date') }}</span>
+                    <span v-else @click="togglePopover()">{{ inputValue }}</span>
                   </template>
                 </v-date-picker>
               </div>
@@ -355,6 +359,13 @@ export default {
 
     this.$axios.get(this.base_url + this.organization_id + '/services').then((response) => {
       this.services = response.data
+
+      if (this.services.filter(el => el.type === 'dog').length > 0){
+        this.service_type = 'dog'
+      } else
+      if (this.services.filter(el => el.type === 'other').length > 0) {
+        this.service_type = 'other'
+      }
     })
     this.$axios.get(this.base_url + this.organization_id + '/salons').then((response) => {
       this.salons = response.data
@@ -370,6 +381,13 @@ export default {
     setServiceType(type){
       this.service_type = type
       this.services_select = [];
+    },
+    selectServiceCard(service){
+      if (!this.services_select.includes(service.id)){
+        this.selectService(service)
+      }else {
+        this.removeService(service)
+      }
     },
     selectService(service) {
       this.services_select.push(service.id)
@@ -614,12 +632,6 @@ label {
 .service_select_content_price {
   display: flex;
 }
-.m-auto {
-  margin: auto!important;
-}
-.ml-auto {
-  margin-left: auto;
-}
 .btn-select-service {
   background: #D2C4DF;
   color: white;
@@ -721,9 +733,7 @@ label {
   color: #90939D;
   font-size: 15px;
 }
-.d-flex {
-  display: flex;
-}
+
 .step_4 .master {
   margin-bottom: 16px;
   padding: 0px;
@@ -755,6 +765,7 @@ label {
 }
 
 .dropdown-toggle {
+
   min-width: 160px;
   text-transform: none;
   border: 0;
@@ -773,6 +784,7 @@ label {
 }
 
 .dropdown-menu {
+  display: block!important;
   position: absolute;
   top: 100%;
   left: 0;
