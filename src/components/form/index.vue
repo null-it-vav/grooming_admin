@@ -150,6 +150,7 @@
           <div
               v-for="(master, k) in salon_select.masters"  @click="setMaster(master)"
               :key="k"
+              class="master pointer"
           >
             <div class="d-flex">
               <div>
