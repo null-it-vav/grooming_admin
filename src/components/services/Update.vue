@@ -59,10 +59,14 @@
           <form-group
               type="select"
               :items="[
-                  { value: 30, text: 30 },
-                  { value: 60, text: 60 },
-                  { value: 90, text: 90 },
-                  { value: 120, text: 120 },
+                  { value: 30, text: $t('app.components.services.durations.30') },
+                  { value: 60, text: $t('app.components.services.durations.60') },
+                  { value: 90, text: $t('app.components.services.durations.90') },
+                  { value: 120, text: $t('app.components.services.durations.120') },
+                  { value: 150, text: $t('app.components.services.durations.150') },
+                  { value: 180, text: $t('app.components.services.durations.180') },
+                  { value: 210, text: $t('app.components.services.durations.210') },
+                  { value: 240, text: $t('app.components.services.durations.240') },
               ]"
               :label="$t('app.components.services.field.duration')"
               :errors="errors"
