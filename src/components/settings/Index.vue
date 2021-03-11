@@ -103,6 +103,17 @@
       <b-card :title="$t('app.components.settings.tabs.push_app')" class="mb-2">
         <div class="row">
           <div class="col-lg-6">
+            <div class="form-group">
+              <b-checkbox
+                  v-model="settings.notif_before_24h"
+                  switch
+                  size="sm"
+              >
+                {{ $t('app.components.settings.notif_before_24h') }}
+              </b-checkbox>
+            </div>
+
+
             <form-group
                 :label="$t('app.components.settings.notif_before')"
                 type="select"
@@ -326,6 +337,7 @@ export default {
       data.append('show_tg_link', this.settings.show_tg_link ? 1 : 0)
       data.append('show_wa_link', this.settings.show_wa_link ? 1 : 0)
       data.append('show_email', this.settings.show_email ? 1 : 0)
+      data.append('notif_before_24h', this.settings.notif_before_24h ? 1 : 0)
 
 
       data.append('text', this.settings.text)
