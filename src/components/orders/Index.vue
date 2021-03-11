@@ -56,7 +56,10 @@
       <tr v-for="(order, k) in orders.data" :key="k">
         <td :data-label="$t('app.components.orders.fields.name')">{{order.name}}</td>
         <td :data-label="$t('app.components.orders.fields.nickname')">{{order.nickname}}</td>
-        <td :data-label="$t('app.components.orders.fields.date')">{{order.date}} {{order.time_start}}</td>
+        <td :data-label="$t('app.components.orders.fields.date')">
+          {{order.date}}  <br>
+          {{order.time_start}} - {{order.time_end}}
+        </td>
         <td :data-label="$t('app.components.orders.fields.phone')">{{order.phone}}</td>
         <td :data-label="$t('app.components.orders.fields.comment')">{{order.comment}}</td>
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
