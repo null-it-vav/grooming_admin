@@ -52,41 +52,32 @@
               <div
                   v-for="(service,k) in services.filter(el => el.type === service_type)"
                   :key="k"
-                  class="service_select pointer"
+                  class="card service_select pointer"
                   @click="selectServiceCard(service)"
               >
-                <div
-                    class="img"
-                    :style="service.image ? 'background-image: url('+service.image+')' : ''"
-                >
-
-                </div>
-                <div
-                    class="service_select_content"
-                >
-                  <div class="service_select_content_title"><b>{{ service.name }}</b></div>
-                  <div class="service_select_content_content">
-                    <div class="service_select_content_description">
-                      {{ service.description }}
+                <img class="card-img-top" :src="service.image" v-if="service.image">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">{{ service.name }}</h5>
+                  <p class="card-text service_select_content_description">
+                    {{ service.description }}
+                  </p>
+                  <div class="mt-auto service_select_content_price">
+                    <div>
+                      <b>от {{ service.price }}</b>
                     </div>
-                    <div class="service_select_content_price">
-                      <div>
-                        <b>от {{ service.price }}</b>
-                      </div>
-                      <div class="ml-auto">
-                        <a
-                            class="btn-select-service"
-                            v-if="!services_select.includes(service.id)"
-                        >
-                          {{ $t('form.select') }}
-                        </a>
-                        <a
-                            v-else
-                            class="btn-select-service remove"
-                        >
-                          {{ $t('form.remove') }}
-                        </a>
-                      </div>
+                    <div class="ml-auto">
+                      <a
+                          class="btn-select-service"
+                          v-if="!services_select.includes(service.id)"
+                      >
+                        {{ $t('form.select') }}
+                      </a>
+                      <a
+                          v-else
+                          class="btn-select-service remove"
+                      >
+                        {{ $t('form.remove') }}
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -123,15 +114,20 @@
               @click="setSalon(salon)"
               :key="k"
           >
-            <div>
-              <img src="https://api.null-it.ru/images/salon_icon.svg"/>
-            </div>
-            <div class="salon-address">
-              <div class="title"><b>{{ $t('form.address') }}</b></div>
-              {{ salon.address }}
-            </div>
-            <div class="salon-next ml-auto">
-              <img src="https://api.null-it.ru/images/button_next.svg"/>
+            <div class="d-flex">
+              <div class="d-none d-sm-block">
+                <img src="https://api.null-it.ru/images/salon_icon.svg"/>
+              </div>
+              <div class="salon-address ml-0 ml-sm-2">
+                <div class="title"><b>{{ $t('form.address') }}</b></div>
+                {{ salon.address }}
+              </div>
+              <div class="salon-next ml-auto d-flex flex-column">
+                <div class="d-block d-sm-none">
+                  <img src="https://api.null-it.ru/images/salon_icon.svg" width="32px"/>
+                </div>
+                <img class="mt-auto" src="https://api.null-it.ru/images/button_next.svg"/>
+              </div>
             </div>
           </div>
         </div>
@@ -162,7 +158,7 @@
               <div class="master-next ml-auto">
                 <img src="https://api.null-it.ru/images/button_next.svg"/>
               </div>
-            </div>#app
+            </div>
             <div class="master-description">
               {{ master.description }}
             </div>
@@ -584,7 +580,7 @@ label {
   margin-right: 6px;
 }
 .services_select {
-  width: calc(100% - 16px);
+  /*width: calc(100% - 16px);*/
   overflow-x: auto;
 }
 .services_select_scroll {
@@ -593,7 +589,7 @@ label {
 .service_select {
   margin-top: 16px;
   width: 222px;
-  height: 307px;
+  /*height: 307px;*/
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(45, 58, 103, 0.2);
   border-radius: 20px;
@@ -603,22 +599,10 @@ label {
 .service_select:first-child {
   margin-left: 16px;
 }
-.service_select .img {
-  width: 222px;
-  height: 124px;
-  border-radius: 20px;
-  background-position: center;
-  background-size: cover;
+.step_1 .scroll_items {
+  padding: 16px 0px;
 }
-.service_select_content {
-  padding: 16px;
-}
-.service_select_content_content {
-  height: 130px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+
 .service_select_content_description {
   padding-top: 12px;
   font-size: 14px;
@@ -630,6 +614,19 @@ label {
   -webkit-line-clamp: 5; /* number of lines to show */
   -webkit-box-orient: vertical;
 }
+
+.service_select img {
+  border-radius: 20px;
+}
+
+.service_select .card-title {
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .service_select_content_price {
   display: flex;
 }
@@ -669,10 +666,10 @@ label {
   color: #FFFFFF;
 }
 .step_2, .step_3, .step_4 {
-  background: url("https://api.null-it.ru/images/step_2_bg.svg");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: 0px -40px;
+  /*background: url("https://api.null-it.ru/images/step_2_bg.svg");*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: 100%;*/
+  /*background-position: 0px -40px;*/
   max-height: 100%;
 }
 
@@ -682,7 +679,6 @@ label {
   box-shadow: 0px 4px 20px rgba(45, 58, 103, 0.2);
   border-radius: 20px;
   margin-bottom: 16px;
-  display: flex;
 }
 .salon-address {
   margin-left: 16px;
@@ -695,7 +691,10 @@ label {
   display: flex;
   color: white;
   padding: 16px;
+  background: #8641C6;
+  border-radius: 0px 0px 20px 20px;
 }
+
 .avatar {
   width: 64px;
   height: 64px;
