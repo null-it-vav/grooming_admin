@@ -9,6 +9,7 @@ const SetPassword = () => import( '../components/auth/SetPassword.vue');
 const BaseIndex = () => import( '../components/base/Index.vue');
 const DashboardIndex = () => import( '../components/dashboard/Index');
 const CalendarIndex = () => import( '../components/calendar/Index');
+// const CalendarScheduleIndex = () => import( '../components/calendar/Schedule');
 const MastersIndex = () => import( '../components/masters/Index');
 const OrdersIndex = () => import( '../components/orders/Index');
 const SalonsIndex = () => import( '../components/salons/Index');
@@ -16,6 +17,7 @@ const ServicesIndex = () => import( '../components/services/Index');
 const PromotionsIndex = () => import( '../components/promotions/Index');
 const SettingsIndex = () => import( '../components/settings/Index');
 const AdminUsers = () => import( '../components/admin/Users');
+const ClientsIndex = () => import( '../components/clients/Index');
 
 const form = () => import('../components/form/index')
 
@@ -74,6 +76,12 @@ const routes = [
                 name: 'home.orders',
                 component: OrdersIndex,
                 meta: { roles: ['admin', 'master'], needAuth: true },
+            },
+            {
+                path: '/clients',
+                name: 'home.clients',
+                component: ClientsIndex,
+                meta: { roles: ['admin'], needAuth: true },
             },
             {
                 path: '/orders/:order_id?',

@@ -119,13 +119,14 @@ let en = {
                 how_match: "Итоговая сумма заказа:",
                 filters: {
                     master_select: "Выбрать мастера",
+                    full_schedule: "Общий календарь",
                     status_select: "Выбрать статус",
                 },
                 fields: {
                     name: 'Имя владельца',
                     phone: 'Телефон',
                     email: 'Email',
-                    nickname: 'Кличка питомца',
+                    nickname: 'Питомец',
                     comment: 'Комментарий',
                     master: 'Мастер',
                     date: 'Дата',

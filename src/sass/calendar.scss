@@ -72,11 +72,15 @@ $vista-blue: #42b983;
                 }
             }
 
-
             .day {
 
 
             }
+
+            .day.disabled {
+                background-color: #ff00001c;
+            }
+
             &:last-child {
                 .day {
                     border-bottom: $calendar-border;

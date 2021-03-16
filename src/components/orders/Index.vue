@@ -48,6 +48,7 @@
           <th>{{$t('app.components.orders.fields.date')}}</th>
           <th>{{$t('app.components.orders.fields.phone')}}</th>
           <th>{{$t('app.components.orders.fields.comment')}}</th>
+          <th>{{$t('app.components.orders.fields.services')}}</th>
           <th v-if="!master_filter">{{$t('app.components.orders.fields.master')}}</th>
           <th v-if="!status_filter">{{$t('app.components.orders.fields.status')}}</th>
           <th width="60px"></th>
@@ -55,13 +56,21 @@
       </thead>
       <tr v-for="(order, k) in orders.data" :key="k">
         <td :data-label="$t('app.components.orders.fields.name')">{{order.name}}</td>
-        <td :data-label="$t('app.components.orders.fields.nickname')">{{order.nickname}}</td>
+        <td :data-label="$t('app.components.orders.fields.nickname')">
+          {{ $t('base.service_types.'+ order.type) }}<br>
+          {{order.nickname}}
+        </td>
         <td :data-label="$t('app.components.orders.fields.date')">
           {{order.date}}  <br>
           {{order.time_start}} - {{order.time_end}}
         </td>
         <td :data-label="$t('app.components.orders.fields.phone')">{{order.phone}}</td>
         <td :data-label="$t('app.components.orders.fields.comment')">{{order.comment}}</td>
+        <td :data-label="$t('app.components.orders.fields.comment')">
+          <div v-for="(service,k) in order.services" :key="k">
+            {{service.name}}
+          </div>
+        </td>
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
         <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>

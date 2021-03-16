@@ -54,6 +54,27 @@
         </div>
         <div class="col-lg-4">
           <form-group
+              :label="$t('base.service_type')"
+              type="select"
+              required
+              :items="[
+                  { value: null, text: $t('base.service_types.select'), disabled: true },
+                  { value: 'cat', text: $t('base.service_types.cat') },
+                  { value: 'dog', text: $t('base.service_types.dog') },
+                  { value: 'other', text: $t('base.service_types.other') }
+              ]"
+
+              v-model="filter_type"
+          />
+          <div v-for="s in services" :key="s.id" class="mb-2">
+            <div class="d-flex">
+              <b-checkbox :value="s.id" v-model="order.services" size="sm"  switch/>
+              {{s.name}}
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4" v-if="order.services.length > 0">
+          <form-group
               :label="$t('app.components.orders.fields.master')"
             type="select"
             :items="masters_select"
@@ -91,28 +112,6 @@
               :errors="errors"
           />
 
-        </div>
-
-        <div class="col-lg-4">
-          <form-group
-              :label="$t('base.service_type')"
-              type="select"
-              required
-              :items="[
-                  { value: null, text: $t('base.service_types.select'), disabled: true },
-                  { value: 'cat', text: $t('base.service_types.cat') },
-                  { value: 'dog', text: $t('base.service_types.dog') },
-                  { value: 'other', text: $t('base.service_types.other') }
-              ]"
-
-              v-model="filter_type"
-          />
-          <div v-for="s in services" :key="s.id" class="mb-2">
-            <div class="d-flex">
-              <b-checkbox :value="s.id" v-model="order.services" size="sm"  switch/>
-              {{s.name}}
-            </div>
-          </div>
         </div>
         <div class="col-lg-12 d-flex mt-2">
           <button type="submit" class="m-auto btn btn-success">
@@ -221,6 +220,11 @@ export default {
     'filter_type': function (){
       this.order.services = [];
       this.loadServices()
+    },
+    'order.services': function () {
+      if (this.order.services.length > 0) {
+        this.loadByDay()
+      }
     }
   },
   created() {
@@ -278,11 +282,13 @@ export default {
       })
     },
     loadByDay(){
+      if (this.order.date)
       workingDiapasons({
         organization_id: this.auth.organization.id,
         master_id: this.order.master_id,
         type: "by_day",
-        day: this.order.date
+        day: this.order.date,
+        services: this.order.services
       }).then(response => {
 
         this.day_times = response.data

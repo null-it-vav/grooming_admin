@@ -1,22 +1,17 @@
 <template>
-  <div>
-    <div class="row mb-2">
-      <div class="col">
-
-
-<!--        <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" no-caret>-->
-<!--          <template #button-content>-->
-<!--            <a-->
-<!--                class="btn btn-purpure fa fa-plus rounded-circle"-->
-<!--            />-->
-<!--          </template>-->
-<!--          <b-dropdown-item >{{ $t('app.components.calendar.new_order') }}</b-dropdown-item>-->
-<!--          <b-dropdown-item >{{ $t('app.components.calendar.new_action') }}</b-dropdown-item>-->
-<!--        </b-dropdown>-->
-
+  <div class="card p-4">
+    <div class="row">
+      <div class="col-lg-4 mb-2">
+        <form-group
+            v-if="auth.role_list.includes('admin')"
+            custom_class="mb-0"
+            v-model="master_filter"
+            type="select"
+            :items="masters_list"
+        />
       </div>
 
-      <div class="mx-auto col  d-flex align-items-center">
+      <div class="mx-auto col-lg-4 mb-2  d-flex align-items-center" v-if="!master_filter">
 
         <i class="p-2 ml-auto fa fa-angle-left pointer" @click="calendarLeft" />
         <div class="px-2 text-center" style="width: 120px">
@@ -24,10 +19,10 @@
         </div>
         <i class="p-2 mr-auto fa fa-angle-right pointer" @click="calendarRight" />
       </div>
-      <div class="col"></div>
+      <div class="col-lg-4 mb-2"></div>
     </div>
 
-    <div id="calendar-area" class="mb-4">
+    <div id="calendar-area" class="mb-4" v-if="!master_filter">
       <div id="day-bar">
         <div>{{ $t('base.days.0') }}</div>
         <div>{{ $t('base.days.1') }}</div>
@@ -47,14 +42,22 @@
               v-for="day in week"
               :day="day"
               @daySelect="openOrdersPopup"
+              @setDayStatus="setDayStatus"
               :month_select="month"
               :count="monthOrders[year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))]"
+              :disabled="disabledDays[year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))]"
+              :can_block_day="master_filter ? true : false"
               :key="year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))"
               :attr-day="year + '-'+ monthFormat(day.format('M')) + '-' + monthFormat(day.format('D'))"
           />
         </div>
       </div>
     </div>
+
+    <scheduler v-if="master_filter" :master_filter="master_filter">
+
+    </scheduler>
+
     <orders-popup
       v-if="showOrdersPopup"
       :day="selectDay"
@@ -64,13 +67,17 @@
 </template>
 
 <script>
-import {orders} from "@/api";
+import {masters, orders, update_masters} from "@/api";
 import CalendarDay from './Day';
 import {mapGetters} from "vuex";
 import OrdersPopup from "@/components/calendar/OrdersPopup";
+import FormGroup from "@/components/base/FormGroup";
+import Scheduler from "@/components/calendar/Schedule";
 export default {
   name: "CalendarIndex",
   components: {
+    Scheduler,
+    FormGroup,
     OrdersPopup,
     CalendarDay
   },
@@ -81,6 +88,7 @@ export default {
       year: (new Date()).getFullYear(),
       month: (new Date()).getMonth() + 1,
       monthOrders: [],
+      disabledDays: [],
       months: {
         1: this.$t("base.months.1"),
         2: this.$t("base.months.2"),
@@ -94,24 +102,59 @@ export default {
         10: this.$t("base.months.10"),
         11: this.$t("base.months.11"),
         12: this.$t("base.months.12"),
-      }
+      },
+      masters: {
+        data: [],
+        page: 1,
+        per_page: 999,
+        last_page: 1,
+        total: 0,
+      },
+      master_filter: null,
     }
   },
   created() {
+    if (!this.auth.role_list.includes('admin') && this.auth.role_list.includes('master')) {
+      this.master_filter = this.auth.id
+    } else {
+      this.loadMasters()
+    }
     this.loadOrders()
   },
   watch: {
     'salon_selected.id': function(){
       this.loadOrders()
+      this.loadMasters()
     },
     'year': function () {
       this.loadOrders()
     },
     'month': function () {
       this.loadOrders()
-    }
+    },
+    'master_filter': function (){
+      this.loadOrders()
+    },
   },
   methods: {
+    setDayStatus(data) {
+      let action = 'set-disabled-day';
+
+      if (data.status == 0) action = 'delete-disabled-day';
+
+      let r = new FormData()
+      r.append('action', action)
+      r.append('date', data.day)
+
+      update_masters(this.master_filter, r)
+      .then(() => {
+        if (data.status == 0) {
+          this.$set(this.disabledDays, data.day, 0)
+        } else {
+          this.$set(this.disabledDays, data.day, 1)
+        }
+      })
+    },
     openOrdersPopup(day){
       this.showOrdersPopup = true
       this.selectDay = day
@@ -124,7 +167,23 @@ export default {
         action: 'count-by-days',
         date: this.year + ' -' + this.month,
         salon_id: this.salon_selected.id,
-      }).then((r) => { this.monthOrders = r.data.data.count_by_days })
+        master_id: this.master_filter
+      }).then((r) => {
+        this.monthOrders = r.data.data.count_by_days
+        this.disabledDays = r.data.data.disabled_days
+      })
+    },
+    loadMasters(){
+      masters({
+        page: this.masters.page,
+        qty: this.masters.per_page,
+        salon_id: this.salon_selected.id,
+        show_deleted: this.show_deleted ? 1 : 0
+      }).then(response => {
+        this.masters.data = response.data.data.masters.data
+        this.masters.total = response.data.data.masters.total
+        this.masters.last_page = response.data.data.masters.last_page
+      })
     },
     monthFormat(m){
       if (m < 10) return "0"+m;
@@ -149,13 +208,29 @@ export default {
     daySelect(day){
       var needDay = this.year + '-'+ this.monthFormat(this.month) + '-' + day
       this.selectDay = needDay;
-      console.log(needDay)
     },
   },
   computed: {
     ...mapGetters([
+      'auth',
       'salon_selected'
     ]),
+    masters_list: function (){
+      var data = [];
+      data.push({
+        value: null,
+        text: this.master_filter ? this.$t('app.components.orders.filters.full_schedule') : this.$t('app.components.orders.filters.master_select')
+      })
+
+      this.masters.data.forEach(master => {
+        data.push({
+          value: master.id,
+          text: master.name
+        })
+      })
+
+      return data
+    },
     days() {
       // Generating all days in current month
       let days = [];

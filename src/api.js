@@ -151,6 +151,11 @@ export function orders(payload){
         .then((response) => response)
 }
 
+export function order(id){
+    return axios.get(BASE_URL + "profile/orders/"+id)
+        .then((response) => response)
+}
+
 export function create_orders(organization_id, payload){
     return axios.post(BASE_URL + "clients/" + organization_id + '/orders' , payload)
         .then((response) => response)
@@ -214,5 +219,12 @@ export function admin_users(payload){
 
 export function admin_user_save(user_id, payload){
     return axios.post(BASE_URL + 'profile/users/' + user_id , payload)
+        .then((response) => response)
+}
+
+export function clients(payload) {
+    return axios.get(BASE_URL + 'profile/clients', {
+        params: payload
+    })
         .then((response) => response)
 }

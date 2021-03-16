@@ -96,6 +96,14 @@
               <span class="mx-3">{{ $t('app.titles.home.orders') }}</span>
             </router-link>
             <router-link
+                v-if="auth.role_list.includes('admin') & (salons.length > 0)"
+                :to="{ name: 'home.clients' }" class="list-group-item"
+            >
+              <i class="fa fa-users" />
+              <span class="mx-3">{{ $t('app.titles.home.clients') }}</span>
+            </router-link>
+
+            <router-link
                 v-if="auth.role_list.includes('admin')"
                 :to="{ name: 'home.salons' }" class="list-group-item"
             >

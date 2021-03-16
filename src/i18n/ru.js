@@ -129,19 +129,21 @@ let ru = {
                 how_match: "Итоговая сумма заказа:",
                 filters: {
                     master_select: "Выбрать мастера",
+                    full_schedule: "Общий календарь",
                     status_select: "Выбрать статус",
                 },
                 fields: {
                     name: 'Имя владельца',
                     phone: 'Телефон',
                     email: 'Email',
-                    nickname: 'Кличка питомца',
+                    nickname: 'Питомец',
                     comment: 'Комментарий',
                     master: 'Мастер',
                     date: 'Дата',
                     time_start: 'Время',
                     status: 'Статус',
                     total_price: 'Итого, цена',
+                    services: 'Услуги',
                 },
                 statuses: {
                     NEW: 'Новый',
@@ -189,7 +191,9 @@ let ru = {
                     orders: {
                         title: 'Список записей'
                     }
-                }
+                },
+                enabled: 'Разблокировать день',
+                disabled: 'Заблокировать день'
             },
             user: {
                 fields: {
@@ -197,6 +201,16 @@ let ru = {
                     get_telegram_id: 'Для получения id напишите нашему боту команду /start: ',
                     email_notifications: 'Получать уведомления на почту',
                     telegram_notifications: 'Получать уведомления в Telegram',
+                }
+            },
+            clients: {
+                show_3m_before: "Не были более 3х месяцев",
+                fields: {
+                    phone: "Телефон",
+                    name: "Имя",
+                    nickname: "Кличка",
+                    last_order: "Последний визит",
+                    last_services: "Последние услуги"
                 }
             }
         },
@@ -209,6 +223,7 @@ let ru = {
                 calendar: 'Календарь',
                 masters: 'Мастера',
                 orders: 'Записи',
+                clients: 'Клиенты',
                 salons: 'Салоны',
                 services: 'Услуги',
                 promotions: 'Акции',
@@ -253,6 +268,7 @@ let ru = {
         service_type: "Тип услуги",
         select: "Выбрать...",
         service_types: {
+            null: "",
             select: 'Выбрать..',
             cat: 'Кошка',
             dog: 'Собака',

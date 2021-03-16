@@ -38,8 +38,9 @@ export default {
     day() {
       var day = this.$moment().format('y-MM-DD')
       return day
-    }
-  }
+    },
+  },
+
 }
 </script>
 
