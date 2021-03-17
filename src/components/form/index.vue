@@ -181,7 +181,7 @@
             id="scroll"
         >
           <div class="master">
-            <div class="master-card d-flex">
+            <div class="master-card d-flex" @click="showMenu = false">
               <div>
                 <img :src="master_select.photo" class="avatar"/>
               </div>
@@ -196,7 +196,7 @@
               <div class="date_select_icon">
                 <img src="https://api.null-it.ru/images/step_4_calendar.svg" />
               </div>
-              <div class="date_select_text pointer">
+              <div class="date_select_text pointer" @click="showMenu = false">
                 <v-date-picker
                     v-model="select_date"
                     :attributes="date_attributes"
@@ -235,7 +235,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" @click="showMenu = false">
             <label>{{ $t('form.order.name') }}</label>
             <input
                 required
@@ -246,7 +246,7 @@
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" @click="showMenu = false">
             <label>{{ $t('form.order.nickname') }}</label>
             <input
                 required
@@ -257,7 +257,7 @@
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" @click="showMenu = false">
             <label>{{ $t('form.order.phone') }}</label>
             <input
                 required
@@ -269,7 +269,7 @@
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" @click="showMenu = false">
             <label>{{ $t('form.order.email') }}</label>
             <input
                 required
@@ -280,7 +280,7 @@
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" @click="showMenu = false">
             <label>{{ $t('form.order.comment') }}</label>
             <textarea
                 name="comment"
@@ -393,6 +393,9 @@ export default {
       this.services_select = this.services_select.filter(el => el !== service.id)
     },
     to_step(step){
+      this.select_date = null
+      this.selected_time = null
+      this.showMenu = false
       this.step = step
       if (step == 3){
         //выбор мастера
@@ -440,15 +443,17 @@ export default {
           })
     },
     loadByDay(){
-      this.$axios.get(this.base_url + this.organization_id + '/masters/' + this.master_select.id + '/working-diapasons', {
-        params: {
-          type: 'by_day',
-          day: this.select_date
-        }
-      })
-          .then((response) => {
-            this.day_times = response.data
-          })
+      if (this.select_date)
+        this.$axios.get(this.base_url + this.organization_id + '/masters/' + this.master_select.id + '/working-diapasons', {
+          params: {
+            type: 'by_day',
+            day: this.select_date,
+            services: this.services_select
+          }
+        })
+            .then((response) => {
+              this.day_times = response.data
+            })
     },
     toggleMenu() {
       this.showMenu = !this.showMenu;

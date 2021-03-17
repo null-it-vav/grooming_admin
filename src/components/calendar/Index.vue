@@ -123,6 +123,7 @@ export default {
   },
   watch: {
     'salon_selected.id': function(){
+      this.master_filter = null
       this.loadOrders()
       this.loadMasters()
     },
@@ -183,6 +184,9 @@ export default {
         this.masters.data = response.data.data.masters.data
         this.masters.total = response.data.data.masters.total
         this.masters.last_page = response.data.data.masters.last_page
+        if (this.masters.total == 1) {
+          this.master_filter = this.masters.data[0].id
+        }
       })
     },
     monthFormat(m){

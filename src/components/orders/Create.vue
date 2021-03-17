@@ -72,6 +72,33 @@
               {{s.name}}
             </div>
           </div>
+
+          <form-group
+              name="duration"
+              v-if="filter_type"
+              :label="$t('app.components.orders.fields.duration')"
+              type="select"
+              v-model="order.duration"
+              :items="[
+                  { value: 30, text: $t('base.durations.30') },
+                  { value: 60, text: $t('base.durations.60') },
+                  { value: 90, text: $t('base.durations.90') },
+                  { value: 120, text: $t('base.durations.120') },
+                  { value: 150, text: $t('base.durations.150') },
+                  { value: 180, text: $t('base.durations.180') },
+                  { value: 210, text: $t('base.durations.210') },
+                  { value: 240, text: $t('base.durations.240') },
+                  { value: 270, text: $t('base.durations.270') },
+                  { value: 300, text: $t('base.durations.300') },
+                  { value: 330, text: $t('base.durations.330') },
+                  { value: 360, text: $t('base.durations.360') },
+                  { value: 390, text: $t('base.durations.390') },
+                  { value: 420, text: $t('base.durations.420') },
+                  { value: 450, text: $t('base.durations.450') },
+                  { value: 480, text: $t('base.durations.480') },
+              ]"
+          />
+
         </div>
         <div class="col-lg-4" v-if="order.services.length > 0">
           <form-group
@@ -148,7 +175,8 @@ export default {
         time_start: "",
         firebase_token: "",
         master_id: null,
-        services: []
+        services: [],
+        duration: 0,
       },
       wdList: [],
       success_error: {
@@ -222,7 +250,19 @@ export default {
       this.loadServices()
     },
     'order.services': function () {
-      if (this.order.services.length > 0) {
+      let duration = 0;
+      this.services.forEach(row => {
+        if (this.order.services.includes(row.id)){
+          duration += row.duration
+        }
+      })
+      this.order.duration = duration;
+      // if (this.order.services.length > 0) {
+      //   this.loadByDay()
+      // }
+    },
+    'order.duration': function (){
+      if (this.order.date) {
         this.loadByDay()
       }
     }
@@ -288,7 +328,8 @@ export default {
         master_id: this.order.master_id,
         type: "by_day",
         day: this.order.date,
-        services: this.order.services
+        services: this.order.services,
+        duration: this.order.duration
       }).then(response => {
 
         this.day_times = response.data

@@ -3,7 +3,7 @@
     <div v-if="title">
       <div class="card-title">{{ title }}</div>
     </div>
-    <div class="row mb-4">
+    <div class="row mb-4" v-if="!$route.params.order_id">
       <div class="col-lg-3" v-if="auth.role_list.includes('admin')">
         <form-group
             v-model="master_filter"
@@ -38,6 +38,16 @@
               @click="showCreatePopup = true"
           />
         </div>
+      </div>
+    </div>
+    <div class="row mb-4" v-else>
+      <div class="col-lg-3">
+        <router-link
+            :to="{ name: 'home.orders' }"
+            class="btn btn-purpure"
+        >
+          {{ $t('app.components.orders.to_all') }}
+        </router-link>
       </div>
     </div>
     <table class="table table-bordered table-adaptive" v-if="orders.data.length > 0">
@@ -232,6 +242,9 @@ export default {
     },
     'orders.per_page': function (){
       this.loadOrders()
+    },
+    '$route.params.order_id': function (){
+      this.loadOrders()
     }
   },
   created() {
@@ -275,6 +288,7 @@ export default {
         master_id: this.master_filter,
         start: this.filter_start ? this.filter_start : this.day,
         end: this.filter_end ? this.filter_end : this.day,
+        order_id: this.$route.params.order_id
       }).then(response => {
         this.orders.data = response.data.data.orders.data
         this.orders.total = response.data.data.orders.total

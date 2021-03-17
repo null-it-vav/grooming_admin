@@ -54,12 +54,66 @@
         </div>
         <div class="col-lg-4">
           <form-group
+              :label="$t('base.service_type')"
+              type="select"
+              :items="[
+                  { value: null, text: $t('base.service_types.select'), disabled: true },
+                  { value: 'cat', text: $t('base.service_types.cat') },
+                  { value: 'dog', text: $t('base.service_types.dog') },
+                  { value: 'other', text: $t('base.service_types.other') }
+              ]"
+              required
+
+              v-model="filter_type"
+          />
+          <div v-for="s in services" :key="s.id" class="mb-2">
+            <div class="d-flex">
+              <b-checkbox :value="s.id" v-model="services_select" size="sm"  switch/>
+              {{s.name}}
+            </div>
+          </div>
+
+          <form-group
+              name="duration"
+              :label="$t('app.components.orders.fields.duration')"
+              type="select"
+              v-model="order.duration"
+              :items="[
+                  { value: 30, text: $t('base.durations.30') },
+                  { value: 60, text: $t('base.durations.60') },
+                  { value: 90, text: $t('base.durations.90') },
+                  { value: 120, text: $t('base.durations.120') },
+                  { value: 150, text: $t('base.durations.150') },
+                  { value: 180, text: $t('base.durations.180') },
+                  { value: 210, text: $t('base.durations.210') },
+                  { value: 240, text: $t('base.durations.240') },
+                  { value: 270, text: $t('base.durations.270') },
+                  { value: 300, text: $t('base.durations.300') },
+                  { value: 330, text: $t('base.durations.330') },
+                  { value: 360, text: $t('base.durations.360') },
+                  { value: 390, text: $t('base.durations.390') },
+                  { value: 420, text: $t('base.durations.420') },
+                  { value: 450, text: $t('base.durations.450') },
+                  { value: 480, text: $t('base.durations.480') },
+              ]"
+          />
+
+          <form-group
+              :label="$t('app.components.orders.fields.total_price')"
+              v-model="order.total_price"
+              type="number"
+              name="total_price"
+              :errors="errors"
+          />
+        </div>
+        <div class="col-lg-4">
+          <form-group
               :label="$t('app.components.orders.fields.master')"
-            type="select"
-            :items="masters_select"
-            required
-            :errors="errors"
-            v-model="order.master_id"
+              type="select"
+              :items="masters_select"
+              required
+              :errors="errors"
+              v-model="order.master_id"
           />
 
           <div v-if="order.master_id" class="form-group">
@@ -90,36 +144,6 @@
               :errors="errors"
           />
 
-        </div>
-
-        <div class="col-lg-4">
-          <form-group
-              :label="$t('base.service_type')"
-              type="select"
-              :items="[
-                  { value: null, text: $t('base.service_types.select'), disabled: true },
-                  { value: 'cat', text: $t('base.service_types.cat') },
-                  { value: 'dog', text: $t('base.service_types.dog') },
-                  { value: 'other', text: $t('base.service_types.other') }
-              ]"
-              required
-
-              v-model="filter_type"
-          />
-          <div v-for="s in services" :key="s.id" class="mb-2">
-            <div class="d-flex">
-              <b-checkbox :value="s.id" v-model="services_select" size="sm"  switch/>
-              {{s.name}}
-            </div>
-          </div>
-
-          <form-group
-              :label="$t('app.components.orders.fields.total_price')"
-              v-model="order.total_price"
-              type="number"
-              name="total_price"
-              :errors="errors"
-          />
         </div>
         <div class="col-lg-12 d-flex mt-2">
           <button type="submit" class="m-auto btn btn-success">
@@ -161,7 +185,7 @@ export default {
       filter_type: this.order.type,
       services: [],
       services_select: [],
-      old_date: this.order.date
+      old_date: this.order.date,
     }
   },
   computed: {
@@ -223,6 +247,24 @@ export default {
     'filter_type': function (){
       this.services_select = [];
       this.loadServices()
+    },
+    'order.duration': function (){
+      if (this.order.date) {
+        this.loadByDay()
+      }
+    },
+    'services_select': function () {
+      let duration = 0;
+      this.services.forEach(row => {
+        if (this.services_select.includes(row.id)){
+          duration += row.duration
+        }
+      })
+      if (duration)
+        this.order.duration = duration;
+      // if (this.order.services.length > 0) {
+      //   this.loadByDay()
+      // }
     }
   },
   created() {
@@ -247,6 +289,7 @@ export default {
       data.master_id = this.order.master_id
       data.date = this.order.date
       data.time_start = this.order.time_start
+      data.duration = this.order.duration
       data.total_price = this.order.total_price
       data.services = this.services_select
 
@@ -305,7 +348,9 @@ export default {
         master_id: this.order.master_id,
         type: "by_day",
         day: this.order.date,
-        without_order_id: this.order.id
+        without_order_id: this.order.id,
+        services: this.order.services.map((row) => row.id),
+        duration: this.order.duration
       }).then(response => {
         this.day_times = response.data
 

@@ -15,7 +15,7 @@
     </div>
     <div
         ref="scheduler"
-        class="h-100"
+        style="height: calc(100% - 10px) !important;"
     >
     </div>
 

@@ -5,6 +5,14 @@
         mode="date"
         is-range
         :model-config="modelConfig"
+        :attributes="[{
+          key: 'today',
+          highlight: {
+            color: 'purple',
+            fillMode: 'solid',
+          },
+          dates: new Date(),
+          }]"
     >
       <template v-slot="{ inputValue, inputEvents }">
         <div class="d-flex align-items-center">
