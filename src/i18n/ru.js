@@ -200,7 +200,7 @@ let ru = {
             user: {
                 fields: {
                     telegram_id: 'Telegram id, указав его вы сможете получать уведомления о записях',
-                    get_telegram_id: 'Для получения id напишите нашему боту команду /start: ',
+                    get_telegram_id: 'Для получения id напишите нашему боту в Telegram команду /start: ',
                     email_notifications: 'Получать уведомления на почту',
                     telegram_notifications: 'Получать уведомления в Telegram',
                 }

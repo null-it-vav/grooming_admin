@@ -34,7 +34,12 @@
               v-model="auth.telegram_chat_id"
               :errors="errors"
           />
-          <b>{{$t('app.components.user.fields.get_telegram_id')}} <a target="_blank" href="https://t.me/GroomingBoxBot">@GroomingBoxBot</a></b>
+          <div v-if="!demo">
+            <b>{{$t('app.components.user.fields.get_telegram_id')}} <a target="_blank" href="https://t.me/GroomingBoxBot">@GroomingBoxBot</a></b>
+          </div>
+          <div v-else>
+            <b>{{$t('app.components.user.fields.get_telegram_id')}} <a target="_blank" href="https://t.me/GroomingBoxDemoBot">@GroomingBoxDemoBot</a></b>
+          </div>
         </div>
 
         <div class="col-lg-12 d-flex mt-2">
@@ -68,7 +73,10 @@ name: "UserSettingsPopup",
   computed: {
     ...mapGetters([
       'auth'
-    ])
+    ]),
+    demo() {
+      return process.env.VUE_APP_DEMO ? true : false
+    }
   },
   methods: {
     submit(){
