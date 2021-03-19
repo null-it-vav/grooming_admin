@@ -88,6 +88,15 @@ export function delete_salon(id){
         .then((response) => response)
 }
 
+export function delete_salon_confirm(id){
+    var payload = {
+        _method: 'delete',
+        confirm: true
+    }
+
+    return axios.post(BASE_URL + "profile/salons/" + id , payload)
+        .then((response) => response)
+}
 
 export function services(payload){
     return axios.get(BASE_URL + "profile/services", {

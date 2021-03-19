@@ -39,7 +39,11 @@
       <h4 class="my-5">{{ $t('app.components.salons.create_first') }}</h4>
     </div>
 
-
+    <div class="col-lg-12 mb-2 alert position-fixed fixed-bottom">
+      <message-success-error
+          :show="success_error"
+      />
+    </div>
 
     <b-pagination
         v-if="salons.last_page > 1"
@@ -60,6 +64,13 @@
         :salon="salon"
         @closePopup="closeUpdatePopup"
     />
+
+    <delete-salon-popup
+      v-if="showDeletePopup"
+      :salon="salon"
+      @closePopup="closeDeletePopup"
+    />
+
   </div>
 </template>
 
@@ -69,11 +80,13 @@ import Create from "@/components/salons/Create";
 import Update from "@/components/salons/Update";
 import deepClone from 'clonedeep';
 import store from "@/store/app";
+import MessageSuccessError from "@/components/base/SuccessError";
+import DeleteSalonPopup from "@/components/salons/DeleteSalonPopup";
 
 
 export default {
   name: "Index",
-  components: {Update, Create},
+  components: {DeleteSalonPopup, MessageSuccessError, Update, Create},
   data() {
     return {
       page_load: false,
@@ -84,8 +97,14 @@ export default {
         last_page: 1,
         total: 0,
       },
+      success_error: {
+        success: false,
+        error: false
+      },
+      salon: {},
       showCreatePopup: false,
-      showUpdatePopup: false
+      showUpdatePopup: false,
+      showDeletePopup: false,
     }
   },
   created() {
@@ -120,12 +139,24 @@ export default {
       delete_salon(salon.id).then(() => {
         store.dispatch('getAuth').then(() => {})
         this.loadSalons()
+      }).catch((error) => {
+        if (error.response?.data?.errors) this.errors = error.response?.data?.errors
+        // this.success_error.error = true
+        if (error.response?.data?.code == 2) {
+          //если в салоне есть мастера и записи
+          this.salon = deepClone(salon)
+          this.showDeletePopup = true
+        }
       })
 
     },
     openUpdatePopup(salon){
       this.showUpdatePopup = true
       this.salon = deepClone(salon)
+    },
+    closeDeletePopup() {
+      this.showDeletePopup = false
+      this.loadSalons()
     },
     closeUpdatePopup(){
       this.showUpdatePopup = false
