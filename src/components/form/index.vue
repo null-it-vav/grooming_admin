@@ -330,7 +330,8 @@ export default {
           dates: [],
         }
       ],
-      base_url: "https://api.null-it.ru/api/v1/clients/",
+      // base_url: "https://api.null-it.ru/api/v1/clients/",
+      base_url: "/api/v1/clients/",
       day_times: [],
       showMenu: false,
       selected_time: null,

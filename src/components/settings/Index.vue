@@ -50,32 +50,32 @@
                 :errors="errors"
             />
           </div>
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.schedule_step')"
-                type="select"
-                :items="[
-                      { value: 30, text: 30 },
-                      { value: 60, text: 60 },
-                      { value: 90, text: 90 },
-                      { value: 120, text: 120 },
-                  ]"
-                name="schedule_step"
-                required
-                v-model="settings.schedule_step"
-                :errors="errors"
-            />
-          </div>
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.timezone')"
-                type="text"
-                name="timezone"
-                disabled
-                v-model="settings.timezone"
-                :errors="errors"
-            />
-          </div>
+<!--          <div class="col-lg-6">-->
+<!--            <form-group-->
+<!--                :label="$t('app.components.settings.schedule_step')"-->
+<!--                type="select"-->
+<!--                :items="[-->
+<!--                      { value: 30, text: 30 },-->
+<!--                      { value: 60, text: 60 },-->
+<!--                      { value: 90, text: 90 },-->
+<!--                      { value: 120, text: 120 },-->
+<!--                  ]"-->
+<!--                name="schedule_step"-->
+<!--                required-->
+<!--                v-model="settings.schedule_step"-->
+<!--                :errors="errors"-->
+<!--            />-->
+<!--          </div>-->
+<!--          <div class="col-lg-6">-->
+<!--            <form-group-->
+<!--                :label="$t('app.components.settings.timezone')"-->
+<!--                type="text"-->
+<!--                name="timezone"-->
+<!--                disabled-->
+<!--                v-model="settings.timezone"-->
+<!--                :errors="errors"-->
+<!--            />-->
+<!--          </div>-->
           <div class="col-lg-6">
 <!--            <form-group-->
 <!--                :label="$t('app.components.settings.lang')"-->

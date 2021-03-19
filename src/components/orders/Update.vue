@@ -134,15 +134,29 @@
               </template>
             </v-date-picker>
           </div>
+
+          <div v-if="order.date && times.length == 0 && !times_load" class="text-danger">
+            {{ $t('app.components.orders.day_full') }}
+          </div>
           <form-group
               :label="$t('app.components.orders.fields.time_start')"
-              v-if="order.date"
+              v-if="order.date && times.length > 0"
               v-model="order.time_start"
               type="select"
               required
               :items="times"
               :errors="errors"
           />
+
+<!--          <form-group-->
+<!--              :label="$t('app.components.orders.fields.time_start')"-->
+<!--              v-if="order.date"-->
+<!--              v-model="order.time_start"-->
+<!--              type="select"-->
+<!--              required-->
+<!--              :items="times"-->
+<!--              :errors="errors"-->
+<!--          />-->
 
         </div>
         <div class="col-lg-12 d-flex mt-2">
@@ -186,6 +200,7 @@ export default {
       services: [],
       services_select: [],
       old_date: this.order.date,
+      times_load: true
     }
   },
   computed: {
@@ -243,6 +258,8 @@ export default {
     'select_date': function (){
       this.order.date = format('yyyy-MM-dd', this.select_date)
       this.loadByDay()
+      this.$set(this.order, 'time_start', null)
+      this.$set(this.order, 'time_end', null)
     },
     'filter_type': function (){
       this.services_select = [];
@@ -250,6 +267,7 @@ export default {
     },
     'order.duration': function (){
       if (this.order.date) {
+        this.loadDates()
         this.loadByDay()
       }
     },
@@ -267,12 +285,13 @@ export default {
       // }
     }
   },
-  created() {
-    this.loadMasters()
-    this.loadDates()
-    this.loadByDay()
-    this.loadServices()
-
+  async created() {
+    this.times_load = true
+    await this.loadMasters()
+    await this.loadDates()
+    await this.loadByDay()
+    await this.loadServices()
+    this.times_load = false
     this.order.services.forEach(row => {
       this.services_select.push(row.id)
     })
@@ -312,53 +331,57 @@ export default {
     closePopup() {
       this.$emit('closePopup');
     },
-    loadMasters(){
+    async loadMasters(){
       masters({
         page: 1,
         qty: 999,
         salon_id: this.salon_selected.id
       }).then(response => {
         this.masters = response.data.data.masters.data
+      }).catch(() => {
       })
     },
 
-    loadServices(){
+    async loadServices(){
       services({
         page: 1,
         qty: 999,
         type: this.filter_type
       }).then(response => {
         this.services = response.data.data.services.data
+      }).catch(() => {
       })
     },
 
-    loadDates(){
+    async loadDates(){
       workingDiapasons({
         organization_id: this.auth.organization.id,
         master_id: this.order.master_id,
-        type: "days"
+        type: "days",
+        services: this.order.services,
+        duration: this.order.duration
       }).then(response => {
-
         this.wdList = response.data
+      }).catch(() => {
       })
     },
-    loadByDay(){
+    async loadByDay(){
       workingDiapasons({
         organization_id: this.auth.organization.id,
         master_id: this.order.master_id,
         type: "by_day",
         day: this.order.date,
-        without_order_id: this.order.id,
+        exclude_order_id: this.order.id,
         services: this.order.services.map((row) => row.id),
         duration: this.order.duration
       }).then(response => {
         this.day_times = response.data
-
-        if (this.old_date == this.order.date){
-          this.day_times.unshift({
-            time: this.order.time_start
-          })
-        }
+        // if (this.old_date == this.order.date){
+        //   this.day_times.unshift({
+        //     time: this.order.time_start
+        //   })
+        // }
+      }).catch(() => {
       })
     },
     allowedDates(val) {

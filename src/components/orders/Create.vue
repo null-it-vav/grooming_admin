@@ -129,9 +129,12 @@
               </template>
             </v-date-picker>
           </div>
+          <div v-if="order.date && times.length == 0 && !times_load" class="text-danger">
+            {{ $t('app.components.orders.day_full') }}
+          </div>
           <form-group
               :label="$t('app.components.orders.fields.time_start')"
-              v-if="order.date"
+              v-if="order.date && times.length > 0"
               v-model="order.time_start"
               type="select"
               required
@@ -187,6 +190,7 @@ export default {
       day_times: [],
       filter_type: null,
       services: [],
+      times_load: false
     }
   },
   computed: {
@@ -264,6 +268,8 @@ export default {
     'order.duration': function (){
       if (this.order.date) {
         this.loadByDay()
+      }else if (this.order.master_id) {
+        this.loadDates()
       }
     }
   },
@@ -292,48 +298,66 @@ export default {
       this.$emit('closePopup');
     },
     loadMasters(){
+      this.times_load = true
       masters({
         page: 1,
         qty: 999,
         salon_id: this.salon_selected.id
       }).then(response => {
+        this.times_load = false
         this.masters = response.data.data.masters.data
+      }).catch(() => {
+        this.times_load = false
       })
     },
 
     loadServices(){
+      this.times_load = true
       services({
         page: 1,
         qty: 999,
         type: this.filter_type
       }).then(response => {
+        this.times_load = false
         this.services = response.data.data.services.data
+      }).catch(() => {
+        this.times_load = false
       })
     },
 
     loadDates(){
+      this.times_load = true
       workingDiapasons({
         organization_id: this.auth.organization.id,
         master_id: this.order.master_id,
-        type: "days"
-      }).then(response => {
-
-        this.wdList = response.data
-      })
-    },
-    loadByDay(){
-      if (this.order.date)
-      workingDiapasons({
-        organization_id: this.auth.organization.id,
-        master_id: this.order.master_id,
-        type: "by_day",
-        day: this.order.date,
+        type: "days",
         services: this.order.services,
         duration: this.order.duration
       }).then(response => {
-
-        this.day_times = response.data
+        this.times_load = false
+        this.wdList = response.data
+      }).catch(() => {
+        this.times_load = false
       })
+    },
+    loadByDay(){
+      if (this.order.date) {
+        this.times_load = true
+        workingDiapasons({
+          organization_id: this.auth.organization.id,
+          master_id: this.order.master_id,
+          type: "by_day",
+          day: this.order.date,
+          services: this.order.services,
+          duration: this.order.duration
+        }).then(response => {
+          this.times_load = false
+          this.day_times = response.data
+        }).catch(() => {
+          this.times_load = false
+        })
+      }
+
     },
     allowedDates(val) {
       return this.wdAllowedDates.find(item=> item === val)
