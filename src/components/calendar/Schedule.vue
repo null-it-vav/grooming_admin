@@ -29,7 +29,7 @@
         v-if="viewMenu"
         id="right-click-menu"
         :style="{
-            top:top, left:left
+            top:top, left:left, right:right
           }"
     >
       <ul
@@ -73,8 +73,9 @@ export default {
       viewMenu: false,
       viewMenuDay: null,
       days_disabled: [],
-      top: '0px',
-      left: '0px',
+      top: null,
+      left: null,
+      right: null,
       week: ""
     }
   },
@@ -144,8 +145,19 @@ export default {
           this.viewMenu = false;
         } else {
           this.viewMenuDay = date
+
           this.top = ev.clientY+5 + 'px';
-          this.left = ev.clientX+5 + 'px';
+
+          if (ev.clientX > (window.outerWidth / 2)) {
+            this.left = null;
+            this.right = (window.outerWidth - ev.clientX) + 'px'
+          } else {
+            this.left = ev.clientX+5 + 'px';
+            this.right = null
+          }
+
+
+
           this.viewMenu = true;
         }
       }
@@ -325,7 +337,7 @@ export default {
 #right-click-menu li {
   border-bottom: 1px solid #E0E0E0;
   margin: 0;
-  padding: 5px 35px;
+  padding: 5px 14px;
 }
 
 #right-click-menu li:hover:first-child {
