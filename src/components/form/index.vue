@@ -433,7 +433,8 @@ export default {
 
       this.$axios.get(this.base_url + this.organization_id + '/masters/' + master.id + '/working-diapasons', {
         params: {
-          type: 'days'
+          type: 'days',
+          services: this.services_select
         }
       })
           .then((response) => {
@@ -855,5 +856,8 @@ li {
 .box .description {
   color: #90939D;
   margin-bottom: 32px;
+}
+#usedesk-messenger {
+  display: none;
 }
 </style>
