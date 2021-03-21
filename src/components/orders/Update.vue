@@ -358,7 +358,7 @@ export default {
         organization_id: this.auth.organization.id,
         master_id: this.order.master_id,
         type: "days",
-        services: this.order.services,
+        services: this.order.services.map((row) => row.id),
         duration: this.order.duration
       }).then(response => {
         this.wdList = response.data

@@ -210,6 +210,7 @@
 
       <cropper
           v-if="cropped && url"
+          ref="cropper"
           class="cropper mt-3"
           :src="url"
           :stencil-props="{
@@ -218,7 +219,9 @@
           @change="change"
       ></cropper>
 
-      <div v-if="cropped && crop_file_size_mb">
+      <div v-if="cropped && crop_file_size_mb" class="mt-2 d-flex align-content-center">
+        <img src="~@/assets/undo.svg" class="pointer mr-2" @click="rotate(-90)" width="15px" />
+        <img src="~@/assets/redo.svg" class="pointer mr-2" @click="rotate(90)" width="15px" />
         {{ $t('base.file_size', {size : crop_file_size_mb}) }}
       </div>
     </div>
@@ -313,6 +316,9 @@ export default {
     },
   },
   methods: {
+    rotate(angle) {
+      this.$refs.cropper.rotate(angle);
+    },
     // eslint-disable-next-line no-unused-vars
     change({coordinates, canvas}){
       // var file = this.srcToFile(canvas.toDataURL(), 'photo', 'image/png');
@@ -323,7 +329,6 @@ export default {
 
       canvas.toBlob((blob) => {
         var file = new File([blob], "crop.png", { type: "image/png" })
-        console.log(file.size);
         this.crop_file_size_mb = Math.round(file.size / 1024 / 1024 * 10) / 10
         this.$emit('set_crop_image', file)
       }, 'image/png');
