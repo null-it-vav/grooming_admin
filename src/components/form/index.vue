@@ -115,17 +115,17 @@
               :key="k"
           >
             <div class="d-flex">
-              <div class="d-none d-sm-block">
-                <img src="https://api.null-it.ru/images/salon_icon.svg"/>
-              </div>
+<!--              <div class="d-none d-sm-block">-->
+<!--                <img src="https://api.null-it.ru/images/salon_icon.svg"/>-->
+<!--              </div>-->
               <div class="salon-address ml-0 ml-sm-2">
                 <div class="title"><b>{{ $t('form.address') }}</b></div>
                 {{ salon.address }}
               </div>
               <div class="salon-next ml-auto d-flex flex-column">
-                <div class="d-block d-sm-none">
-                  <img src="https://api.null-it.ru/images/salon_icon.svg" width="32px"/>
-                </div>
+<!--                <div class="d-block d-sm-none">-->
+<!--                  <img src="https://api.null-it.ru/images/salon_icon.svg" width="32px"/>-->
+<!--                </div>-->
                 <img class="mt-auto" src="https://api.null-it.ru/images/button_next.svg"/>
               </div>
             </div>
