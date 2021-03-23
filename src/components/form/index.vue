@@ -126,7 +126,7 @@
 <!--                <div class="d-block d-sm-none">-->
 <!--                  <img src="https://api.null-it.ru/images/salon_icon.svg" width="32px"/>-->
 <!--                </div>-->
-                <img class="mt-auto" src="https://api.null-it.ru/images/button_next.svg"/>
+                <img class="m-auto" src="https://api.null-it.ru/images/button_next.svg"/>
               </div>
             </div>
           </div>
