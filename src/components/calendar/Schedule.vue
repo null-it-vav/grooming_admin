@@ -135,6 +135,16 @@ export default {
     // eslint-disable-next-line no-undef
     scheduler.config.last_hour = this.auth.organization.min_first_last_hour.last_hour
 
+    // eslint-disable-next-line no-undef
+    scheduler.templates.hour_scale = function(date){
+      // eslint-disable-next-line no-undef
+      console.log(date);
+      // eslint-disable-next-line no-undef
+      //return scheduler.date.date_to_str(scheduler.config.hour_date)(date);
+      // eslint-disable-next-line no-undef
+      return date.getHours() + " - " + (date.getHours() + 1)
+    };
+
 
     // eslint-disable-next-line no-undef
     scheduler.attachEvent("onEmptyClick", (day, ev) => {
