@@ -201,7 +201,9 @@ let ru = {
                     }
                 },
                 enabled: 'Разблокировать день',
-                disabled: 'Заблокировать день'
+                disabled: 'Заблокировать день',
+                disabled_time: 'Заблокировать время',
+                disabled_save: 'Заблокировать',
             },
             user: {
                 fields: {

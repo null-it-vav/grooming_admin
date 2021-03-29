@@ -1,6 +1,6 @@
 <template>
   <div :class="custom_class ? custom_class : 'mb-3'">
-    <label v-if="label && group">{{ label }}</label>
+    <label v-if="label && group">{{ label }} <span v-if='required == ""' class="text-danger">*</span></label>
 
     <div
         :class="[
@@ -10,7 +10,7 @@
             (append_name in errors) ? 'is-invalid' : '',
         ]"
     >
-      <label v-if="label && !group">{{ label }}</label>
+      <label v-if="label && !group">{{ label }} <span v-if='required == ""' class="text-danger">*</span></label>
 
       <slot name="prepend">
       </slot>

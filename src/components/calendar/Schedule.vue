@@ -25,6 +25,15 @@
         @closePopup="closeUpdatePopup"
     />
 
+    <create-disabled-time
+      v-if="showCreateDisabledTime"
+      :day="viewMenuDay"
+      :first_hour="auth.organization.min_first_last_hour.first_hour"
+      :last_hour="auth.organization.min_first_last_hour.last_hour"
+      :master_id="this.master_filter"
+      @closePopup="closeCreateBlockTime"
+    />
+
     <div
         v-if="viewMenu"
         id="right-click-menu"
@@ -36,8 +45,9 @@
           v-on:blur="closeMenu"
       >
         <li>{{viewMenuDay}}</li>
-        <li v-if="days_disabled.includes(viewMenuDay)" @click="setDayStatus(0)" class="pointer">Разблокировать день</li>
-        <li v-else class="pointer" @click="setDayStatus(1)" >Заблокировать день</li>
+        <li v-if="days_disabled.includes(viewMenuDay)" @click="setDayStatus(0)" class="pointer">{{ $t('app.components.calendar.enabled') }}</li>
+        <li v-else class="pointer" @click="setDayStatus(1)">{{ $t('app.components.calendar.disabled') }}</li>
+        <li class="pointer" @click="createBlockTime()">{{ $t('app.components.calendar.disabled_time') }}</li>
       </ul>
     </div>
 
@@ -48,13 +58,14 @@
 import "dhtmlx-scheduler";
 import "dhtmlx-scheduler/codebase/ext/dhtmlxscheduler_limit"
 import "dhtmlx-scheduler/codebase/locale/locale_ru"
-import {masters, order, orders, update_masters, update_order} from "@/api";
+import {masters, order, orders, update_masters, update_order, delete_order} from "@/api";
 import {mapGetters} from "vuex";
 import Update from "@/components/orders/Update";
+import CreateDisabledTime from "@/components/calendar/CreateDisabledTime";
 
 export default {
   name: 'scheduler',
-  components: {Update},
+  components: {CreateDisabledTime, Update},
   props: {
     master_filter: {}
   },
@@ -76,7 +87,8 @@ export default {
       top: null,
       left: null,
       right: null,
-      week: ""
+      week: "",
+      showCreateDisabledTime: false,
     }
   },
   watch: {
@@ -138,7 +150,7 @@ export default {
     // eslint-disable-next-line no-undef
     scheduler.templates.hour_scale = function(date){
       // eslint-disable-next-line no-undef
-      console.log(date);
+      //console.log(date);
       // eslint-disable-next-line no-undef
       //return scheduler.date.date_to_str(scheduler.config.hour_date)(date);
       // eslint-disable-next-line no-undef
@@ -195,10 +207,17 @@ export default {
 
     // eslint-disable-next-line no-undef
     scheduler.attachEvent("onDblClick", (id) => {
-
       order(id).then(response => {
-        this.select_order = response.data.data.order
-        this.showUpdatePopup = true
+        if (response.data.data.order.blocked){
+          if (confirm("Вы точно хотите разблокировать время?")){
+            delete_order(id).then(() => {
+              this.loadOrders()
+            })
+          }
+        }else {
+          this.select_order = response.data.data.order
+          this.showUpdatePopup = true
+        }
       })
 
     });
@@ -238,6 +257,16 @@ export default {
       this.showUpdatePopup = false
       this.loadOrders()
     },
+    createBlockTime(){
+      this.showCreateDisabledTime = true
+      this.closeMenu()
+    },
+    closeCreateBlockTime(data) {
+      this.showCreateDisabledTime = false
+      if (data.reload) {
+        this.loadOrders()
+      }
+    },
     setDayStatus(status) {
       let action = 'set-disabled-day';
 
@@ -269,16 +298,27 @@ export default {
         master_id: this.master_filter,
         start: this.filter_start ? this.filter_start : this.day,
         end: this.filter_end ? this.filter_end : this.day,
+        with_blocked: 1
       }).then(response => {
         let events = []
 
         response.data.data.orders.data.forEach(event => {
-          events.push({
-            id: event.id,
-            start_date: event.date + " " + event.time_start,
-            end_date: event.date + " " + event.time_end,
-            text: `#${event.id} <div class="d-none d-md-block"> ${event.name}<br> ${event.phone}<br> ${event.nickname} </div>`
-          })
+          if (event.blocked) {
+            events.push({
+              id: event.id,
+              start_date: event.date + " " + event.time_start,
+              end_date: event.date + " " + event.time_end,
+              text: ``,
+              color: 'gray'
+            })
+          }else {
+            events.push({
+              id: event.id,
+              start_date: event.date + " " + event.time_start,
+              end_date: event.date + " " + event.time_end,
+              text: `#${event.id} <div class="d-none d-md-block"> ${event.name}<br> ${event.phone}<br> ${event.nickname} </div>`
+            })
+          }
         })
         // eslint-disable-next-line no-undef
         scheduler.parse(events)

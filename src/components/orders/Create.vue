@@ -48,7 +48,6 @@
               :label="$t('app.components.orders.fields.comment')"
               v-model="order.comment"
               name="comment"
-              required
               :errors="errors"
           />
         </div>
