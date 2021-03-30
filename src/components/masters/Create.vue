@@ -9,6 +9,7 @@
       <form
           @submit.prevent="submit"
           class="row"
+          autocomplete="off"
       >
         <div class="col-lg-6">
           <form-group
@@ -28,6 +29,7 @@
               required
               v-model="master.email"
               :errors="errors"
+              autocomplete="master-email"
           />
         </div>
         <div class="col-lg-6">
@@ -38,6 +40,7 @@
               required
               v-model="master.password"
               :errors="errors"
+              autocomplete="new-password"
           />
         </div>
 
@@ -141,9 +144,9 @@ export default {
         success: false,
         error: false
       },
-      times: [
-        "00:00" , "01:00", "02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"
-      ],
+      // times: [
+      //   "00:00" , "01:00", "02:00","03:00","04:00","05:00","06:00","07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"
+      // ],
       photo_crop: null,
       master: {
         name: '',
@@ -169,7 +172,21 @@ export default {
   computed: {
     ...mapGetters([
       'salon_selected'
-    ])
+    ]),
+    times() {
+      var quarterHours = ["00", "30"];
+      var times = [];
+      for(var i = 0; i < 24; i++){
+        for(var j = 0; j < 2; j++){
+          if(i < 10){
+            times.push("0" + i + ":" + quarterHours[j]);
+          } else {
+            times.push(i + ":" + quarterHours[j]);
+          }
+        }
+      }
+      return times
+    }
   },
   methods: {
     set_crop_image(data){

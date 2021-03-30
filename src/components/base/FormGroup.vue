@@ -28,6 +28,7 @@
           :name="name"
           :required="required"
           :disabled="disabled"
+          :autocomplete="autocomplete"
       />
       <select
           v-else-if="type == 'select'"
@@ -63,6 +64,7 @@
           :required="required"
           :disabled="disabled"
           v-model="localValue"
+          :autocomplete="autocomplete"
       />
       <input
           v-else-if="type == 'number'"
@@ -78,6 +80,7 @@
           :disabled="disabled"
           v-model="localValue"
           :placeholder="placeholder"
+          :autocomplete="autocomplete"
       />
       <input
           v-else-if="type == 'email'"
@@ -93,6 +96,7 @@
           :disabled="disabled"
           v-model="localValue"
           :placeholder="placeholder"
+          :autocomplete="autocomplete"
       />
 <!--      <input-->
 <!--          v-else-if="type == 'date'"-->
@@ -288,6 +292,9 @@ export default {
       default: function () { return null;}
     },
     placeholder: {
+      required: false
+    },
+    autocomplete: {
       required: false
     },
     items: Array,
