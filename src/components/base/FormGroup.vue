@@ -124,7 +124,6 @@
                 ]"
           :name="name"
           :required="required"
-          :disabled="disabled"
           :model-config="{
             type: 'string',
             mask: 'YYYY-MM-DD',

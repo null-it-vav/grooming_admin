@@ -74,7 +74,7 @@
 
           <form-group
               name="duration"
-              v-if="filter_type"
+              v-if="filter_type && order.services.length > 0"
               :label="$t('app.components.orders.fields.duration')"
               type="select"
               v-model="order.duration"
@@ -117,14 +117,25 @@
                 :attributes="attributes"
                 required
             >
-              <template v-slot="{ inputValue, inputEvents }">
+              <template v-slot="{ inputValue, togglePopover }">
                 <label>{{$t('app.components.orders.fields.date')}}</label>
-                <input
-                    required
-                    class="form-control"
-                    :value="inputValue"
-                    v-on="inputEvents"
-                />
+                <div
+                    class="input-group"
+                    @click="togglePopover()"
+                >
+                  <input
+                      required
+                      disabled
+                      class="form-control"
+                      :value="inputValue"
+                      style="background-color: #fff"
+                  />
+                  <div class="input-group-append date-button">
+                    <i
+                        class="input-group-text fa fa-calendar pointer"
+                    />
+                  </div>
+                </div>
               </template>
             </v-date-picker>
           </div>
@@ -364,3 +375,10 @@ export default {
   }
 }
 </script>
+
+<style >
+  .date-button .input-group-text {
+    background-color: #eaf8ff;
+    color: #3182ce
+  }
+</style>
