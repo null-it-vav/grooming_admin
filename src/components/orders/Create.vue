@@ -376,9 +376,3 @@ export default {
 }
 </script>
 
-<style >
-  .date-button .input-group-text {
-    background-color: #eaf8ff;
-    color: #3182ce
-  }
-</style>

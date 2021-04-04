@@ -286,3 +286,9 @@ a.list-group-item i{
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
 }
+.date-button {
+  .input-group-text {
+    background-color: #eaf8ff;
+    color: #3182ce
+  }
+}

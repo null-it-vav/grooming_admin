@@ -123,13 +123,25 @@
                 :attributes="attributes"
                 required
             >
-              <template v-slot="{ inputValue, inputEvents }">
+              <template v-slot="{ inputValue, togglePopover }">
                 <label>{{$t('app.components.orders.fields.date')}}</label>
-                <input
-                    class="form-control"
-                    :value="inputValue"
-                    v-on="inputEvents"
-                />
+                <div
+                    class="input-group"
+                    @click="togglePopover()"
+                >
+                  <input
+                      required
+                      disabled
+                      class="form-control"
+                      :value="inputValue"
+                      style="background-color: #fff"
+                  />
+                  <div class="input-group-append date-button">
+                    <i
+                        class="input-group-text fa fa-calendar pointer"
+                    />
+                  </div>
+                </div>
               </template>
             </v-date-picker>
           </div>
