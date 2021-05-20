@@ -11,6 +11,29 @@
           class="row"
           autocomplete="off"
       >
+        <div
+            class="col-lg-6"
+            :class="[
+                !new_photo ? 'd-flex' : ''
+            ]"
+        >
+          <b-avatar
+              v-if="!new_photo && master.photo"
+              :src="master.photo"
+              class="my-3 mx-auto"
+              size="4rem"
+          />
+          <form-group
+              :label="$t('app.components.masters.fields.photo')"
+              type="photo"
+              :errors="errors"
+              name="photo"
+              v-model="new_photo"
+              accept="image/png"
+              @set_crop_image="set_crop_image"
+              :cropped="1"
+          />
+        </div>
         <div class="col-lg-6">
           <form-group
               :label="$t('app.components.masters.fields.name')"
@@ -94,7 +117,15 @@
               :errors="errors"
           />
         </div>
-
+        <div class="col-lg-6">
+          <form-group
+              :label="$t('app.components.masters.fields.date_start_work')"
+              type="date"
+              name="date_start_work"
+              v-model="master.date_start_work"
+              :errors="errors"
+          />
+        </div>
         <div class="col-lg-6">
           <label>{{$t('app.components.masters.fields.schedule')}}</label>
           <div v-for="(day, k) in master.schedule" :key="k" class="mb-2">
@@ -125,22 +156,22 @@
             </div>
           </div>
         </div>
+
         <div class="col-lg-6">
           <form-group
-              :label="$t('app.components.masters.fields.photo')"
-              type="photo"
-              :errors="errors"
-              name="photo"
-              v-model="new_photo"
-              accept="image/png"
-              @set_crop_image="set_crop_image"
-              :cropped="12/12"
+            type="switch"
+            :label="$t('base.service_types.cat')"
+            v-model="master.cat"
           />
-          <b-img
-              v-if="!new_photo && master.photo"
-              :src="master.photo"
-              fluid
-              class="my-3 mx-auto"
+          <form-group
+              type="switch"
+              :label="$t('base.service_types.dog')"
+              v-model="master.dog"
+          />
+          <form-group
+              type="switch"
+              :label="$t('base.service_types.other')"
+              v-model="master.other"
           />
         </div>
 
@@ -226,6 +257,10 @@ export default {
       data.append('position', this.master.position)
       data.append('salon_id', this.master.salon_id)
       data.append('profit', this.master.profit)
+      data.append('date_start_work', this.master.date_start_work)
+      data.append('cat', this.master.cat ? 1 : 0)
+      data.append('dog', this.master.dog ? 1 : 0)
+      data.append('other', this.master.other ? 1 : 0)
 
       if (this.new_photo_crop)
         data.append('photo', this.new_photo_crop)

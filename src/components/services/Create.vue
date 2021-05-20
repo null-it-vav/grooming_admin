@@ -9,8 +9,27 @@
           @submit.prevent="submit"
           class="row"
       >
-        <div class="col-lg-6">
+        <div class="col-lg-6 d-flex">
+          <div class="form-group mr-auto">
+            <label>{{ $t('app.components.services.field.color_mark') }}</label>
+            <div>
+              <b-dropdown
+                  variant="link"
+                  toggle-class="text-decoration-none"
+                  class="color-mark-picker"
+                  dropright
+              >
+                <template #button-content>
+                  <div class="border rounded-circle" :style="`width:30px;height:30px;background-color: #${service.color_mark};`"></div>
+                </template>
+                <template #default>
+                  <sketch-picker v-model="colors" />
+                </template>
+              </b-dropdown>
+            </div>
+          </div>
           <form-group
+              class="w-75"
             type="text"
             :label="$t('app.components.services.field.name')"
             :errors="errors"
@@ -120,6 +139,17 @@ export default {
         error: false
       },
       new_image_crop: null,
+    }
+  },
+  computed: {
+    colors: {
+      get: function () {
+        return '#'+this.service.color_mark
+      },
+      set: function (value) {
+
+        this.service.color_mark = value.hex.replace('#', '')
+      }
     }
   },
   components: {FormGroup, BasePopup},

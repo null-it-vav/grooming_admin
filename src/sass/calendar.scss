@@ -1,91 +1,82 @@
-$alto: #ddd;
-$calendar-border: 1px solid $alto;
-$buttermilk: rgba(255, 238, 173, 0.4);
-$vista-blue: #42b983;
-
-@mixin calendar-row {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-@mixin calendar-cell {
-    width: 100%;
-    padding: 0.5rem;
-}
-
-
-#calendar-area {
-    #day-bar {
-        @include calendar-row;
-        div {
-            @include calendar-cell;
+.cl {
+    &-header {
+        flex: none;
+        display: flex;
+    }
+    &-view-bottom {
+        display: flex;
+        overflow: hidden;
+        flex: 1 1 60%;
+        position: relative;
+        flex-direction: column;
+    }
+    &-day {
+        flex: 1 1 auto;
+        width: 0;
+        border-right: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    &-hour {
+        height: 40px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    &-hour-list {
+        flex: none;
+        width: 44px;
+        border-right: 1px solid #e0e0e0;
+        .cl-hour {
+            height: 80px;
         }
     }
-
-    #calendar {
-        background-color: white;
-        .calendar-week {
-            @include calendar-row;
-            .day {
-                overflow: hidden;
-                font-weight: bold;
-                @include calendar-cell;
-                height: 100px;
-                user-select: none;
-                cursor: default;
-                border-left: $calendar-border;
-                border-top: $calendar-border;
-
-                &:last-child {
-                    border-right: $calendar-border;
-                }
-
-                &.past {
-                    opacity: 0.6;
-                }
-
-
-                &.not-current-month {
-                    color: $alto;
-                }
-
-                &.today {
-                    background-color: $buttermilk;
-                }
-
-                &.active {
-                    background-color: $pink;
-                }
-
-                .event-list {
-                    font-size: 0.8rem;
-                    color: $vista-blue;
-                    font-weight: bold;
-                    list-style: none;
-                    padding: 0;
-                    margin: 0.5rem 0 0.5rem 0;
-
-                    li {
-                        white-space: nowrap;
-                    }
-                }
-            }
-
-            .day {
-
-
-            }
-
-            .day.disabled {
-                background-color: #ff00001c;
-            }
-
-            &:last-child {
-                .day {
-                    border-bottom: $calendar-border;
-                }
-            }
+    &-view-container {
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        height: 100%;
+    }
+    &-view-bottom {
+        .cl-day {
+            border-bottom: 0px !important;
+            position: relative;
+        }
+    }
+    &-view-scrollable {
+        overflow-y: scroll;
+        flex: 1 1 auto;
+        display: flex;
+        align-items: flex-start;
+    }
+    &-view-pane {
+        width: 100%;
+        overflow-y: hidden;
+        flex: none;
+        display: flex;
+        align-items: flex-start;
+    }
+    &-week {
+        display: flex;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+    }
+    &-event {
+        margin: 1px;
+        color: #fff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-left: .5em;
+        font-size: 12px;
+        position: absolute;
+        right: 0;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: middle;
+        &-menu {
+            align-items: center;
+            cursor: pointer;
+            position: relative;
         }
     }
 }

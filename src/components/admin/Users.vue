@@ -23,7 +23,7 @@
         />
       </div>
     </div>
-    <table class="table table-bordered table-adaptive" v-if="users.data.length > 0">
+    <table class="table table-adaptive" v-if="users.data.length > 0">
       <thead>
         <tr>
           <th>{{$t('app.components.users.fields.name')}}</th>

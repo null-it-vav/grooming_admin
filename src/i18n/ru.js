@@ -58,6 +58,7 @@ let ru = {
                 create: "Создать услугу",
                 update: "Обновить услугу",
                 not_found: "Услуги не заполнены",
+                settings_by_breeds: "Настройка по породам",
                 field: {
                     name: 'Название',
                     description: 'Описание',
@@ -65,6 +66,13 @@ let ru = {
                     type: 'Тип',
                     duration: 'Продолжительность',
                     image: 'Фото (png до 1 мб)',
+                    aggressive: 'Доплата за агрессивность',
+                    aggressive_duration: '+ время',
+                    aggressive_price: '+ цена',
+                    koltun: 'Доплата за колтуны',
+                    koltun_duration: '+ время',
+                    koltun_price: '+ цена',
+                    color_mark: 'Цвет услуги'
                 },
                 durations: {
                     30: '30 минут',
@@ -75,6 +83,15 @@ let ru = {
                     180: '3 часа',
                     210: '3 часа 30 мин',
                     240: '4 часа',
+                },
+                breeds: {
+                    breed: 'Порода',
+                    price: 'Цена',
+                    duration: 'Продолжительность',
+                    aggressive_duration: 'Агрессивность, + к времени',
+                    aggressive_price: 'Агрессивность, + к цене',
+                    koltun_duration: 'Колтуны, + к времени',
+                    koltun_price: 'Колтуны, + к цене'
                 }
             },
             salons: {
@@ -124,6 +141,7 @@ let ru = {
                     description: 'Описание',
                     profit: 'Процент прибыли (для мастеров которые работают на проценте)',
                     salon: 'Салон',
+                    date_start_work: 'Дата приема на работу'
                 },
                 need_photo_size: 'Изображение должно быть квадратное (рекомендуемое 400px на 400px)'
             },
@@ -173,14 +191,20 @@ let ru = {
             settings: {
                 tabs: {
                     base: "Базовые",
-                    push_app: "Уведомления и приложение",
-                    schedule: "Расписание работы"
+                    app: "Приложение",
+                    push: "Уведомления",
+                    schedule: "Расписание",
+                    tags: "Теги",
+                    site: "Сайт",
                 },
                 name: 'Название',
                 phone: 'Телефон',
                 site: 'Сайт',
                 email: 'Email',
-                schedule: 'Расписание',
+                schedule: {
+                    index: 'Расписание',
+                    disabled: 'Заблокированное время'
+                },
                 schedule_step: 'Шаг расписания, мин',
                 timezone: 'Временная зона',
                 lang: 'Язык',
@@ -191,6 +215,7 @@ let ru = {
                 image: 'Фото на главной странице приложения (png или jpg, до 1 мб)',
                 tg_link: 'Ссылка на Telegram',
                 wa_link: 'Ссылка на WhatsApp',
+
             },
             calendar: {
                 new_order: "Новая запись",
@@ -216,31 +241,105 @@ let ru = {
             clients: {
                 show_3m_before: "Не были более 3х месяцев",
                 fields: {
+                    photo: "Фото",
                     phone: "Телефон",
+                    email: "Email",
                     name: "Имя",
                     nickname: "Кличка",
                     last_order: "Последний визит",
-                    last_services: "Последние услуги"
+                    last_services: "Последние услуги",
+                    actions: "Действия",
+                    discount_type: 'Постоянная скидка',
+                    discount: 'Cкидка',
+                    next_discount_type: 'Скидка на следующую запись',
+                    tags: 'Теги'
+                },
+                discount_types: {
+                    null: 'Нет',
+                    total: 'Фиксированная скидка',
+                    percent: 'Процент',
+                },
+                filters: {
+                    phone: 'Телефон'
+                },
+                pets: {
+                    fields: {
+                        nickname: 'Ник',
+                        breed: 'Порода',
+                        tags: 'Теги',
+                        birthday: 'День рождения',
+                        aggressive: 'Агрессивный',
+                    }
+                },
+                additional_phones: 'Дополнительные контакты',
+                additional_phone: {
+                    who: 'Кто',
+                    name: 'Имя',
+                    phone: 'Телефон'
                 }
+            },
+            breeds: {
+                name: 'Название',
+                update: 'Обновить породу'
+            },
+            tags: {
+                create: 'Добавить тэг',
+                update: 'Обновить тэг',
+                fields: {
+                    name: 'Описание тэга',
+                    code_title: 'Название тэга',
+                    lang: 'Язык',
+                    color_mark: 'Цвет тега',
+                    type: 'Тип',
+                    types: {
+                        all: 'Все типы',
+                        pet: 'Питомцы',
+                        user: 'Пользователи'
+                    }
+                },
             }
         },
         titles: {
             home: {
                 dashboard: 'Dashboard',
                 admin: {
-                    users: 'Пользователи'
+                    users: 'Пользователи',
+                    breeds: 'Породы',
                 },
                 calendar: 'Календарь',
                 masters: 'Мастера',
+                master: {
+                    show: 'Данные мастера'
+                },
                 orders: 'Записи',
                 order: {
                   show: 'Запись'
                 },
-                clients: 'Клиенты',
                 salons: 'Салоны',
                 services: 'Услуги',
                 promotions: 'Акции',
-                settings: 'Настройки',
+                settings: {
+                    index: 'Настройки',
+                    base: 'Базовые настройки',
+                    tags: 'Настройки тегов',
+                    app: 'Настройки приложения',
+                    push: 'Настройки уведомлений',
+                    site: 'Настройки сайта',
+                    schedule: 'Настройки расписания'
+                },
+                breeds: 'Породы',
+                service: {
+                    breeds: 'Настройка по породам',
+                    schedule: 'Настройка по времени'
+                },
+                clients: 'Клиенты',
+                client: {
+                    show: 'Данные клиента',
+                    pet: {
+                        index: 'Данные питомца'
+                    }
+                },
+                tags: 'Тэги'
             }
         },
         base: {
@@ -278,6 +377,7 @@ let ru = {
         create: 'Создать',
         update: 'Обновить',
         delete: 'Удалить',
+        reset: 'Сбросить',
         service_type: "Тип услуги",
         select: "Выбрать...",
         service_types: {

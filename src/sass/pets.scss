@@ -1,0 +1,25 @@
+a.pet-card {
+  color: #000;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.pet-card {
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 10px 20px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 16px 0px;
+  display: flex;
+  flex-direction: row;
+  margin: 12px 16px;
+  width: 250px;
+  &-about {
+    padding-left: 10px;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &-breed {
+      color: $gray;
+    }
+  }
+}

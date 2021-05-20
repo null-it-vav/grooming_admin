@@ -4,7 +4,7 @@
       <div class="card-title">{{ title }}</div>
     </div>
     <div class="row mb-4" v-if="!$route.params.order_id">
-      <div class="col-lg-3" v-if="auth.role_list.includes('admin')">
+      <div class="col-lg-3" v-if="auth.role_list.includes('admin') && !prop_master_id">
         <form-group
             v-model="master_filter"
             type="select"
@@ -50,7 +50,7 @@
         </router-link>
       </div>
     </div>
-    <table class="table table-bordered table-adaptive" v-if="orders.data.length > 0">
+    <table class="table table-adaptive" v-if="orders.data.length > 0">
       <thead>
         <tr>
           <th>{{$t('app.components.orders.fields.name')}}</th>
@@ -196,6 +196,9 @@ export default {
     create_new: {
       required: false,
       default: true
+    },
+    prop_master_id: {
+      required: false,
     }
   },
   data() {
@@ -211,7 +214,7 @@ export default {
         total: 0,
       },
       order: {},
-      master_filter: null,
+      master_filter: this.prop_master_id ? this.prop_master_id : null,
       status_filter: null,
       filter_start: null,
       filter_end: null,

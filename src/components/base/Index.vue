@@ -74,6 +74,14 @@
             </router-link>
 
             <router-link
+                v-if="(auth.role_list.includes('super-admin'))"
+                :to="{ name: 'home.breeds' }" class="list-group-item"
+            >
+              <i class="fa fa-paw"/>
+              <span class="mx-3">{{ $t('app.titles.home.admin.breeds') }}</span>
+            </router-link>
+
+            <router-link
                 v-if="(auth.role_list.includes('admin') || auth.role_list.includes('master')) & (salons.length > 0)"
                 :to="{ name: 'home.calendar' }" class="list-group-item"
             >
@@ -117,19 +125,26 @@
               <i class="fa fa-briefcase"/>
               <span class="mx-3">{{ $t('app.titles.home.services') }}</span>
             </router-link>
+<!--            <router-link-->
+<!--                v-if="auth.role_list.includes('admin')"-->
+<!--                :to="{ name: 'home.promotions' }" class="list-group-item"-->
+<!--            >-->
+<!--              <i class="fa fa-bullhorn"/>-->
+<!--              <span class="mx-3">{{ $t('app.titles.home.promotions') }}</span>-->
+<!--            </router-link>-->
             <router-link
                 v-if="auth.role_list.includes('admin')"
-                :to="{ name: 'home.promotions' }" class="list-group-item"
-            >
-              <i class="fa fa-bullhorn"/>
-              <span class="mx-3">{{ $t('app.titles.home.promotions') }}</span>
-            </router-link>
-            <router-link
-                v-if="auth.role_list.includes('admin')"
-                :to="{ name: 'home.settings' }" class="list-group-item"
+                :to="{ name: 'home.settings.index' }" class="list-group-item"
             >
               <i class="fa fa-cogs"/>
-              <span class="mx-3">{{ $t('app.titles.home.settings') }}</span>
+              <span class="mx-3">{{ $t('app.titles.home.settings.index') }}</span>
+            </router-link>
+            <router-link
+                v-if="auth.role_list.includes('super-admin')"
+                :to="{ name: 'home.tags' }" class="list-group-item"
+            >
+              <i class="fa fa-cogs"/>
+              <span class="mx-3">{{ $t('app.titles.home.tags') }}</span>
             </router-link>
           </div>
           <hr>
@@ -142,7 +157,7 @@
         </div>
       </div>
       <div class="main-panel">
-        <div class="container">
+        <div class="px-2">
           <div style="height: 60px; width: 100%;"></div>
           <router-view />
           <div style="height: 60px; width: 100%;"></div>

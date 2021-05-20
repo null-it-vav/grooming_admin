@@ -17,6 +17,7 @@
       <input
           v-if="type == 'text'"
           type="text"
+          :maxlength="maxlength"
           :placeholder="placeholder"
           :class="[
             (name in errors) ? 'is-invalid' : '',
@@ -29,6 +30,7 @@
           :required="required"
           :disabled="disabled"
           :autocomplete="autocomplete"
+          @keyup.enter="$emit('keyupenter')"
       />
       <select
           v-else-if="type == 'select'"
@@ -157,6 +159,40 @@
           v-model="localValue"
           :placeholder="placeholder"
       />
+      <b-checkbox
+          v-else-if="type == 'switch'"
+          switch
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+          class="mt-2"
+          size="sm"
+          :name="name"
+          :required="required"
+          :disabled="disabled"
+          v-model="localValue"
+          :placeholder="placeholder"
+      >
+      </b-checkbox>
+      <div
+          v-else-if="type == 'color-mark-picker'"
+      >
+        <b-dropdown
+            variant="link"
+            toggle-class="text-decoration-none"
+            class="color-mark-picker"
+            dropright
+        >
+          <template #button-content>
+            <div class="border rounded-circle" :style="`width:30px;height:30px;background-color: ${localValue.hex ? localValue.hex : localValue};`"></div>
+          </template>
+          <template #default>
+            <sketch-picker v-model="localValue" />
+          </template>
+        </b-dropdown>
+      </div>
       <div
           v-else-if="type == 'photo'"
           :class="[
@@ -291,6 +327,9 @@ export default {
       default: function () { return null;}
     },
     placeholder: {
+      required: false
+    },
+    maxlength: {
       required: false
     },
     autocomplete: {

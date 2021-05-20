@@ -40,6 +40,12 @@ export function masters(payload){
     }).then((response) => response)
 }
 
+export function master(id, payload){
+    return axios.get(BASE_URL + "profile/masters/"+id, {
+        params: payload
+    }).then((response) => response)
+}
+
 export function create_master(payload){
     return axios.post(BASE_URL + "profile/masters", payload)
         .then((response) => response)
@@ -104,13 +110,22 @@ export function services(payload){
     }).then((response) => response)
 }
 
+export function service(id, payload){
+    return axios.get(BASE_URL + "profile/services/"+id, {
+        params: payload
+    }).then((response) => response)
+}
+
 export function create_service(payload){
     return axios.post(BASE_URL + "profile/services", payload)
         .then((response) => response)
 }
 
 export function update_service(id, payload){
-    payload.append('_method', 'patch');
+    if (payload instanceof FormData)
+        payload.append('_method', 'patch');
+    else
+        payload._method = 'patch'
 
     return axios.post(BASE_URL + "profile/services/" + id , payload)
         .then((response) => response)
@@ -235,5 +250,69 @@ export function clients(payload) {
     return axios.get(BASE_URL + 'profile/clients', {
         params: payload
     })
+        .then((response) => response)
+}
+
+export function client_update(id, payload) {
+    return axios.post(BASE_URL + 'profile/clients/'+id, payload)
+        .then((response) => response)
+}
+
+export function breeds(payload) {
+    return axios.get(BASE_URL + 'profile/breeds', {
+        params: payload
+    })
+        .then((response) => response)
+}
+
+
+export function breed_create(payload) {
+    return axios.post(BASE_URL + 'profile/breeds', payload)
+        .then((response) => response)
+}
+
+export function breed_update(id, payload) {
+    payload._method = 'patch'
+    return axios.post(BASE_URL + 'profile/breeds/' + id, payload)
+        .then((response) => response)
+}
+
+export function organizationUpdate(id, payload) {
+    payload._method = 'patch'
+    return axios.post(BASE_URL + 'profile/organizations/' + id, payload)
+        .then((response) => response)
+}
+
+export function tags(payload) {
+    return axios.get(BASE_URL + 'profile/tags', {
+        params: payload
+    })
+        .then((response) => response)
+}
+
+export function tag_create(payload){
+    return axios.post(BASE_URL + 'profile/tags', payload)
+        .then((response) => response)
+}
+
+export function tag_update(id, payload){
+    payload._method = 'patch'
+    return axios.post(BASE_URL + 'profile/tags/'+id, payload)
+        .then((response) => response)
+}
+
+export function pets(payload){
+    return axios.get(BASE_URL + 'profile/pets', {
+        params: payload
+    })
+        .then((response) => response)
+}
+
+export function pet_update(id, payload){
+    if (payload instanceof FormData)
+        payload.append('_method', 'patch');
+    else
+        payload._method = 'patch'
+    return axios.post(BASE_URL + 'profile/pets/'+id, payload)
         .then((response) => response)
 }

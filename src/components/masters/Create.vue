@@ -116,7 +116,24 @@
               accept="image/png"
               @set_crop_image="set_crop_image"
           />
+
+          <form-group
+              type="switch"
+              :label="$t('base.service_types.cat')"
+              v-model="master.cat"
+          />
+          <form-group
+              type="switch"
+              :label="$t('base.service_types.dog')"
+              v-model="master.dog"
+          />
+          <form-group
+              type="switch"
+              :label="$t('base.service_types.other')"
+              v-model="master.other"
+          />
         </div>
+
 
         <div class="col-lg-12 d-flex">
           <button type="submit" class="m-auto btn btn-success">
@@ -165,7 +182,10 @@ export default {
           { active: false, start: "10:00", end: "19:00" },
           { active: false, start: "10:00", end: "19:00" },
           { active: false, start: "10:00", end: "19:00" },
-        ]
+        ],
+        cat: false,
+        dog: false,
+        other: false
       }
     }
   },
@@ -217,7 +237,9 @@ export default {
         data.append('schedule['+day+'][end]', this.master.schedule[day].end)
       }
 
-
+      data.append('cat', this.master.cat ? 1 : 0)
+      data.append('dog', this.master.dog ? 1 : 0)
+      data.append('other', this.master.other ? 1 : 0)
 
 
       create_master(data)

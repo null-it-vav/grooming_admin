@@ -6,7 +6,7 @@
         aria-hidden="true"
     >
       <div
-          class="modal-dialog modal-dialog-scrollable"
+          class="modal-dialog"
           :class="dialogSize ? dialogSize : 'modal-xl'"
           role="document"
       >
@@ -82,22 +82,6 @@ export default {
   data() {
     return {
 
-    }
-  },
-  watch: {
-    'success_error.success': function (){
-      if (this.success_error.success) {
-        setTimeout(() => {
-          this.success_error.success = false;
-        }, 4000);
-      }
-    },
-    'success_error.error': function (){
-      if (this.success_error.error) {
-        setTimeout(() => {
-          this.success_error.error = false;
-        }, 4000);
-      }
     }
   },
   methods: {

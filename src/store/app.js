@@ -8,6 +8,8 @@ const store = new Vuex.Store({
     state: {
         auth: false,
         salons: [],
+        breeds: [],
+        tags: [],
         salon_selected: {},
         internetError: false,
         loading: {
@@ -22,6 +24,12 @@ const store = new Vuex.Store({
         },
         salons(state, {data}){
             state.salons = data
+        },
+        breeds(state, {data}){
+            state.breeds = data
+        },
+        tags(state, {data}){
+            state.tags = data
         },
         salon_selected(state, {data}) {
             state.salon_selected = data
@@ -53,6 +61,8 @@ const store = new Vuex.Store({
         auth: (state) => state.auth,
         salons: (state) => state.salons,
         salon_selected: (state) => state.salon_selected,
+        breeds: (state) => state.breeds,
+        tags: (state) => state.tags,
         getStore: (state) => (key) => {
             if (key.includes('.')) {
                 let tmp = state;
@@ -77,6 +87,8 @@ const store = new Vuex.Store({
         clearAuth({ commit, state }) {
             commit('setStore', {key: 'auth', data: false});
             commit('setStore', {key: 'salons', data: []});
+            commit('setStore', {key: 'breeds', data: []});
+            commit('setStore', {key: 'tags', data: []});
             localStorage.removeItem('user-token')
             localStorage.removeItem('salon_selected')
             window.location.href = '/'
@@ -91,6 +103,8 @@ const store = new Vuex.Store({
                 await me().then((response) => {
                     commit('setStore', {key: 'auth', data: response.data.data.user});
                     commit('setStore', {key: 'salons', data: response.data.data.salons});
+                    commit('setStore', {key: 'breeds', data: response.data.data.user.organization ? response.data.data.user.organization.breeds : []});
+                    commit('setStore', {key: 'tags', data: response.data.data.tags});
 
                     // eslint-disable-next-line no-debugger
                     //debugger;

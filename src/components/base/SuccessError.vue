@@ -57,22 +57,38 @@
 
 <script>
 export default {
-    name: 'MessageSuccessError',
-    props: {
-        success_message: null,
-        error_message: null,
-        show: {
-            type: Object,
-            default() {
-                return {
-                    error: false,
-                    success: false,
-                    invalid: {},
-                    msg: []
-                };
-            },
-        },
+  name: 'MessageSuccessError',
+  props: {
+    success_message: null,
+    error_message: null,
+    show: {
+      type: Object,
+      default() {
+        return {
+          error: false,
+          success: false,
+          invalid: {},
+          msg: []
+        };
+      },
     },
+  },
+  watch: {
+    'show.success': function (){
+      if (this.show.success) {
+        setTimeout(() => {
+          this.show.success = false;
+        }, 4000);
+      }
+    },
+    'show.error': function (){
+      if (this.show.error) {
+        setTimeout(() => {
+          this.show.error = false;
+        }, 4000);
+      }
+    }
+  },
 };
 </script>
 

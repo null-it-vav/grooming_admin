@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <table class="table table-bordered table-adaptive" v-if="organizations.data.length && !page_load">
+    <table class="table table-adaptive" v-if="organizations.data.length && !page_load">
       <thead>
         <tr>
           <th>#</th>

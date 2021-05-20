@@ -15,9 +15,97 @@
 @import "calendar";
 
 @import "table";
+@import "pets";
 @import "~vue-select/dist/vue-select.css";
 
 @import '~vue-advanced-cropper/dist/style.css';
+
+@import '~ant-design-vue/dist/antd.css';
+
+.ant-select {
+  width: 100%;
+  &-selection {
+    display: block;
+    width: 100%;
+    min-height: calc(1.6em + 0.75rem + 2px);
+    padding: 2px 0.75rem;
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+}
+
+.ant-select-selection--multiple > ul > li, .ant-select-selection--multiple .ant-select-selection__rendered > ul > li {
+
+}
+.anticon {
+  vertical-align: 0px;
+}
+.ant-select-selection__choice {
+  display: flex !important;
+  border: 0px;
+}
+.ant-select-selection--multiple .ant-select-selection__choice {
+  padding: 0 20px 0 2px;
+}
+.ant-select-selection--multiple .ant-select-selection__choice__content {
+  align-items: center !important;
+  display: flex !important;
+}
+.ant-select-selection__choice__content {
+  .tag-color {
+    height: 20px;
+    min-width: 20px;
+    padding: 0px 6px;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-right: 5px;
+    line-height: 20px;
+  }
+}
+.ant-select-selection--multiple > ul > li, .ant-select-selection--multiple .ant-select-selection__rendered > ul > li
+{
+  margin-top: 2px;
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 2px;
+}
+.ant-select-selection--multiple .ant-select-selection__choice__remove {
+  line-height: 29px;
+}
+.ant-select-dropdown-menu-item {
+  &-tags {
+    display: flex;
+    &-code_title {
+      height: 20px;
+      min-width: 20px;
+      padding: 0px 6px;
+      font-size: 12px;
+      border-radius: 10px;
+      margin-right: 5px;
+      line-height: 20px;
+    }
+  }
+}
+.add-tag {
+  position: sticky;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  color: rgb(41, 205, 87);
+  border-bottom: 1px solid rgb(233, 236, 239);
+  font-size: 14px;
+  cursor: pointer;
+}
+.ant-select-selection__rendered {
+  line-height: 30px;
+  margin-left: 0px;
+}
 
 //.popup-open {
 //  overflow-y: hidden;
@@ -291,4 +379,29 @@ a.list-group-item i{
     background-color: #eaf8ff;
     color: #3182ce
   }
+}
+
+.btn-rounded {
+  border-radius: 46px;
+  padding: 10px 15px;
+}
+.btn-hint-white {
+  background-color: #F3F3F4;
+  color: #161616 !important;
+}
+.color-mark-picker {
+  .btn {
+    margin: 0px !important;
+    padding: 0px;
+    height: 40px;
+  }
+  .dropdown-menu {
+    background-color: unset;
+    border: 0px;
+    padding: 0px !important;
+  }
+}
+
+.form-control {
+  height: calc(1.6em + 0.75rem + 6px) !important;
 }

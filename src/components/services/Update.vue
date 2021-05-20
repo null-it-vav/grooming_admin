@@ -9,37 +9,7 @@
           @submit.prevent="submit"
           class="row"
       >
-        <div class="col-lg-6">
-          <form-group
-              type="text"
-              :label="$t('app.components.services.field.name')"
-              :errors="errors"
-              name="name"
-              required
-              v-model="service.name"
-          />
-        </div>
-        <div class="col-lg-6">
-          <form-group
-              type="textarea"
-              :label="$t('app.components.services.field.description')"
-              :errors="errors"
-              name="description"
-              required
-              v-model="service.description"
-          />
-        </div>
-        <div class="col-lg-6">
-          <form-group
-              type="number"
-              :label="$t('app.components.services.field.price')"
-              :errors="errors"
-              name="price"
-              required
-              v-model="service.price"
-          />
-        </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <form-group
               type="select"
               required
@@ -54,8 +24,50 @@
               name="type"
               v-model="service.type"
           />
+          <form-group
+              type="text"
+              :label="$t('app.components.services.field.name')"
+              :errors="errors"
+              name="name"
+              required
+              v-model="service.name"
+          />
+          <form-group
+              type="textarea"
+              :label="$t('app.components.services.field.description')"
+              :errors="errors"
+              name="description"
+              required
+              v-model="service.description"
+          />
+          <div class="form-group">
+            <label>{{ $t('app.components.services.field.color_mark') }}</label>
+            <div>
+              <b-dropdown
+                  variant="link"
+                  toggle-class="text-decoration-none"
+                  class="color-mark-picker"
+                  dropright
+              >
+                <template #button-content>
+                  <div class="border rounded-circle" :style="`width:30px;height:30px;background-color: #${service.color_mark};`"></div>
+                </template>
+                <template #default>
+                  <sketch-picker v-model="colors" />
+                </template>
+              </b-dropdown>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
+          <form-group
+              type="number"
+              :label="$t('app.components.services.field.price')"
+              :errors="errors"
+              name="price"
+              required
+              v-model="service.price"
+          />
           <form-group
               type="select"
               :items="[
@@ -74,8 +86,54 @@
               required
               v-model="service.duration"
           />
+          <form-group
+              :label="$t('app.components.services.field.aggressive')"
+              type="switch"
+              name="aggressive"
+              :errors="errors"
+              v-model="service.aggressive"
+          />
+          <form-group
+              v-if="service.aggressive"
+              :label="$t('app.components.services.field.aggressive_duration')"
+              type="number"
+              name="aggressive_duration"
+              :errors="errors"
+              v-model="service.aggressive_duration"
+          />
+          <form-group
+              v-if="service.aggressive"
+              :label="$t('app.components.services.field.aggressive_price')"
+              type="number"
+              name="aggressive_price"
+              :errors="errors"
+              v-model="service.aggressive_price"
+          />
+          <form-group
+              :label="$t('app.components.services.field.koltun')"
+              type="switch"
+              name="koltun"
+              :errors="errors"
+              v-model="service.koltun"
+          />
+          <form-group
+              v-if="service.koltun"
+              :label="$t('app.components.services.field.koltun_duration')"
+              type="number"
+              name="koltun_duration"
+              :errors="errors"
+              v-model="service.koltun_duration"
+          />
+          <form-group
+              v-if="service.koltun"
+              :label="$t('app.components.services.field.koltun_price')"
+              type="number"
+              name="koltun_price"
+              :errors="errors"
+              v-model="service.koltun_price"
+          />
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <form-group
               :label="$t('app.components.services.field.image')"
               type="photo"
@@ -124,6 +182,17 @@ export default {
       }
     },
   },
+  computed: {
+    colors: {
+      get: function () {
+        return '#'+this.service.color_mark
+      },
+      set: function (value) {
+
+        this.service.color_mark = value.hex.replace('#', '')
+      }
+    }
+  },
   data() {
     return {
       errors:{},
@@ -132,7 +201,7 @@ export default {
       success_error: {
         success: false,
         error: false
-      }
+      },
     }
   },
   components: {FormGroup, BasePopup},
@@ -150,6 +219,20 @@ export default {
       data.append('price', this.service.price)
       data.append('type', this.service.type)
       data.append('duration', this.service.duration)
+      data.append('color_mark', this.service.color_mark)
+      data.append('aggressive', this.service.aggressive ? 1 : 0)
+      data.append('koltun', this.service.koltun ? 1 : 0)
+
+      if (this.service.aggressive) {
+        data.append('aggressive_duration', this.service.aggressive_duration)
+        data.append('aggressive_price', this.service.aggressive_price)
+      }
+      if (this.service.koltun) {
+        data.append('koltun_duration', this.service.koltun_duration)
+        data.append('koltun_price', this.service.koltun_price)
+      }
+
+
 
       if (this.new_image_crop)
         data.append('image', this.new_image_crop)

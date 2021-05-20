@@ -3,7 +3,7 @@
       class="page"
   >
     <div class="container vh-100">
-      <div class="row">
+      <div class="row vh-100">
         <div class="col-lg-8 text-center">
           <img class=" my-5 logo" src='~@/assets/grooming_box.svg' />
           <div class="d-none d-lg-block">

@@ -8,255 +8,50 @@
             :show="success_error"
         />
       </div>
-
-      <b-card :title="$t('app.components.settings.tabs.base')"  class="mb-2">
-        <div class="row">
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.name')"
-                type="text"
-                name="name"
-                v-model="settings.name"
-                :errors="errors"
-            />
-          </div>
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.phone')"
-                type="text"
-                name="phone"
-                required
-                v-model="settings.phone"
-                :errors="errors"
-            />
-          </div>
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.site')"
-                type="text"
-                name="site"
-                required
-                v-model="settings.site"
-                :errors="errors"
-            />
-          </div>
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.email')"
-                type="email"
-                name="email"
-                required
-                v-model="settings.email"
-                :errors="errors"
-            />
-          </div>
-<!--          <div class="col-lg-6">-->
-<!--            <form-group-->
-<!--                :label="$t('app.components.settings.schedule_step')"-->
-<!--                type="select"-->
-<!--                :items="[-->
-<!--                      { value: 30, text: 30 },-->
-<!--                      { value: 60, text: 60 },-->
-<!--                      { value: 90, text: 90 },-->
-<!--                      { value: 120, text: 120 },-->
-<!--                  ]"-->
-<!--                name="schedule_step"-->
-<!--                required-->
-<!--                v-model="settings.schedule_step"-->
-<!--                :errors="errors"-->
-<!--            />-->
-<!--          </div>-->
-<!--          <div class="col-lg-6">-->
-<!--            <form-group-->
-<!--                :label="$t('app.components.settings.timezone')"-->
-<!--                type="text"-->
-<!--                name="timezone"-->
-<!--                disabled-->
-<!--                v-model="settings.timezone"-->
-<!--                :errors="errors"-->
-<!--            />-->
-<!--          </div>-->
-          <div class="col-lg-6">
-<!--            <form-group-->
-<!--                :label="$t('app.components.settings.lang')"-->
-<!--                type="text"-->
-<!--                name="lang"-->
-<!--                v-model="settings.lang"-->
-<!--                :errors="errors"-->
-<!--            />-->
-            <b-list-group horizontal class="mb-4">
-              <b-list-group-item
-                  v-for="(lang,k) in langs"
-                  :key="k"
-                  :class="settings.lang == lang.lang ? 'active' : ''"
-                  @click="settings.lang = lang.lang">
-                <flag :iso="lang.iso" />
-              </b-list-group-item>
-            </b-list-group>
-          </div>
-          <div class="col-lg-12">
-            <button type="submit" class="btn btn-success">{{ $t('base.save') }}</button>
-          </div>
-        </div>
-      </b-card>
-
-      <b-card :title="$t('app.components.settings.tabs.push_app')" class="mb-2">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <b-checkbox
-                  v-model="settings.notif_before_24h"
-                  switch
-                  size="sm"
+      <div class="row">
+        <div class="col-md-2 mb-2">
+          <b-card>
+            <div class="list-group border-none">
+              <router-link
+                  :to="{ name: 'home.settings.base' }" class="list-group-item"
               >
-                {{ $t('app.components.settings.notif_before_24h') }}
-              </b-checkbox>
+                <span class="mx-3">{{$t('app.components.settings.tabs.base')}}</span>
+              </router-link>
+              <router-link
+                  :to="{ name: 'home.settings.schedule' }" class="list-group-item"
+              >
+                <span class="mx-3">{{$t('app.components.settings.tabs.schedule')}}</span>
+              </router-link>
+              <router-link
+                  :to="{ name: 'home.settings.app' }" class="list-group-item"
+              >
+                <span class="mx-3">{{$t('app.components.settings.tabs.app')}}</span>
+              </router-link>
+              <router-link
+                  :to="{ name: 'home.settings.push' }" class="list-group-item"
+              >
+                <span class="mx-3">{{$t('app.components.settings.tabs.push')}}</span>
+              </router-link>
+              <router-link
+                  :to="{ name: 'home.settings.tags' }" class="list-group-item"
+              >
+                <span class="mx-3">{{$t('app.components.settings.tabs.tags')}}</span>
+              </router-link>
+              <router-link
+                  :to="{ name: 'home.settings.site' }" class="list-group-item"
+              >
+                <span class="mx-3">{{$t('app.components.settings.tabs.site')}}</span>
+              </router-link>
             </div>
-
-
-            <form-group
-                :label="$t('app.components.settings.notif_before')"
-                type="select"
-                :items="[30, 60, 90]"
-                v-model="settings.notif_before"
-                :errors="errors"
-            />
-
-            <form-group
-                :label="$t('app.components.settings.notif_after')"
-                type="select"
-                :items="[30, 45, 60]"
-                v-model="settings.notif_after"
-                :errors="errors"
-            />
-
-            <form-group
-                :label="$t('app.components.settings.text')"
-                type="text"
-                v-model="settings.text"
-                :errors="errors"
-                name="text"
-                required
-            />
-
-            <form-group
-                :group="true"
-                :label="$t('app.components.settings.tg_link')"
-                name="tg_link"
-                prepend_name="show_tg_link"
-                v-model="settings.tg_link"
-                placeholder="https://t.me/..."
-                type="text"
-                :errors="errors"
-            >
-              <template v-slot:prepend>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" v-model="settings.show_tg_link"
-                      :disabled="settings.show_wa_link && settings.show_email"
-                    >
-                  </div>
-                </div>
-              </template>
-            </form-group>
-            <form-group
-                :group="true"
-                :label="$t('app.components.settings.wa_link')"
-                name="wa_link"
-                prepend_name="show_wa_link"
-                v-model="settings.wa_link"
-                placeholder="https://api.whatsapp.com/send?phone="
-                type="text"
-                :errors="errors"
-            >
-              <template v-slot:prepend>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" v-model="settings.show_wa_link"
-                           :disabled="settings.show_tg_link && settings.show_email"
-                    >
-                  </div>
-                </div>
-              </template>
-            </form-group>
-
-            <form-group
-                :group="true"
-                :label="$t('app.components.settings.email')"
-                type="email"
-                name="email"
-                prepend_name="show_email"
-                v-model="settings.email"
-                :errors="errors"
-            >
-              <template v-slot:prepend>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox"  v-model="settings.show_email"
-                           :disabled="settings.show_wa_link && settings.show_tg_link"
-                    >
-                  </div>
-                </div>
-              </template>
-            </form-group>
-          </div>
-          <div class="col-lg-6">
-            <form-group
-                :label="$t('app.components.settings.image')"
-                type="photo"
-                :errors="errors"
-                name="image"
-                v-model="new_image"
-            />
-            <b-img
-                v-if="!new_image && settings.image"
-                :src="settings.image"
-                fluid
-                class="my-3 mx-auto"
-            />
-          </div>
-          <div class="col-lg-12">
-            <button type="submit" class="btn btn-success">{{ $t('base.save') }}</button>
-          </div>
+          </b-card>
         </div>
-      </b-card>
-
-      <b-card :title="$t('app.components.settings.tabs.schedule')" class="mb-2">
-        <div v-for="(day,k) in settings.schedule" :key="k">
-          <div class="d-flex align-items-center">
-            <div class="form-group">
-              <b-form-checkbox v-model="day.active" name="check-button" switch size="sm">
-                {{ day.name }}:
-              </b-form-checkbox>
-            </div>
-
-            <form-group
-                class="ml-4"
-                type="select"
-                :disabled="!settings.schedule[k].active"
-                :items="times"
-                v-model="settings.schedule[k].start"
-                :errors="errors"
-            />
-
-            <div class="form-group ml-4">
-              <b>-</b>
-            </div>
-
-            <form-group
-                class="ml-4"
-                type="select"
-                :disabled="!settings.schedule[k].active"
-                :items="times"
-                v-model="settings.schedule[k].end"
-                :errors="errors"
-            />
-          </div>
+        <div class="col-md-10">
+          <router-view
+              :settings="settings"
+              :errors="errors"
+          />
         </div>
-        <div>
-          <button type="submit" class="btn btn-success">{{ $t('base.save') }}</button>
-        </div>
-      </b-card>
+      </div>
     </form>
 
 
@@ -265,7 +60,6 @@
 
 <script>
 
-import FormGroup from "@/components/base/FormGroup";
 import deepClone from 'clonedeep';
 import {mapGetters} from "vuex";
 import {save_settings} from "@/api";
@@ -276,7 +70,6 @@ export default {
   name: "Index",
   components: {
     MessageSuccessError,
-    FormGroup
   },
   data() {
     return {
@@ -293,7 +86,8 @@ export default {
       langs: [
         { iso: "ru", lang: "ru" },
         { iso: "us", lang: "en" },
-      ]
+      ],
+      tab_select: 'base'
     }
   },
   computed: {
@@ -317,22 +111,7 @@ export default {
   },
   created() {
     this.settings = deepClone(this.auth.organization)
-  },
-  watch: {
-    'success_error.success': function (){
-      if (this.success_error.success) {
-        setTimeout(() => {
-          this.success_error.success = false;
-        }, 4000);
-      }
-    },
-    'success_error.error': function (){
-      if (this.success_error.error) {
-        setTimeout(() => {
-          this.success_error.error = false;
-        }, 4000);
-      }
-    }
+    this.settings.new_image = null;
   },
   methods: {
     submit(){
@@ -357,8 +136,8 @@ export default {
       data.append('text', this.settings.text)
 
 
-      if (this.new_image) {
-        data.append('image', this.new_image)
+      if (this.settings.new_image) {
+        data.append('image', this.settings.new_image)
       }
 
       for (var day in this.settings.schedule){

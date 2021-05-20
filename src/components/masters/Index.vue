@@ -32,7 +32,6 @@
         <div class="mr-2">
           <b-avatar class="mr-3" :src="master.photo"></b-avatar>
         </div>
-
         <div>
           <div>
             <b>{{ master.name }}</b>
@@ -40,6 +39,9 @@
           <div>
             {{ master.description }}
           </div>
+        </div>
+        <div class="ml-2 d-flex align-items-center">
+          <star-rating :star-size="20" :rating="master.rating" :read-only="true" :increment="0.1" :show-rating="false" />
         </div>
       </div>
       <div class="col-lg-4 d-flex align-items-center mb-3 mb-md-1">
@@ -51,8 +53,11 @@
         >
           {{ $t('app.components.masters.active') }}
         </b-checkbox>
-
-        <button class="btn btn-dark rounded-circle ml-auto ml-lg-2 fa fa-pencil fa-lg" @click="openUpdatePopup(master)"/>
+        <router-link
+          :to="{name: 'home.master.show', params: { master_id: master.id }}"
+          class="btn btn-dark rounded-circle ml-auto ml-lg-2 fa fa-eye fa-lg"
+        />
+        <button class="btn btn-dark rounded-circle ml-2 ml-lg-2 fa fa-pencil fa-lg" @click="openUpdatePopup(master)"/>
         <button v-if="!master.deleted_at" class="btn btn-dark rounded-circle ml-2 fa fa-trash fa-lg" @click="deleteMater(master)"/>
       </div>
     </div>

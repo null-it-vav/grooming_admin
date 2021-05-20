@@ -14,7 +14,16 @@
           v-model="filter_type"
         />
       </div>
-      <div class="ml-auto col-3 d-flex">
+      <div class="ml-auto col-auto d-flex">
+        <div class="mr-2">
+          <a
+              v-if="breeds.length == 0"
+              class="btn btn-purpure"
+              @click="servicesSettingsBreeds"
+          >
+            {{ $t('app.components.services.settings_by_breeds') }}
+          </a>
+        </div>
         <div class="ml-auto">
           <a
               class="btn btn-purpure rounded-circle fa fa-plus"
@@ -34,7 +43,12 @@
       >
         <div class="col-md-8 mb-3 d-flex align-items-center">
           <div class="mr-2">
-            <b-avatar class="mr-3" :src="service.image"></b-avatar>
+            <b-avatar
+                class="mr-3"
+                size="3rem"
+                :src="service.image"
+                :style="`border:2px solid #${service.color_mark}`"
+            />
           </div>
 
           <div>
@@ -48,6 +62,15 @@
         </div>
         <div class="col-md-4 d-flex align-items-center">
           <button class="ml-md-auto btn btn-dark rounded-circle fa fa-pencil fa-lg" @click="openUpdatePopup(service)"/>
+          <router-link
+              v-if="(service.type == 'cat' || service.type == 'dog') && breeds.length > 0"
+              :to="{name: 'home.service.breeds', params: {service_id: service.id}}"
+              class="ml-md-2 ml-2 btn btn-dark rounded-circle fa fa-paw fa-lg"
+          />
+          <router-link
+              :to="{name: 'home.service.schedule', params: {service_id: service.id}}"
+              class="ml-md-2 ml-2 btn btn-dark rounded-circle fa fa-clock-o fa-lg"
+          />
           <button class="ml-md-2 ml-auto btn btn-dark rounded-circle fa fa-trash fa-lg" @click="deleteService(service.id)"/>
         </div>
       </div>
@@ -86,11 +109,13 @@
 </template>
 
 <script>
-import { services, delete_service } from "@/api";
+import {services, delete_service, organizationUpdate} from "@/api";
 import FormGroup from "@/components/base/FormGroup";
 import Create from "@/components/services/Create";
 import Update from "@/components/services/Update";
 import deepClone from 'clonedeep';
+import {mapGetters} from "vuex";
+import store from "@/store/app";
 
 export default {
   name: "Index",
@@ -110,6 +135,12 @@ export default {
       showUpdatePopup: false,
       page_load: false,
     }
+  },
+  computed: {
+    ...mapGetters([
+        'auth',
+        'breeds'
+    ]),
   },
   created() {
     this.loadServices()
@@ -154,6 +185,13 @@ export default {
           this.loadServices()
         })
       }
+    },
+    servicesSettingsBreeds(){
+      organizationUpdate(this.auth.organization.id, {
+        action: 'attach-all-breeds'
+      }).then(() => {
+        store.dispatch('getAuth').then(() => {})
+      })
     }
   }
 }

@@ -16,13 +16,21 @@ import 'moment/locale/ru'
 import VCalendar from 'v-calendar';
 import vSelect from 'vue-select'
 import { Cropper } from 'vue-advanced-cropper'
+import { Sketch } from 'vue-color'
+import StarRating from 'vue-star-rating'
+const invert = require('invert-color');
+import { Select } from 'ant-design-vue';
+
+window.invert = invert
+Vue.use(Select);
 
 Vue.component('v-select', vSelect)
 Vue.use(FlagIcon);
 Vue.use(VCalendar);
 Vue.use(Cropper);
+Vue.component('sketch-picker', Sketch);
 
-
+Vue.component('star-rating', StarRating);
 Vue.prototype.$moment = VueMoment;
 
 
@@ -59,10 +67,7 @@ const i18n = new VueI18n({
   locale: 'ru', // установка локализации по умолчанию
   messages: {
     ru: ru,
-    gb: en,
     en: en,
-    it: {language: "Italiano",},
-    es: {language: "Español",},
   } // установка сообщений локализаций
 })
 
@@ -73,6 +78,10 @@ Vue.use(VueProgressBar, {
   height: '4px',
   autoFinish: true,
 });
+
+Vue.filter('invert_color', function (value) {
+  return window.invert('#'+value, true)
+})
 
 const app = new Vue({ // eslint-disable-line no-unused-vars
   el: '#app',

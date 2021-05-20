@@ -1,5 +1,5 @@
 let en = {
-    language: "Русский",
+    language: "English",
     app: {
         components: {
             admin: {
