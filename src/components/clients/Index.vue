@@ -105,6 +105,11 @@
         </td>
         <td>
           <router-link
+              v-if="client.chat"
+              :to="{name: 'home.client.chat', params: {client_id: client.id, chat_id: client.chat.id}}"
+              class="btn btn-dark btn-sm rounded-circle fa fa-comment mr-2"
+          />
+          <router-link
               :to="{name: 'home.client.show', params: {client_id: client.id}}"
               class="btn btn-dark btn-sm rounded-circle fa fa-eye"
           />
@@ -198,7 +203,10 @@ export default {
         qty: this.clients.per_page,
         with_last_order: 1,
         phone: this.filters.phone,
-        tag_id: this.filters.tag
+        tag_id: this.filters.tag,
+        with: [
+            'chat'
+        ]
       })
       .then((response) => {
         this.clients.data = response.data.data.clients.data

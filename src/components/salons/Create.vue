@@ -65,7 +65,7 @@ export default {
         zoom: 15
       },
       libraries: ['places'],
-      apiKey: "AIzaSyBWca5mS-zErdQCt55kBS4VSePF-ngWpwo",
+      apiKey: "AIzaSyDIBD474WLp4j9QJL5DjT8sd-tEH7zF-oI",
     }
   },
   created() {

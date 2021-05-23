@@ -316,3 +316,14 @@ export function pet_update(id, payload){
     return axios.post(BASE_URL + 'profile/pets/'+id, payload)
         .then((response) => response)
 }
+
+export function chat_messages(chat_id, payload){
+    return axios.get(BASE_URL + 'profile/chat/'+chat_id+'/messages', {
+        params: payload
+    }).then((response) => response)
+}
+
+export function send_message(chat_id, payload){
+    return axios.post(BASE_URL + 'profile/chat/'+chat_id+'/messages', payload)
+        .then((response) => response)
+}

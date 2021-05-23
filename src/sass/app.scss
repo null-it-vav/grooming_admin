@@ -16,6 +16,7 @@
 
 @import "table";
 @import "pets";
+@import "chat";
 @import "~vue-select/dist/vue-select.css";
 
 @import '~vue-advanced-cropper/dist/style.css';
@@ -403,5 +404,11 @@ a.list-group-item i{
 }
 
 .form-control {
-  height: calc(1.6em + 0.75rem + 6px) !important;
+  height: calc(1.6em + 0.75rem + 6px);
+}
+.form-control-sm {
+  height: calc(1.5em + 0.5rem + 2px);
+}
+.text-hint {
+  color: #9EA2B1;
 }

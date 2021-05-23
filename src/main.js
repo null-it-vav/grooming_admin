@@ -21,6 +21,7 @@ import StarRating from 'vue-star-rating'
 const invert = require('invert-color');
 import { Select } from 'ant-design-vue';
 
+
 window.invert = invert
 Vue.use(Select);
 

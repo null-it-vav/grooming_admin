@@ -132,6 +132,40 @@
               :errors="errors"
               v-model="service.koltun_price"
           />
+          <form-group
+              :label="$t('app.components.services.field.baby_'+service.type)"
+              type="switch"
+              name="baby"
+              :errors="errors"
+              v-model="service.baby"
+          />
+          <form-group
+              v-if="service.baby"
+              type="select"
+              :items="[
+                  { value: 30, text: $t('app.components.services.durations.30') },
+                  { value: 60, text: $t('app.components.services.durations.60') },
+                  { value: 90, text: $t('app.components.services.durations.90') },
+                  { value: 120, text: $t('app.components.services.durations.120') },
+                  { value: 150, text: $t('app.components.services.durations.150') },
+                  { value: 180, text: $t('app.components.services.durations.180') },
+                  { value: 210, text: $t('app.components.services.durations.210') },
+                  { value: 240, text: $t('app.components.services.durations.240') },
+              ]"
+              :label="$t('app.components.services.field.baby_duration')"
+              :errors="errors"
+              name="duration"
+              required
+              v-model="service.baby_duration"
+          />
+          <form-group
+              v-if="service.baby"
+              :label="$t('app.components.services.field.baby_price')"
+              type="number"
+              name="baby_price"
+              :errors="errors"
+              v-model="service.baby_price"
+          />
         </div>
         <div class="col-lg-4">
           <form-group
@@ -179,6 +213,7 @@ export default {
         type: "",
         duration: "",
         image: null,
+        baby: false,
       }
     },
   },
@@ -222,6 +257,9 @@ export default {
       data.append('color_mark', this.service.color_mark)
       data.append('aggressive', this.service.aggressive ? 1 : 0)
       data.append('koltun', this.service.koltun ? 1 : 0)
+      data.append('baby', this.service.baby ? 1 : 0)
+      data.append('baby_duration', this.service.baby_duration)
+      data.append('baby_price', this.service.baby_price)
 
       if (this.service.aggressive) {
         data.append('aggressive_duration', this.service.aggressive_duration)

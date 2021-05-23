@@ -150,7 +150,7 @@
           <hr>
           <div class="form-group" v-if="auth.role_list.includes('admin') & (salons.length > 0)">
             <label>{{ $t('app.components.main.selected_salon') }}</label>
-            <select class="form-control" @change="setSalon" v-model="selected_salon">
+            <select class="form-control form-control-sm" @change="setSalon" v-model="selected_salon">
               <option v-for="(salon, k) in salons" :value="salon.id" :key="k">{{ salon.address }}</option>
             </select>
           </div>
@@ -160,7 +160,6 @@
         <div class="px-2">
           <div style="height: 60px; width: 100%;"></div>
           <router-view />
-          <div style="height: 60px; width: 100%;"></div>
         </div>
 
       </div>
@@ -195,6 +194,12 @@ export default {
       'salons',
       'salon_selected'
     ]),
+  },
+  created() {
+    window.Echo.private(`App.User.${this.auth.id}`)
+        .listen('UserNotification', ({ data }) => {
+          console.log(data)
+        });
   },
   watch: {
     // eslint-disable-next-line no-unused-vars

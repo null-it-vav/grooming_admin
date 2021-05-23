@@ -41,6 +41,7 @@
             (name in errors) ? 'is-invalid' : '',
             (prepend_name in errors) ? 'is-invalid' : '',
             (append_name in errors) ? 'is-invalid' : '',
+            sm == '' ? 'form-control-sm' : ''
           ]"
           :disabled="disabled"
       >
@@ -316,6 +317,9 @@ export default {
       default: function () { return {} },
     },
     required: {
+      required: false
+    },
+    sm: {
       required: false
     },
     accept: {

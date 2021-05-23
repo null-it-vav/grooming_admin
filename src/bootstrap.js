@@ -34,7 +34,7 @@ try {
 const axios = require('axios');
 
 // axios.defaults.baseURL = 'https://api.null-it.ru';
-axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL;
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API_PROTOCOL + '://' +process.env.VUE_APP_BASE_API_URL;
 
 const token = localStorage.getItem('user-token')
 if (token) {
@@ -51,6 +51,17 @@ window.io = require('socket.io-client');
 //     broadcaster: 'socket.io',
 //     host: `${window.location.hostname}:6001`,
 // });
+import Echo from "laravel-echo"
+
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: `${process.env.VUE_APP_BASE_API_URL}:6001`,
+    auth : {
+        headers : {
+            Authorization : token
+        }
+    }
+});
 
 
 export default axios;

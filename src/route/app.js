@@ -19,6 +19,8 @@ const ServicesIndex = () => import( '../components/services/Index');
 const ServicesBreeds = () => import( '../components/services/Breeds');
 const ServicesSchedule = () => import( '../components/services/Schedule');
 
+const ChatMessages = () => import( '../components/chat/ChatMessages');
+
 const PromotionsIndex = () => import( '../components/promotions/Index');
 const SettingsIndex = () => import( '../components/settings/Index');
 const SettingsBase = () => import( '../components/settings/tabs/SettingsBase');
@@ -216,6 +218,13 @@ const routes = [
                 name: 'home.tags',
                 component: AdminTagsIndex,
                 meta: { needAuth: true, roles: ['super-admin'] },
+            },
+            {
+                path: '/clients/:client_id/chat/:chat_id',
+                name: 'home.client.chat',
+                component: ChatMessages,
+                meta: { needAuth: true, roles: ['admin'] },
+                props: route => ({ client_id: route.params.client_id, chat_id: route.params.chat_id })
             }
         ]
     },

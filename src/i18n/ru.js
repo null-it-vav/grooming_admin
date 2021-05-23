@@ -72,7 +72,11 @@ let ru = {
                     koltun: 'Доплата за колтуны',
                     koltun_duration: '+ время',
                     koltun_price: '+ цена',
-                    color_mark: 'Цвет услуги'
+                    color_mark: 'Цвет услуги',
+                    baby_dog: 'Цена за щенка',
+                    baby_cat: 'Цена за котенка',
+                    baby_price: 'Цена, от',
+                    baby_duration: 'Продолжительность',
                 },
                 durations: {
                     30: '30 минут',
@@ -91,7 +95,7 @@ let ru = {
                     aggressive_duration: 'Агрессивность, + к времени',
                     aggressive_price: 'Агрессивность, + к цене',
                     koltun_duration: 'Колтуны, + к времени',
-                    koltun_price: 'Колтуны, + к цене'
+                    koltun_price: 'Колтуны, + к цене',
                 }
             },
             salons: {
@@ -297,6 +301,11 @@ let ru = {
                         user: 'Пользователи'
                     }
                 },
+            },
+            chats: {
+                file: 'Файл',
+                photo: 'Фото',
+                order: 'Запись'
             }
         },
         titles: {
@@ -337,7 +346,8 @@ let ru = {
                     show: 'Данные клиента',
                     pet: {
                         index: 'Данные питомца'
-                    }
+                    },
+                    chat: 'Чат'
                 },
                 tags: 'Тэги'
             }

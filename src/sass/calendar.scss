@@ -19,6 +19,15 @@
     &-hour {
         height: 40px;
         border-bottom: 1px solid #e0e0e0;
+        user-select: none;
+        cursor: pointer;
+        &-disabled {
+            background-color: #bcbbbb !important;
+        }
+        &-disabled-time {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     }
     &-hour-list {
         flex: none;
@@ -70,13 +79,16 @@
         position: absolute;
         right: 0;
         border-radius: 2px;
-        cursor: pointer;
         display: inline-block;
         vertical-align: middle;
         &-menu {
             align-items: center;
-            cursor: pointer;
             position: relative;
+        }
+        &-select {
+            box-shadow: 4px 4px 10px rgb(158 162 177 / 0.8);
+            user-select: none;
+            cursor: move;
         }
     }
 }

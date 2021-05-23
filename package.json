@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --host admin.grooming-box.my",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -22,10 +22,11 @@
     "google-maps": "^4.3.3",
     "invert-color": "^2.0.0",
     "jquery": "^3.5.1",
-    "laravel-echo": "^1.10.0",
+    "laravel-echo": "^1.8.0",
+    "laravel-echo-server": "^1.6.2",
     "moment-timezone": "^0.5.33",
     "popper.js": "^1.16.1",
-    "socket.io-client": "^3.1.1",
+    "socket.io-client": "^2.3.0",
     "v-calendar": "^2.2.3",
     "vue": "^2.6.11",
     "vue-advanced-cropper": "^1.3.0",
@@ -40,6 +41,7 @@
     "vue-router": "^3.5.1",
     "vue-select": "^3.11.2",
     "vue-star-rating": "^1.7.0",
+    "vue-touch": "^2.0.0-beta.4",
     "vuejs-datetimepicker": "^1.1.13",
     "vuex": "^3.6.2"
   },
