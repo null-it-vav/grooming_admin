@@ -1,6 +1,6 @@
 <template>
-  <b-card>
-    <div class="mb-2 row align-items-center">
+  <b-card class="p-0" ref="clWindows">
+    <div class="mb-2 row align-items-center" ref="clFilter">
       <div class="col-lg-2 mb-2">
         <form-group
             v-if="auth.role_list.includes('admin')"
@@ -24,7 +24,7 @@
     </div>
     <div class="cl">
       <div class="cl-view-container">
-        <div class="cl-header">
+        <div class="cl-header" ref="clHeader">
           <div class="cl-hour-list">
 
           </div>
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="cl-view-bottom">
-          <div class="cl-view-scrollable" style="max-height: 500px">
+          <div class="cl-view-scrollable" :style="`height: ${cl_height}px`">
             <div class="cl-view-pane">
               <div
                   class="cl-week"
@@ -159,7 +159,24 @@ export default {
         last_page: 1,
         total: 0,
       },
+      cl_height: 500
     }
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.pageResize);
+  },
+  created() {
+    this.loadOrders();
+    if (!this.auth.role_list.includes('admin') && this.auth.role_list.includes('master')) {
+      this.master_filter = this.auth.id
+    } else {
+      this.loadMasters()
+    }
+  },
+  mounted() {
+    this.dayColumnsEnter()
+    this.pageResize()
+    window.addEventListener("resize", this.pageResize);
   },
   watch: {
     'shift': function () {
@@ -210,17 +227,6 @@ export default {
 
       return data
     },
-  },
-  created() {
-    this.loadOrders();
-    if (!this.auth.role_list.includes('admin') && this.auth.role_list.includes('master')) {
-      this.master_filter = this.auth.id
-    } else {
-      this.loadMasters()
-    }
-  },
-  mounted() {
-    this.dayColumnsEnter()
   },
   methods: {
     calendarLeft() {
@@ -412,6 +418,12 @@ export default {
         console.log(this.disabledTimes[d])
         this.mouse_day = null
       }
+    },
+    pageResize() {
+      let top = this.$refs.clWindows.getBoundingClientRect().top
+      let height = window.innerHeight;
+
+      this.cl_height = height - top - this.$refs.clFilter.clientHeight - this.$refs.clHeader.clientHeight - 50;
     }
   }
 }
