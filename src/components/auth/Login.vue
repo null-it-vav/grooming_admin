@@ -127,7 +127,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { login, create_demo, reset_password } from '@/api'
-import store from "@/store/app";
+// import store from "@/store/app";
 import FormGroup from "@/components/base/FormGroup";
 import MessageSuccessError from "@/components/base/SuccessError";
 import VueRecaptcha from 'vue-recaptcha';
@@ -254,9 +254,11 @@ export default {
             localStorage.setItem('user-token', response.data.data.token)
             this.$axios.defaults.headers.common['Authorization'] = response.data.data.token
 
-            store.dispatch('getAuth').then(() => {
-              this.$router.push({ name: 'home.dashboard' });
-            });
+            window.location.href = '/dashboard'
+
+            // store.dispatch('getAuth').then(() => {
+            //   this.$router.push({ name: 'home.dashboard' });
+            // });
 
           })
           .catch((e) => {

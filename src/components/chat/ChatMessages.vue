@@ -1,52 +1,30 @@
 <template>
   <div>
-    <div class="py-2">
-      <router-link
-          :to="{ name: 'home.clients' }"
-          class="btn btn-rounded btn-hint-white"
-      >
-        <i class="fa fa-chevron-left"/> Назад
-      </router-link>
-    </div>
-    <div class="row" ref="chatWindows">
+    <div class="row no-gutters" ref="chatWindows">
       <div class="col-lg-8" :style="`height: ${chat_height}px`">
-        <div class="card h-100 p-0">
-          <div
-              class="chat-body"
-              :style="`height: ${chat_history_height}px`"
-              @scroll="checkLoadMessage"
-          >
-            <div
-                v-for="message in messages"
-                :key="`message_${message.id}`"
+        <div class="card mr-lg-2 mr-0 h-100 p-0">
+          <div class="chat-footer px-4 py-2" ref="chatFooter">
+            <router-link
+                :to="{ name: 'home.clients' }"
+                class="text-dark text-decoration-none"
             >
-              <div class="mb-2 mx-2 row no-gutters">
-                <div class="col-auto p-0">
-                  <b-avatar
-                      :src="message.user_info.photo"
-                  />
-                </div>
-                <div class="col-10 col-md-7 p-0">
-                  <div class="mx-2">
-                    <div class="text-hint">{{ message.user_info.name }}</div>
-                    <div class="d-flex">
-                      <div
-                          :class="'chat-message-box-'+(message.user_info.id == auth.id ? 'my' : 'other')"
-                      >
-                        {{ message.data.text }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3 col-md-4 pt-1 pl-0 d-none d-md-flex ml-auto">
-                  <div class="ml-auto text-hint" v-b-tooltip="$moment(message.created_at).format('YYYY-MM-DD HH:mm:ss')">
-                    {{ message.created_at | moment("from", "now") }}
-                  </div>
-                </div>
-              </div>
-            </div>
+              <i class="fa fa-chevron-left"/> Назад
+            </router-link>
+          </div>
+          <div class="chat-body" :style="`height: ${chat_history_height}px`" @scroll="checkLoadMessage" ref="chatBody">
+            <chat-message :message="message" v-for="message in messages" :key="`message_${message.id}`"/>
           </div>
           <div class="chat-input" ref="chatInput">
+            <button
+                class="chat-input-to-end"
+                :class="{'chat-input-to-end-show': toEndShow}"
+                @click="scrollToBottom"
+            >
+              <span class="chat-input-to-end-button"></span>
+              <span v-if="newMessages" class="chat-input-to-end-label">
+                <span class="chat-input-to-end-label-round">{{ newMessages }}</span>
+              </span>
+            </button>
             <div class="py-2 row no-gutters align-items-center">
               <div class="col-auto d-flex">
                 <b-dropdown
@@ -91,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 overflow-auto" :style="`height: ${chat_height}px`">
+      <div class="col-lg-4 d-none d-md-block overflow-auto" :style="`height: ${chat_height}px`">
         <div class="card p-4 mb-2" v-if="client">
           <b>{{ client.name }}</b>
           {{ client.phone }}
@@ -140,9 +118,11 @@
 <script>
 import {mapGetters} from "vuex";
 import {clients, send_message, chat_messages} from "@/api";
+import ChatMessage from "@/components/chat/ChatMessage";
 
 export default {
   name: "ChatDialog",
+  components: {ChatMessage},
   props: {
     client_id: null,
     chat_id: null
@@ -158,12 +138,19 @@ export default {
         total: 0,
       },
       messages: [],
+      messages_per_page: 20,
       images: [],
       files: [],
       message: '',
       chat_height: 400,
       chat_history_height: 0,
-      send_message_rows: 1
+      send_message_rows: 1,
+      loadMessage: false,
+      endOfChatMessages: false,
+      toEndShow: false,
+      newMessages: 0,
+      showScrollBottomPx: 100,
+      scrollTop: 0
     }
   },
   computed: {
@@ -175,6 +162,7 @@ export default {
   },
   destroyed() {
     window.removeEventListener("resize", this.pageResize);
+    window.Echo.leave(`chat.${this.chat_id}`)
   },
   created() {
     this.getClient()
@@ -183,6 +171,7 @@ export default {
   },
   mounted() {
     this.pageResize()
+    this.echoCreateConnect()
   },
   watch: {
     message() {
@@ -191,6 +180,21 @@ export default {
     }
   },
   methods: {
+    echoCreateConnect() {
+      window.Echo.private(`chat.${this.chat_id}`)
+          .listen('ChatMessage', (data) => {
+            if (data.message) {
+              this.messages.unshift(data.message)
+              this.newMessages++
+
+              var audio = new Audio(require('../../assets/chat/sound.mp3'));
+              audio.play()
+            }
+            // this.receiveMessageData = data
+            // this.addMessage()
+            // this.receiveMessageData = []
+          })
+    },
     getClient() {
       clients({
         id: this.client_id,
@@ -254,8 +258,8 @@ export default {
     },
     sendMessage (data) {
       send_message(this.chat_id, data)
-          .then((response) => {
-            this.messages.unshift(response.data)
+          .then(() => {
+            //this.messages.unshift(response.data)
             this.message = ''
           })
           .catch((error) => {
@@ -263,13 +267,61 @@ export default {
           })
     },
     checkLoadMessage (e) {
-      console.log(e)
+      let el = e.target
+      let maxScroll = el.scrollHeight - el.clientHeight;
+      let scrollTop = (Math.abs(el.scrollTop) + 100) > maxScroll
+      if (scrollTop) {
+        this.loadMore()
+      }
+      if (Math.abs(el.scrollTop) > this.showScrollBottomPx){
+        this.toEndShow = true
+      }else {
+        this.toEndShow = false
+        this.newMessages = 0
+      }
+      this.scrollTop = Math.abs(el.scrollTop)
+    },
+    loadMore() {
+      if (!this.loadMessage && !this.endOfChatMessages) {
+        this.loadMessage = true
+        let lastMessage = this.messages[this.messages.length - 1]
+        if (lastMessage){
+          chat_messages(this.chat_id, {
+            last_message: lastMessage.id,
+            type: "before",
+            qty: this.messages_per_page
+          })
+              .then((response) => {
+                if (!response.data.messages.length){
+                  this.endOfChatMessages = true;
+                }
+                if (response.data.messages.length != this.messages_per_page){
+                  this.endOfChatMessages = true;
+                }
+                this.loadMessage = false
+                response.data.messages.forEach(element => this.messages.push(element))
+              })
+            .catch((error) => {
+              console.log(error)
+              this.loadMessage = false
+            })
+        }
+      }
     },
     loadMessages(){
-      chat_messages(this.chat_id, {})
+      chat_messages(this.chat_id, {
+        qty: this.messages_per_page
+      })
           .then((response) => {
             this.messages = response.data.messages
+            //если в первом ответе и так меньше сообещний чем надо
+            if (response.data.messages.length != this.messages_per_page){
+              this.endOfChatMessages = true;
+            }
           })
+    },
+    scrollToBottom() {
+      this.$refs.chatBody.scrollTop = 0
     }
   }
 }

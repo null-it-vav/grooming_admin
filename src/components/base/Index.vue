@@ -156,11 +156,9 @@
           </div>
         </div>
       </div>
-      <div class="main-panel">
-        <div class="px-2">
-          <div style="height: 60px; width: 100%;"></div>
-          <router-view />
-        </div>
+      <div class="main-panel px-2">
+        <div style="height: 60px; width: 100%;"></div>
+        <router-view />
 
       </div>
     </div>
