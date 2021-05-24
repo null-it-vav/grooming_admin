@@ -258,8 +258,8 @@ export default {
     },
     sendMessage (data) {
       send_message(this.chat_id, data)
-          .then(() => {
-            //this.messages.unshift(response.data)
+          .then((response) => {
+            this.messages.unshift(response.data)
             this.message = ''
           })
           .catch((error) => {
