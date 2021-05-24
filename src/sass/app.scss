@@ -28,7 +28,7 @@
   &-selection {
     display: block;
     width: 100%;
-    min-height: calc(1.6em + 0.75rem + 2px);
+    min-height: calc(1.6em + 0.75rem + 6px);
     padding: 2px 0.75rem;
     font-size: 0.88rem;
     font-weight: 400;
@@ -104,7 +104,7 @@
   cursor: pointer;
 }
 .ant-select-selection__rendered {
-  line-height: 30px;
+  line-height: 36px;
   margin-left: 0px;
 }
 

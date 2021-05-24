@@ -1,22 +1,29 @@
 <template>
   <div class="card p-4">
     <div class="row mb-4 align-items-center">
-      <div class="col-lg-2 d-flex align-items-center">
+      <div class="col-lg-2">
         <form-group
-            custom_class="mb-0"
+            custom_class="mb-2"
             type="text"
             v-model="filters.phone"
             :placeholder="$t('app.components.clients.filters.phone')"
             @keyupenter="getClients"
-        />
-        <div class="ml-2">
-          <i class="pointer fa fa-search" @click="getClients"/>
-        </div>
+            group
+        >
+          <template v-slot:append>
+            <div class="input-group-append d-flex align-items-center">
+              <div class="input-group-text h-100">
+                <i class="pointer fa fa-search" @click="getClients"/>
+              </div>
+            </div>
+          </template>
+        </form-group>
       </div>
       <div class="col-lg-2">
         <a-select
             v-model="filters.tag"
             :filter-option="false"
+            class="mb-2"
         >
           <div slot="dropdownRender" slot-scope="menu">
             <div @click="filters.tag = null" class="add-tag" v-if="filters.tag">
@@ -48,7 +55,7 @@
           </a-select-opt-group>
         </a-select>
       </div>
-      <div class="col-auto ml-auto">
+      <div class="col-auto ml-0 ml-md-auto">
         <b-checkbox
             switch
             size="sm"
