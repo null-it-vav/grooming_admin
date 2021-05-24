@@ -396,6 +396,8 @@ export default {
         let d = day.format('YYYY-MM-DD')
         if (!this.disabledTimes[d]) this.disabledTimes[d] = {}
         this.disabledTimes[d][time] = this.disabledTimes[d][time] ? !this.disabledTimes[d][time] : true
+        this.$forceUpdate()
+        //todo надо переделать
       }
     },
     addDisabledTime(day, time){
