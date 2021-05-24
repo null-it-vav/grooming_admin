@@ -1,6 +1,6 @@
 <template>
   <b-card>
-    <div class="mb-2 d-flex align-items-center">
+    <div class="mb-2 row align-items-center">
       <div class="col-lg-2 mb-2">
         <form-group
             v-if="auth.role_list.includes('admin')"
