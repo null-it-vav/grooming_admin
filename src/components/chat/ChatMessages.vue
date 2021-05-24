@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 d-none d-md-block overflow-auto" :style="`height: ${chat_height}px`">
+      <div class="col-lg-4 d-none d-lg-block overflow-auto" :style="`height: ${chat_height}px`">
         <div class="card p-4 mb-2" v-if="client">
           <b>{{ client.name }}</b>
           {{ client.phone }}
