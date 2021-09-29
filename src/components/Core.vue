@@ -44,7 +44,7 @@ export default {
   },
   watch: {
     hasLoadingGlobal(value) {
-      this.loading(value);
+      this.loading(value, true);
     },
     hasLoadingLocal(value) {
       this.loading(value);
@@ -58,17 +58,17 @@ export default {
     ...mapMutations([
       'setStore',
     ]),
-    loading(value){
+    loading(value, isGlobal = false){
       if (value >= 1 && this.started == false) {
         this.$Progress.start();
         this.started = true;
-        this.globalLoading = true;
+        if (isGlobal) this.globalLoading = true;
       }
 
       if (value == 0 && this.started == true) {
         this.$Progress.finish();
         this.started = false;
-        this.globalLoading = false;
+        if (isGlobal) this.globalLoading = false;
       }
     }
   },

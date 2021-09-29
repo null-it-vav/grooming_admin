@@ -12,11 +12,8 @@
 // Icon awesome
 @import "~font-awesome/css/font-awesome.css";
 
-@import "calendar";
+@import "components";
 
-@import "table";
-@import "pets";
-@import "chat";
 @import "~vue-select/dist/vue-select.css";
 
 @import '~vue-advanced-cropper/dist/style.css';
@@ -24,7 +21,7 @@
 @import '~ant-design-vue/dist/antd.css';
 
 body {
-  background: #F8F8F8;
+  background: #F0F2F7;
 }
 
 .ant-select {
@@ -152,27 +149,6 @@ body {
   cursor: pointer !important;
 }
 
-.btn {
-  color: #fff !important;
-}
-
-.btn-purpure {
-  color: $white;
-  background-color: $purple;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-}
-.btn-purpure:hover {
-  color: $white;
-}
-.btn-purpure:active {
-  color: $white;
-  box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%) !important;
-}
-
-.btn-block {
-  width: 100%;
-}
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
@@ -197,166 +173,6 @@ body {
   //position: relative;
   //top: 0;
   //height: 100vh;
-}
-
-.sidebar {
-  background: white;
-}
-
-.main-panel, .sidebar {
-  overflow: auto;
-  //min-height: 100vh;
-  transition-property: top,bottom;
-  transition-duration: .2s,.2s;
-  transition-timing-function: linear,linear;
-  -webkit-overflow-scrolling: touch;
-}
-
-.sidebar, body>.navbar-collapse {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 260px;
-  display: block;
-  z-index: 999;
-  font-weight: 200;
-  background-size: cover;
-  background-position: 50%;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1029;
-}
-
-.main-panel {
-  background: #F8F8F8;
-  position: relative;
-  float: right;
-  width: calc(100% - 260px);
-}
-
-.main-panel .navbar {
-  margin-left: 260px;
-}
-
-.navbar-light {
-  background: #fff;
-}
-
-@media (max-width: 991px) {
-  .nav-open .main-panel, .sidebar {
-    transition: all .5s cubic-bezier(.685,.0473,.346,1);
-  }
-
-  .main-panel, .nav-open .sidebar {
-    transition: all .5s cubic-bezier(.685,.0473,.346,1);
-  }
-
-  .sidebar {
-    right: 0!important;
-    left: auto;
-    position: fixed;
-    -webkit-transform: translate3d(262px,0,0);
-    transform: translate3d(262px,0,0)!important;
-  }
-  .main-panel {
-    width: 100%;
-  }
-
-  .main-panel .navbar {
-    margin-left: 0px;
-  }
-
-  .nav-open .main-panel {
-    position: absolute;
-    left: 0;
-    -webkit-transform: translate3d(-250px,0,0);
-    transform: translate3d(-250px,0,0)!important;
-  }
-
-  .nav-open .sidebar {
-    -webkit-transform: translate3d(10px,0,0);
-    transform: translate3d(10px,0,0)!important;
-  }
-}
-
-
-.list-group .router-link-active {
-  color: #6a1b9a!important;
-}
-
-
-
-.list-group a:hover:before {
-  background: #6a1b9a80 !important;
-  opacity: .12;
-  bottom: 0;
-  content: "";
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  border-radius: 4px;
-  transition: .3s cubic-bezier(.25,.8,.5,1);
-}
-
-.list-group a.router-link-active:before {
-  background: #6a1b9a!important;
-  opacity: .12;
-  bottom: 0;
-  content: "";
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  border-radius: 4px;
-  transition: .3s cubic-bezier(.25,.8,.5,1);
-}
-
-a.list-group-item {
-  margin-bottom: 0.2rem;
-}
-
-
-.list-group.border-none {
-  .list-group-item {
-    border: none;
-  }
-}
-
-.list-group a {
-  color: #000;
-  font-weight: 400;
-}
-button:focus:not(:focus-visible),
-button:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.page-item.active .page-link {
-
-}
-
-a.list-group-item:hover {
-  text-decoration: none;
-}
-a.list-group-item i{
-  width: 20px;
-}
-
-.custom-file-label::after:lang(ru) {
-  content: 'Выбрать';
-}
-.nav-item a {
-  color: $purple;
 }
 
 .card-footer {
@@ -415,4 +231,9 @@ a.list-group-item i{
 }
 .text-hint {
   color: #9EA2B1;
+}
+
+*:focus {
+  box-shadow: none !important;
+  outline: 0px;
 }

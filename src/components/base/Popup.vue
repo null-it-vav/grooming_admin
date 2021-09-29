@@ -14,7 +14,7 @@
             class="modal-content"
         >
           <div class="modal-header">
-            <h5 class="modal-title ml-4">
+            <h5 class="modal-title">
               {{ caption }}
             </h5>
             <button

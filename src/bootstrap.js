@@ -5,7 +5,7 @@
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo';
+import Echo from 'laravel-echo';
 
 window._ = require('lodash'); // eslint disable-line global-require
 
@@ -51,7 +51,7 @@ window.io = require('socket.io-client');
 //     broadcaster: 'socket.io',
 //     host: `${window.location.hostname}:6001`,
 // });
-import Echo from "laravel-echo"
+// import Echo from "laravel-echo"
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',

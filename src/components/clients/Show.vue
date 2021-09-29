@@ -5,7 +5,7 @@
           :to="{ name: 'home.clients' }"
           class="btn btn-rounded btn-hint-white"
       >
-        <i class="fa fa-chevron-left"/> Назад
+        <i class="fa fa-chevron-left"/> {{ $t('base.back') }}
       </router-link>
     </div>
     <form @submit.prevent="saveClientData">
@@ -198,6 +198,7 @@
             <button
                 type="submit"
                 class="m-auto btn btn-success"
+                v-if="client.additional_phones && client.additional_phones.length > 0"
             >
               {{ $t('base.update') }}
             </button>
@@ -212,7 +213,7 @@
       </b-card>
     </form>
     <div class="card p-4 mb-2">
-      <div class="card-body p-0 d-flex">
+      <div class="card-body p-0 d-flex flex-wrap">
         <router-link
             v-for="(pet, k) in client.pets"
             :key="k"
@@ -223,7 +224,7 @@
             class="pet-card"
         >
           <div>
-            <b-avatar />
+            <b-avatar :src="pet.phone"/>
           </div>
           <div
               class="pet-card-about"
@@ -424,6 +425,7 @@ export default {
     },
     deleteAdditionalPhone(k) {
       this.client.additional_phones.splice(k, 1)
+      this.saveClientData()
     },
     addItem() {
 

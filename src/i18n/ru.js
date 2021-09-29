@@ -200,6 +200,8 @@ let ru = {
                     schedule: "Расписание",
                     tags: "Теги",
                     site: "Сайт",
+                    sms: "СМС",
+                    chats: 'Чаты'
                 },
                 name: 'Название',
                 phone: 'Телефон',
@@ -219,7 +221,7 @@ let ru = {
                 image: 'Фото на главной странице приложения (png или jpg, до 1 мб)',
                 tg_link: 'Ссылка на Telegram',
                 wa_link: 'Ссылка на WhatsApp',
-
+                client_view_chat_status: 'Клиент видит админ онлайн или нет'
             },
             calendar: {
                 new_order: "Новая запись",
@@ -256,7 +258,8 @@ let ru = {
                     discount_type: 'Постоянная скидка',
                     discount: 'Cкидка',
                     next_discount_type: 'Скидка на следующую запись',
-                    tags: 'Теги'
+                    tags: 'Теги',
+                    pets_count: 'Кол-во питомцев'
                 },
                 discount_types: {
                     null: 'Нет',
@@ -280,6 +283,23 @@ let ru = {
                     who: 'Кто',
                     name: 'Имя',
                     phone: 'Телефон'
+                },
+                transactions: {
+                    fields: {
+                        type: 'Тип операции',
+                        type_funds: 'Тип средств',
+                        value: 'Сумма',
+                        created_at: 'Дата',
+                    },
+                    types: {
+                        debit: 'Списание',
+                        refund: 'Возврат',
+                        accrual: 'Начисление'
+                    },
+                    types_funds: {
+                        bonus: 'Бонус',
+                        money: 'Деньги',
+                    }
                 }
             },
             breeds: {
@@ -306,6 +326,64 @@ let ru = {
                 file: 'Файл',
                 photo: 'Фото',
                 order: 'Запись'
+            },
+            packages: {
+                create: 'Создать абонемент',
+                salon: 'Салон',
+                model: 'Тип абонемента',
+                types: {
+                    select: 'Выбрать',
+                    organization: 'Организация',
+                    salon: 'Салон',
+                    master: 'Мастер',
+                },
+                service: 'Услуга',
+                name: 'Описание',
+                service_count: 'Кол-во в абонементе',
+                discount: 'Скидка за пакет',
+                started_at: 'Начало действия',
+                start_published_at: 'С какой даты показывать пользователям',
+                end_published_at: 'До какой даты показывать пользователям',
+            },
+            comments: {
+                fields: {
+                    text: 'Комментарий',
+                    user: 'Клиент',
+                    date: 'Дата',
+                    status: 'Статус'
+                }
+            },
+            shop: {
+                tabs: {
+                    categories: 'Категории',
+                    orders: 'Заказы',
+                    items: 'Товары'
+                },
+                category: {
+                    create: 'Создать категорию',
+                    update: 'Обновить категорию',
+                    select: 'Выбрать категорию...',
+                    fields: {
+                        title: 'Название',
+                        type: 'Тип',
+                        visible: 'Видимая',
+                    }
+                },
+                item: {
+                    create: 'Создать товар',
+                    update: 'Обновить товар',
+                    fields: {
+                        type: 'Тип',
+                        category: 'Категория',
+                        title: 'Название',
+                        description: 'Описание',
+                        images: 'Фотографии',
+                        supplier_price: 'Цена закупки',
+                        price: 'Цена',
+                        new_price: 'Цена со скидкой',
+                        count: 'Кол-во на складе',
+                    }
+                }
             }
         },
         titles: {
@@ -334,7 +412,9 @@ let ru = {
                     app: 'Настройки приложения',
                     push: 'Настройки уведомлений',
                     site: 'Настройки сайта',
-                    schedule: 'Настройки расписания'
+                    sms: 'Настройки СМС',
+                    schedule: 'Настройки расписания',
+                    chats: 'Чаты'
                 },
                 breeds: 'Породы',
                 service: {
@@ -347,13 +427,25 @@ let ru = {
                     pet: {
                         index: 'Данные питомца'
                     },
-                    chat: 'Чат'
+                    chat: 'Чат',
+                    transactions: 'Транзакции клиента'
                 },
-                tags: 'Тэги'
+                tags: 'Тэги',
+                packages: 'Абонементы',
+                comments: 'Отзывы',
+                shop: {
+                    index: 'Магазин',
+                    categories: 'Категории',
+                    orders: 'Заказы',
+                    items: 'Товары'
+                },
+                mail: {
+                    index: 'Почта'
+                }
             }
         },
         base: {
-            create: 'Создать'
+            create: 'Создать',
         }
     },
     base: {
@@ -383,6 +475,7 @@ let ru = {
             11: "Ноябрь",
             12: "Декабрь",
         },
+        back: 'Назад',
         save: 'Сохранить',
         create: 'Создать',
         update: 'Обновить',
@@ -430,7 +523,10 @@ let ru = {
             420: '7 часов',
             450: '7 часов 30 мин',
             480: '8 часов',
-        }
+        },
+        yes: 'Да',
+        not: 'Нет',
+        edit: 'Редактировать'
     },
     form: {
         services_types: {

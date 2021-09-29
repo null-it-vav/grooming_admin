@@ -18,6 +18,8 @@ const SalonsIndex = () => import( '../components/salons/Index');
 const ServicesIndex = () => import( '../components/services/Index');
 const ServicesBreeds = () => import( '../components/services/Breeds');
 const ServicesSchedule = () => import( '../components/services/Schedule');
+const PackagesIndex = () => import( '../components/packages/PackagesIndex');
+const CommentsIndex = () => import( '../components/comments/CommentsIndex');
 
 const ChatMessages = () => import( '../components/chat/ChatMessages');
 
@@ -28,13 +30,20 @@ const SettingsTags = () => import( '../components/settings/tabs/SettingTags');
 const SettingsApp = () => import( '../components/settings/tabs/SettingsApp');
 const SettingsPush = () => import( '../components/settings/tabs/SettingsPush');
 const SettingsSite = () => import( '../components/settings/tabs/SettingsSite');
+const SettingsSMS = () => import( '../components/settings/tabs/SettingsSMS');
 const SettingsSchedule = () => import( '../components/settings/tabs/SettingsSchedule');
+const SettingsChats = () => import( '../components/settings/tabs/SettingsChats');
 
+const ShopIndex = () => import('../components/shop/ShopIndex')
+const ShopCategories = () => import('../components/shop/tabs/ShopCategories')
+const ShopOrders = () => import('../components/shop/tabs/ShopOrders')
+const ShopItems = () => import('../components/shop/tabs/ShopItems')
 
 const AdminUsers = () => import( '../components/admin/Users');
 const ClientsIndex = () => import( '../components/clients/Index');
 const ClientsShow = () => import( '../components/clients/Show');
 const ClientsPetIndex = () => import( '../components/clients/pet/Index');
+const ClientTransactions = () => import( '../components/clients/ClientTransactions');
 
 const AdminTagsIndex = () => import('../components/tags/TagsIndex')
 
@@ -43,6 +52,9 @@ const form = () => import('../components/form/index')
 const BreedsIndex = () => import('../components/breeds/Index')
 
 const Error404 = () => import( '../components/base/404.vue');
+
+const MailIndex = () => import( '../components/mail/MailIndex.vue');
+const GoogleOauth2callback = () => import('../components/google/GoogleOauth2callback')
 
 const routes = [
     {
@@ -118,6 +130,13 @@ const routes = [
                 meta: { roles: ['admin'], needAuth: true },
             },
             {
+                path: '/clients/:client_id/transactions',
+                name: 'home.client.transactions',
+                component: ClientTransactions,
+                props: route => ({ client_id: route.params.client_id }),
+                meta: { roles: ['admin'], needAuth: true },
+            },
+            {
                 path: '/clients/:client_id/pet/:pet_id',
                 name: 'home.client.pet.index',
                 component: ClientsPetIndex,
@@ -163,6 +182,33 @@ const routes = [
                 meta: { roles: ['admin'], needAuth: true },
             },
             {
+                path: '/shop',
+                name: 'home.shop.index',
+                component: ShopIndex,
+                meta: { roles: ['admin'], needAuth: true },
+                redirect: { name: 'home.shop.orders' },
+                children: [
+                    {
+                        path: '/shop/categories',
+                        name: 'home.shop.categories',
+                        component: ShopCategories,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                    {
+                        path: '/shop/orders',
+                        name: 'home.shop.orders',
+                        component: ShopOrders,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                    {
+                        path: '/shop/items',
+                        name: 'home.shop.items',
+                        component: ShopItems,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                ]
+            },
+            {
                 path: '/settings',
                 name: 'home.settings.index',
                 component: SettingsIndex,
@@ -200,9 +246,21 @@ const routes = [
                         meta: { roles: ['admin'], needAuth: true },
                     },
                     {
+                        path: '/settings/sms',
+                        name: 'home.settings.sms',
+                        component: SettingsSMS,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                    {
                         path: '/settings/schedule',
                         name: 'home.settings.schedule',
                         component: SettingsSchedule,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                    {
+                        path: '/settings/chats',
+                        name: 'home.settings.chats',
+                        component: SettingsChats,
                         meta: { roles: ['admin'], needAuth: true },
                     }
                 ]
@@ -225,6 +283,30 @@ const routes = [
                 component: ChatMessages,
                 meta: { needAuth: true, roles: ['admin'] },
                 props: route => ({ client_id: route.params.client_id, chat_id: route.params.chat_id })
+            },
+            {
+                path: '/packages',
+                name: 'home.packages',
+                component: PackagesIndex,
+                meta: { needAuth: true, roles: ['admin'] },
+            },
+            {
+                path: '/comments',
+                name: 'home.comments',
+                component: CommentsIndex,
+                meta: { needAuth: true, roles: ['admin', 'master'] },
+            },
+            {
+                path: '/mail',
+                name: 'home.mail.index',
+                component: MailIndex,
+                meta: { needAuth: true, roles: ['admin'] },
+            },
+            {
+                path: '/oauth2callback',
+                name: 'home.google.oauth2callback',
+                component: GoogleOauth2callback,
+                meta: { needAuth: true, roles: ['admin', 'master'] },
             }
         ]
     },

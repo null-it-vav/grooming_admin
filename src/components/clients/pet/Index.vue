@@ -11,7 +11,7 @@
           :to="{name: 'home.client.show', params: {client_id: client_id}}"
           class="btn btn-rounded btn-hint-white"
       >
-        <i class="fa fa-chevron-left"/> Назад
+        <i class="fa fa-chevron-left"/> {{ $t('base.back') }}
       </router-link>
     </div>
 

@@ -70,7 +70,7 @@
       <tr>
         <th>{{$t('app.components.clients.fields.phone')}}</th>
         <th>{{$t('app.components.clients.fields.name')}}</th>
-        <th>{{$t('app.components.clients.fields.nickname')}}</th>
+        <th>{{$t('app.components.clients.fields.pets_count')}}</th>
         <th>{{$t('app.components.clients.fields.last_order')}}</th>
         <th>{{$t('app.components.clients.fields.last_services')}}</th>
         <th></th>
@@ -84,31 +84,13 @@
           {{ client.name }}
         </td>
         <td>
-          <div v-if="client.last_order">
-            <img
-                v-if="client.last_order.type == 'cat'"
-                src='~@/assets/types/cat.svg' width="15px"
-            />
-            <img
-                v-if="client.last_order.type == 'dog'"
-                src='~@/assets/types/dog.svg' width="15px"
-            />
-            <img
-                v-if="client.last_order.type == 'other'"
-                src='~@/assets/types/other.svg' width="15px"
-            />
-            <i :class="'fa ' + 'fa-'+client.last_order.type"/> {{ client.last_order.nickname }}
-          </div>
+          {{ client.pets ? client.pets.length : 0 }}
         </td>
         <td>
           {{ client.last_order ? client.last_order.date : '' }}
         </td>
         <td>
-          <div v-if="client.last_order">
-            <div v-for="(row, k) in client.last_order.services" :key="k">
-              {{ row.name }}
-            </div>
-          </div>
+
         </td>
         <td>
           <router-link
@@ -118,7 +100,11 @@
           />
           <router-link
               :to="{name: 'home.client.show', params: {client_id: client.id}}"
-              class="btn btn-dark btn-sm rounded-circle fa fa-eye"
+              class="btn btn-dark btn-sm rounded-circle fa fa-eye mr-2"
+          />
+          <router-link
+              :to="{name: 'home.client.transactions', params: {client_id: client.id}}"
+              class="btn btn-dark btn-sm rounded-circle fa fa-list mr-2"
           />
         </td>
       </tr>
@@ -212,7 +198,8 @@ export default {
         phone: this.filters.phone,
         tag_id: this.filters.tag,
         with: [
-            'chat'
+            'chat',
+            'pets'
         ]
       })
       .then((response) => {

@@ -20,7 +20,7 @@ import { Sketch } from 'vue-color'
 import StarRating from 'vue-star-rating'
 const invert = require('invert-color');
 import { Select } from 'ant-design-vue';
-
+import './filters/filesize';
 
 window.invert = invert
 Vue.use(Select);
@@ -47,7 +47,8 @@ Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 axios.interceptors.request.use((config) => {
-  store.dispatch('animateLoading', { type: 'local', action: 'start' }, { root: true });
+  let type = config.type ?  config.type : 'local'
+  store.dispatch('animateLoading', { type: type, action: 'start' }, { root: true });
   return config;
   // return config;
 }, function (error) {
@@ -56,10 +57,12 @@ axios.interceptors.request.use((config) => {
 });
 
 axios.interceptors.response.use(function (response) {
-  store.dispatch('animateLoading', { type: 'local', action: 'finish' }, { root: true });
+  let type = response.config.type ?  response.config.type : 'local'
+  store.dispatch('animateLoading', { type: type, action: 'finish' }, { root: true });
   return response;
 }, function (error) {
-  store.dispatch('animateLoading', { type: 'local', action: 'error', status_code: error.request.status }, { root: true });
+  let type = error.response.config.type ?  error.response.config.type : 'local'
+  store.dispatch('animateLoading', { type: type, action: 'error', status_code: error.response.status }, { root: true });
   return Promise.reject(error);
 });
 

@@ -1,11 +1,11 @@
 <template>
-  <div class="row">
-    <div
-        class="mb-4 col-lg-12"
+  <div>
+    <orders
         v-if="auth.role_list.includes('admin') || auth.role_list.includes('master')"
-    >
-      <orders :qty="5" :day="day" :title="$t('app.components.dashboard.orders_by_day_now')" />
-    </div>
+        :qty="5"
+        :day="day"
+        :title="$t('app.components.dashboard.orders_by_day_now')"
+    />
     <div
       class="col-lg-12"
       v-if="auth.role_list.includes('super-admin')"

@@ -24,12 +24,16 @@ export function logout(){
 }
 
 export function me(){
-    return axios.get(BASE_URL + 'profile/me')
+    return axios.get(BASE_URL + 'profile/me', {
+        type: 'global'
+    })
         .then((response) => response)
 }
 
 export function me_save_settings(payload){
-    return axios.post(BASE_URL + 'profile/me/settings', payload)
+    return axios.post(BASE_URL + 'profile/me/settings', payload, {
+        type: 'global'
+    })
         .then((response) => response)
 }
 
@@ -325,5 +329,93 @@ export function chat_messages(chat_id, payload){
 
 export function send_message(chat_id, payload){
     return axios.post(BASE_URL + 'profile/chat/'+chat_id+'/messages', payload)
+        .then((response) => response)
+}
+
+export function update_message(chat_id, message_id, payload){
+    return axios.post(BASE_URL + `profile/chat/${chat_id}/messages/${message_id}`, payload)
+        .then((response) => response)
+}
+
+
+export function chat_messages_set_read(chat_id, message_id){
+    return axios.get(`${BASE_URL}profile/chat/${chat_id}/messages/${message_id}/set-read`)
+        .then((response) => response)
+}
+
+export function packages(payload) {
+    return axios.get(BASE_URL + 'profile/abonements', {
+        params: payload
+    }).then((response) => response)
+}
+
+export function package_create(payload) {
+    return axios.post(BASE_URL + 'profile/abonements', payload)
+        .then((response) => response)
+}
+
+export function comments(payload) {
+    return axios.get(BASE_URL + 'profile/comments', {
+        params: payload
+    })
+        .then((response) => response)
+}
+
+export function transactions(payload) {
+    return axios.get(BASE_URL + 'profile/transactions', {
+        params: payload,
+        type: 'global'
+    })
+        .then((response) => response)
+}
+
+export function shop_categories(payload){
+    return axios.get(BASE_URL + 'profile/shop-categories', {
+        params: payload
+    }).then((response) => response)
+}
+
+export function shop_category_create(payload) {
+    let url = BASE_URL + 'profile/shop-categories';
+    if (payload.id){
+        payload._method = 'patch'
+        url += `/${payload.id}`
+    }
+    return axios.post(url, payload, {
+        type: 'global'
+    })
+        .then((response) => response)
+}
+
+export function shop_items(payload){
+    return axios.get(BASE_URL + 'profile/shop-items', {
+        params: payload
+    }).then((response) => response)
+}
+
+export function shop_item_create(payload){
+    let url = BASE_URL + 'profile/shop-items';
+    let id = payload.get('id');
+
+    if (id != null && id != 'null'){
+        payload.append('_method', 'patch');
+        url += `/${payload.get('id')}`
+    }
+    return axios.post(url, payload, {
+        type: 'global'
+    }).then((response) => response)
+}
+
+export function sms_services() {
+    return axios.get(`${BASE_URL}profile/sms-services`)
+}
+
+export function google_oauth(payload) {
+    return axios.get(BASE_URL + 'profile/google/oauth', payload)
+        .then((response) => response)
+}
+
+export function google_oauth2callback(payload) {
+    return axios.post(BASE_URL + 'profile/google/oauth2callback', payload)
         .then((response) => response)
 }

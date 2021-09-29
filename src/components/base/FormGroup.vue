@@ -15,7 +15,7 @@
       <slot name="prepend">
       </slot>
       <input
-          v-if="type == 'text'"
+          v-if="type == 'text' || type == 'string'"
           type="text"
           :maxlength="maxlength"
           :placeholder="placeholder"
@@ -77,6 +77,7 @@
             (prepend_name in errors) ? 'is-invalid' : '',
             (append_name in errors) ? 'is-invalid' : '',
           ]"
+          :step="step"
           class="form-control"
           :name="name"
           :required="required"
@@ -161,7 +162,7 @@
           :placeholder="placeholder"
       />
       <b-checkbox
-          v-else-if="type == 'switch'"
+          v-else-if="type == 'switch' || type == 'boolean'"
           switch
           :class="[
             (name in errors) ? 'is-invalid' : '',
@@ -193,6 +194,25 @@
             <sketch-picker v-model="localValue" />
           </template>
         </b-dropdown>
+      </div>
+
+      <div
+          v-else-if="type == 'files'"
+          :class="[
+            (name in errors) ? 'is-invalid' : '',
+            (prepend_name in errors) ? 'is-invalid' : '',
+            (append_name in errors) ? 'is-invalid' : '',
+          ]"
+      >
+        <b-form-file
+            :accept="accept"
+            type="file"
+            multiple
+            :name="name"
+            :required="required"
+            :disabled="disabled"
+            v-model="localValue"
+        />
       </div>
       <div
           v-else-if="type == 'photo'"
@@ -318,6 +338,10 @@ export default {
     },
     required: {
       required: false
+    },
+    step: {
+      required: false,
+      default: 0.1
     },
     sm: {
       required: false

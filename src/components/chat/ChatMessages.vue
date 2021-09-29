@@ -1,18 +1,43 @@
 <template>
   <div>
+    <div class="mb-2 alert position-fixed fixed-bottom">
+      <message-success-error
+          :show="success_error"
+      />
+    </div>
     <div class="row no-gutters" ref="chatWindows">
       <div class="col-lg-8" :style="`height: ${chat_height}px`">
         <div class="card mr-lg-2 mr-0 h-100 p-0">
-          <div class="chat-footer px-4 py-2" ref="chatFooter">
+          <div class="chat-header px-4 py-2 d-flex" ref="chatHeader">
             <router-link
                 :to="{ name: 'home.clients' }"
                 class="text-dark text-decoration-none"
             >
-              <i class="fa fa-chevron-left"/> Назад
+              <i class="fa fa-chevron-left"/> {{ $t('base.back') }}
             </router-link>
+            <div class="ml-auto d-flex">
+              <div
+                  v-for="(time, k) in users_typing" :key="k"
+                  class="mr-2"
+              >
+                <div v-if="time > nowTime">
+                  <div class="spinner-grow spinner-grow-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  {{ users[k] ? users[k].name : '' }}
+                </div>
+              </div>
+            </div>
           </div>
           <div class="chat-body" :style="`height: ${chat_history_height}px`" @scroll="checkLoadMessage" ref="chatBody">
-            <chat-message :message="message" v-for="message in messages" :key="`message_${message.id}`"/>
+            <chat-message
+                @reply="replyMessage"
+                @sendSMS="sendSMS"
+                :users_online="users_online"
+                :message="message"
+                :client_id="client_id"
+                v-for="message in messages" :key="`message_${message.id}`"
+            />
           </div>
           <div class="chat-input" ref="chatInput">
             <button
@@ -40,6 +65,14 @@
                   <b-dropdown-item @click="addImages()">{{ $t('app.components.chats.photo') }}</b-dropdown-item>
                   <b-dropdown-item @click="addOrder()">{{ $t('app.components.chats.order') }}</b-dropdown-item>
                 </b-dropdown>
+                <div v-else>
+                  <button type="button" class="btn btn-link m-auto text-decoration-none dropdown-toggle-no-caret" @click="addContent">
+                    <img src="~@/assets/chat/attach-doc.svg">
+                  </button>
+                </div>
+
+                <input ref="documents" multiple type="file" style="display: none" @change="handleFileUpload()">
+                <input ref="images" multiple type="file" style="display: none" @change="handleImagesUpload()">
               </div>
               <div class="col-lg-7 col-8 d-flex align-items-center">
                 <textarea
@@ -63,6 +96,67 @@
                     <img v-if="message.length > 0 || files.length > 0 || images.length > 0" src="~@/assets/chat/send_button_active.svg"/>
                     <img v-else src="~@/assets/chat/send_button.svg"/>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="chat-message-box-files">
+              <div class="d-flex" v-if="reply_message.id">
+                <chat-message class="w-100" v-if="reply_message.id" :users_online="users_online" :message="reply_message" :client_id="client_id" :can_reply="false"/>
+                <div
+                    class="ml-auto col-auto align-items-center d-flex pointer"
+                    @click="reply_message = {}"
+                >
+                  <i class="text-hint fa fa-times"/>
+                </div>
+              </div>
+              <div
+                  v-for="(document,k) in files"
+                  :key="k"
+                  class="row no-gutters w-100 px-3 pb-2"
+              >
+                <div
+                    class="card-file col-auto card-file-can-delete"
+                >
+                  <div class="d-flex align-items-center">
+                    <img src="~@/assets/chat/base_file.svg" class="mr-2" />
+                    <div class="mr-2">
+                      <div>{{ document.name }}</div>
+                      <span class="text-primary">{{ document.size | filesize }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                    class="ml-auto col-auto align-items-center d-flex pointer"
+                    @click="deleteFileFromUpload(k)"
+                >
+                  <i class="text-hint fa fa-times"/>
+                </div>
+              </div>
+
+              <div
+                  v-for="(image,k) in imagesData"
+                  :key="k"
+                  class="row no-gutters w-100 px-3 pb-2"
+              >
+                <div
+                    class="card-file col-auto card-file-can-delete"
+                >
+                  <div class="d-flex align-items-center">
+                    <div
+                        class="card-file-preview"
+                        :style="`background-image: url('${image}')`"
+                    />
+                    <div class="mr-2">
+                      <div>{{ images[k] ? images[k].name : '' }}</div>
+                      <span class="text-primary">{{ (images[k] ? images[k].size : 0) | filesize }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                    class="ml-auto col-auto align-items-center d-flex pointer"
+                    @click="deleteImageFromUpload(k)"
+                >
+                  <i class="text-hint fa fa-times"/>
                 </div>
               </div>
             </div>
@@ -117,12 +211,13 @@
 
 <script>
 import {mapGetters} from "vuex";
-import {clients, send_message, chat_messages} from "@/api";
+import {clients, send_message, chat_messages, chat_messages_set_read, update_message} from "@/api";
 import ChatMessage from "@/components/chat/ChatMessage";
+import MessageSuccessError from "@/components/base/SuccessError";
 
 export default {
   name: "ChatDialog",
-  components: {ChatMessage},
+  components: {MessageSuccessError, ChatMessage},
   props: {
     client_id: null,
     chat_id: null
@@ -140,6 +235,7 @@ export default {
       messages: [],
       messages_per_page: 20,
       images: [],
+      imagesData: [],
       files: [],
       message: '',
       chat_height: 400,
@@ -150,19 +246,47 @@ export default {
       toEndShow: false,
       newMessages: 0,
       showScrollBottomPx: 100,
-      scrollTop: 0
+      scrollTop: 0,
+      messagesRead: [],
+      chatEventsChannel: null,
+      isTabActive: true,
+      users_typing: {},
+      users_online: {},
+      nowTime: Date.now(),
+      reply_message: {},
+      success_error: {
+        success: false,
+        error: false,
+        msg: '',
+      },
     }
   },
   computed: {
     ...mapGetters([
       'auth',
       'breeds',
+      'masters',
+      'admins',
       'tags'
     ]),
+    users: function () {
+      let data = {}
+      this.masters.forEach(master => {
+        data[master.id] = master
+      })
+      this.admins.forEach(admin => {
+        data[admin.id] = admin
+      })
+      data[this.client.id] = this.client
+      return data;
+    }
   },
   destroyed() {
     window.removeEventListener("resize", this.pageResize);
     window.Echo.leave(`chat.${this.chat_id}`)
+    window.Echo.leave(`chat_events.${this.chat_id}`)
+
+    clearInterval(this.intervalId);
   },
   created() {
     this.getClient()
@@ -172,27 +296,91 @@ export default {
   mounted() {
     this.pageResize()
     this.echoCreateConnect()
+    window.onfocus = () => { this.isTabActive = true }
+    window.onblur = () => { this.isTabActive = false }
+    this.intervalId = setInterval(() => {
+      this.nowTime = Date.now()
+    }, 1000);
   },
   watch: {
+    isTabActive() {
+      if (this.isTabActive){
+        //отправить что прочитал сообщения
+        let messages = this.messages.filter(message => (message.user_id == this.client_id && !message.admin_read))
+        messages.forEach(message => {
+          this.setChatMessagesRead(message.id)
+        })
+      }
+    },
     message() {
       let rows = (this.message.match(/\n/g) || []).length
       this.send_message_rows = rows ? rows+1 : 1
     }
   },
   methods: {
+    setMessageReaded(message_id) {
+      let messageIsRead = this.messagesRead.find(message => message == message_id)
+
+      if (messageIsRead){
+        let message = this.messages.find(message => message.id == messageIsRead)
+        if (message) {
+          message.user_read = true
+        }
+      }
+    },
+    setChatMessagesRead(message_id){
+      chat_messages_set_read(this.chat_id, message_id).then(() => {
+        let message = this.messages.find(message => message.id == message_id)
+        message.admin_read = 1
+      })
+    },
     echoCreateConnect() {
+      this.chatEventsChannel = window.Echo.join('chat_events.'+this.chat_id)
+      this.chatEventsChannel.listenForWhisper('typing', (e) => {
+        this.$set(this.users_typing, e.id, (Date.now() + 6000))
+      })
+      this.chatEventsChannel
+          .here((users) => {
+            users.forEach(user => {
+              this.$set(this.users_online, user.id, true)
+            })
+          })
+          .joining((user) => {
+            this.$set(this.users_online, user.id, true)
+          })
+          .leaving((user) => {
+            this.$set(this.users_online, user.id, false)
+          })
       window.Echo.private(`chat.${this.chat_id}`)
           .listen('ChatMessage', (data) => {
             if (data.message) {
               this.messages.unshift(data.message)
+
+              this.$set(this.users_typing, data.message.user_id, Date.now())
+
               this.newMessages++
 
-              var audio = new Audio(require('../../assets/chat/sound.mp3'));
-              audio.play()
+              if (this.isTabActive) {
+                this.setMessageReaded(data.message.id)
+                this.setChatMessagesRead(data.message.id)
+              }
+
+
+              try {
+                var audio = new Audio(require('../../assets/chat/sound.mp3'));
+                audio.play()
+              }catch (e) {
+                console.log(e)
+              }
             }
-            // this.receiveMessageData = data
-            // this.addMessage()
-            // this.receiveMessageData = []
+          })
+          .listen('ChatMessageReaded', (data) => {
+            if (data.message) {
+              let message = this.messages.find(message => message.id == data.message.id)
+              if (message){
+                message.user_read = true
+              }
+            }
           })
     },
     getClient() {
@@ -219,48 +407,137 @@ export default {
       this.chat_history_height = this.chat_height - height
     },
     addFiles(){
-
+      this.$refs.documents.click()
     },
     addImages() {
-
+      this.$refs.images.click()
     },
     addOrder() {
 
     },
+    addContent () {
+      if(this.images.length > 0) {
+        this.addImages()
+      }
+      else if (this.files.length > 0) {
+        this.addFiles()
+      }
+    },
+    handleFileUpload () {
+      for (let i = 0; i < this.$refs.documents.files.length; i++) {
+        if ((this.$refs.documents.files[i].size / 1024 / 1024) < 2) {
+          this.files.push(this.$refs.documents.files[i])
+        }
+      }
+      this.$refs.documents.value = ''
+    },
+    handleImagesUpload () {
+      for (let i = 0; i < this.$refs.images.files.length; i++) {
+        if ((this.$refs.images.files[i].size / 1024 / 1024) < 2) {
+          this.images.push(this.$refs.images.files[i])
+        }
+      }
+      this.$refs.images.value = ''
+      this.previewImage()
+    },
+    previewImage () {
+      if (this.images) {
+        let newPhotos = []
+        this.images.forEach(element => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            newPhotos.push(e.target.result);
+          }
+          reader.readAsDataURL(element)
+        })
+        this.imagesData = newPhotos;
+      }
+    },
+    deleteFileFromUpload (k) {
+      this.files.splice(k, 1)
+    },
+    deleteImageFromUpload (k) {
+      this.images.splice(k, 1)
+      this.imagesData.splice(k, 1)
+    },
     typing(){
-      window.Echo.join('chat_typing.'+this.chat_id)
+      this.chatEventsChannel
           .whisper('typing', {
             id: this.auth.id
           });
     },
     chooseMessageType()
     {
+      let data = new FormData()
       switch (true) {
-        case this.replymessage:
-          //this.sendRepliedMessage();
-          break;
         case !!this.images.length:
-          //this.sendImageMessage();
+          data.append("type", 'IMAGES')
+          data.append("text", (this.message || ""))
+          if (this.reply_message.id) {
+            data.append('reply_id', this.reply_message.id)
+          }
+          this.images.forEach(element => {
+            data.append("message[images][]", element)
+          })
+          this.images = []
+          this.imagesData = []
+          this.sendMessage(data)
           break;
         case !!this.files.length:
-          //this.sendFileMessage();
+          data.append("type", 'FILES')
+          data.append("text", (this.message || ""))
+          if (this.reply_message.id) {
+            data.append('reply_id', this.reply_message.id)
+          }
+          this.files.forEach(element => {
+            data.append("message[files][]", element)
+          })
+          this.files = []
+          this.sendMessage(data)
           break;
         // case !!this.audios.blobUrl:
         //   this.sendAudioMessage();
         //   break;
         default:
-          var data = new FormData();
+          data = new FormData();
           data.append("type", 'TEXT')
           data.append("text", this.message)
+          if (this.reply_message.id) {
+            data.append('reply_id', this.reply_message.id)
+          }
           this.sendMessage(data)
           break;
       }
+    },
+    sendSMS(message_id){
+      update_message(this.chat_id, message_id, {
+        _method: 'patch',
+        action: 'send-sms'
+      })
+      .then((response) => {
+        let message = this.messages.find(message => message.id == response.data.id)
+
+        if (message){
+          message.sms_is_send = true
+          this.$forceUpdate();
+        }
+      })
+      .catch(error => {
+        if (error.response.data.message || false) {
+          this.success_error.error = true
+          this.success_error.msg = [
+              error.response.data.message
+          ]
+        }
+      })
     },
     sendMessage (data) {
       send_message(this.chat_id, data)
           .then((response) => {
             this.messages.unshift(response.data)
             this.message = ''
+            this.reply_message = {}
+            this.setMessageReaded(response.data.id)
           })
           .catch((error) => {
             console.log(error)
@@ -322,6 +599,9 @@ export default {
     },
     scrollToBottom() {
       this.$refs.chatBody.scrollTop = 0
+    },
+    replyMessage(message){
+      this.reply_message = message
     }
   }
 }

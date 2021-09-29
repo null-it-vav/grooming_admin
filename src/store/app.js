@@ -8,6 +8,8 @@ const store = new Vuex.Store({
     state: {
         auth: false,
         salons: [],
+        masters: [],
+        admins: [],
         breeds: [],
         tags: [],
         salon_selected: {},
@@ -24,6 +26,12 @@ const store = new Vuex.Store({
         },
         salons(state, {data}){
             state.salons = data
+        },
+        masters(state, {data}){
+            state.masters = data
+        },
+        admins(state, {data}){
+            state.admins = data
         },
         breeds(state, {data}){
             state.breeds = data
@@ -60,6 +68,8 @@ const store = new Vuex.Store({
     getters: {
         auth: (state) => state.auth,
         salons: (state) => state.salons,
+        masters: (state) => state.masters,
+        admins: (state) => state.admins,
         salon_selected: (state) => state.salon_selected,
         breeds: (state) => state.breeds,
         tags: (state) => state.tags,
@@ -87,6 +97,8 @@ const store = new Vuex.Store({
         clearAuth({ commit, state }) {
             commit('setStore', {key: 'auth', data: false});
             commit('setStore', {key: 'salons', data: []});
+            commit('setStore', {key: 'masters', data: []});
+            commit('setStore', {key: 'admins', data: []});
             commit('setStore', {key: 'breeds', data: []});
             commit('setStore', {key: 'tags', data: []});
             localStorage.removeItem('user-token')
@@ -103,6 +115,8 @@ const store = new Vuex.Store({
                 await me().then((response) => {
                     commit('setStore', {key: 'auth', data: response.data.data.user});
                     commit('setStore', {key: 'salons', data: response.data.data.salons});
+                    commit('setStore', {key: 'masters', data: response.data.data.masters});
+                    commit('setStore', {key: 'admins', data: response.data.data.admins || []});
                     commit('setStore', {key: 'breeds', data: response.data.data.user.organization ? response.data.data.user.organization.breeds : []});
                     commit('setStore', {key: 'tags', data: response.data.data.tags});
 

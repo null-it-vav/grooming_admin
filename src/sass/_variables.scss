@@ -3,7 +3,7 @@ $body-bg: #FDFEFE;
 $border-width:                1px !default;
 
 // Typography
-$font-family-sans-serif: 'Roboto';
+$font-family-sans-serif: 'Vela Sans';
 $font-size-base: 0.88rem;
 $line-height-base: 1.6;
 $custom-control-indicator-size: 1.75rem;
@@ -56,4 +56,10 @@ $custom-file-text: (
 );
 
 
+$nav-width-transition: 0.6s;
+$nav-delay: 0.15s;
 
+$grooming-red: #FF3B30;
+$grooming-text-2: #787F8A;
+$grooming-text-6: #95A3BA;
+$grooming-black-2: #1F2937;

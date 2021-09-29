@@ -76,7 +76,7 @@
         </td>
         <td :data-label="$t('app.components.orders.fields.phone')">{{order.phone}}</td>
         <td :data-label="$t('app.components.orders.fields.comment')">{{order.comment}}</td>
-        <td :data-label="$t('app.components.orders.fields.comment')">
+        <td :data-label="$t('app.components.orders.fields.services')">
           <div v-for="(service,k) in order.services" :key="k">
             {{service.name}}
           </div>
@@ -84,8 +84,8 @@
         <td v-if="!master_filter" :data-label="$t('app.components.orders.fields.master')">{{order.master.name}}</td>
         <td v-if="!status_filter" :data-label="$t('app.components.orders.fields.status')">{{$t('app.components.orders.statuses.'+order.status)}}</td>
         <td>
-          <b-dropdown  variant="link" toggle-class="text-decoration-none">
-            <template #button-content >
+          <b-dropdown variant="link" toggle-class="btn-dropdown">
+            <template #button-content>
               <i class="btn btn-dark btn-sm rounded-circle fa fa-align-justify"/>
             </template>
             <b-dropdown-item
@@ -356,9 +356,9 @@ export default {
 </script>
 
 <style>
-  .dropdown .dropdown-toggle {
-    padding: 0px !important;
-    margin: 0px !important;
-    box-shadow: none !important;
-  }
+  /*.dropdown .dropdown-toggle {*/
+  /*  padding: 0px !important;*/
+  /*  margin: 0px !important;*/
+  /*  box-shadow: none !important;*/
+  /*}*/
 </style>

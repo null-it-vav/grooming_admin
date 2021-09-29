@@ -1,0 +1,46 @@
+.btn {
+  color: #fff !important;
+  &-dropdown {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0px;
+    border-radius: 50%;
+    i {
+      width: 30px;
+      height: 30px;
+      line-height: 21px;
+    }
+  }
+  &-purpure {
+    color: $white;
+    background-color: $purple;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+  &-purpure:hover {
+    color: $white;
+  }
+  &-purpure:active {
+    color: $white;
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  }
+  &-block {
+    width: 100%;
+  }
+
+  &-blue {
+    background-color: #6366F1;
+  }
+  &-gray {
+    background-color: #F0F2F7;
+    color: #787F8A !important;
+  }
+  &-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

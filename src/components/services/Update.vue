@@ -132,17 +132,18 @@
               :errors="errors"
               v-model="service.koltun_price"
           />
-          <form-group
-              :label="$t('app.components.services.field.baby_'+service.type)"
-              type="switch"
-              name="baby"
-              :errors="errors"
-              v-model="service.baby"
-          />
-          <form-group
-              v-if="service.baby"
-              type="select"
-              :items="[
+          <div v-if="service.type == 'cat' || service.type == 'dog'">
+            <form-group
+                :label="$t('app.components.services.field.baby_'+service.type)"
+                type="switch"
+                name="baby"
+                :errors="errors"
+                v-model="service.baby"
+            />
+            <form-group
+                v-if="service.baby"
+                type="select"
+                :items="[
                   { value: 30, text: $t('app.components.services.durations.30') },
                   { value: 60, text: $t('app.components.services.durations.60') },
                   { value: 90, text: $t('app.components.services.durations.90') },
@@ -152,20 +153,22 @@
                   { value: 210, text: $t('app.components.services.durations.210') },
                   { value: 240, text: $t('app.components.services.durations.240') },
               ]"
-              :label="$t('app.components.services.field.baby_duration')"
-              :errors="errors"
-              name="duration"
-              required
-              v-model="service.baby_duration"
-          />
-          <form-group
-              v-if="service.baby"
-              :label="$t('app.components.services.field.baby_price')"
-              type="number"
-              name="baby_price"
-              :errors="errors"
-              v-model="service.baby_price"
-          />
+                :label="$t('app.components.services.field.baby_duration')"
+                :errors="errors"
+                name="duration"
+                required
+                v-model="service.baby_duration"
+            />
+            <form-group
+                v-if="service.baby"
+                :label="$t('app.components.services.field.baby_price')"
+                type="number"
+                name="baby_price"
+                :errors="errors"
+                v-model="service.baby_price"
+            />
+          </div>
+
         </div>
         <div class="col-lg-4">
           <form-group

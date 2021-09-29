@@ -1,6 +1,6 @@
 $url: '../assets/chat/scroll_bottom.svg';
 .chat {
-  &-footer {
+  &-header {
     border-bottom: 1px solid #dee2e6 !important;
   }
   &-body{
@@ -83,6 +83,28 @@ $url: '../assets/chat/scroll_bottom.svg';
       color: #000000;
       padding: 10px;
       max-width: 100%;
+      &-files {
+        max-height: 300px;
+        overflow-y: auto;
+        .card-file {
+          margin-bottom: 6px;
+          &:last-child {
+            margin-bottom: 0px;
+          }
+          a {
+            color: #000000;
+          }
+        }
+        .card-file-preview {
+          width: 50px;
+          height: 50px;
+          background-position: center;
+          background-size: cover;
+          border-radius: 4px;
+          border: 1px solid #FFFFFF;
+          margin-right: 10px;
+        }
+      }
       &-my {
         background: #f1f1f1;
       }
@@ -90,5 +112,21 @@ $url: '../assets/chat/scroll_bottom.svg';
         background: #e2edfc;
       }
     }
+  }
+}
+.chat-message-box-files {
+
+}
+.b-avatar-badge.badge-success {
+  border: 2px solid white;
+  padding: 0.3em;
+}
+.chat-message-reply {
+  border-left: 1px solid black;
+  .chat-message-box-my {
+    background: white;
+  }
+  .chat-message-box-other {
+    background: white;
   }
 }
