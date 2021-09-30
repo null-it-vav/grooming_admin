@@ -33,6 +33,7 @@ const SettingsSite = () => import( '../components/settings/tabs/SettingsSite');
 const SettingsSMS = () => import( '../components/settings/tabs/SettingsSMS');
 const SettingsSchedule = () => import( '../components/settings/tabs/SettingsSchedule');
 const SettingsChats = () => import( '../components/settings/tabs/SettingsChats');
+const SettingsInstagram = () => import( '../components/settings/tabs/SettingsInstagram');
 
 const ShopIndex = () => import('../components/shop/ShopIndex')
 const ShopCategories = () => import('../components/shop/tabs/ShopCategories')
@@ -261,6 +262,12 @@ const routes = [
                         path: '/settings/chats',
                         name: 'home.settings.chats',
                         component: SettingsChats,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                    {
+                        path: '/settings/instagram',
+                        name: 'home.settings.instagram',
+                        component: SettingsInstagram,
                         meta: { roles: ['admin'], needAuth: true },
                     }
                 ]

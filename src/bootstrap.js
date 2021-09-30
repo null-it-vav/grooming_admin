@@ -5,7 +5,7 @@
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from 'laravel-echo';
+// import Echo from 'laravel-echo';
 
 window._ = require('lodash'); // eslint disable-line global-require
 
@@ -53,15 +53,15 @@ window.io = require('socket.io-client');
 // });
 // import Echo from "laravel-echo"
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: `${process.env.VUE_APP_BASE_API_URL}:6001`,
-    auth : {
-        headers : {
-            Authorization : token
-        }
-    }
-});
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+//     host: `${process.env.VUE_APP_BASE_API_URL}:6001`,
+//     auth : {
+//         headers : {
+//             Authorization : token
+//         }
+//     }
+// });
 
 
 export default axios;

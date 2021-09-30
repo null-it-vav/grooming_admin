@@ -55,6 +55,7 @@ export default {
         { name: 'home.settings.chats', title: this.$t('app.components.settings.tabs.chats')},
         { name: 'home.settings.site', title: this.$t('app.components.settings.tabs.site')},
         { name: 'home.settings.sms', title: this.$t('app.components.settings.tabs.sms')},
+        { name: 'home.settings.instagram', title: 'instagram'},
       ]
     }
   },
