@@ -49,13 +49,19 @@ export default {
     },
     logout() {
       window.FB.logout(response => {
-        console.log(response)
         save_settings_part({
           action: 'delete-instagram',
         }).then(() => {
           store.dispatch('getAuth')
         })
-      });
+      })
+      .catch(() => {
+        save_settings_part({
+          action: 'delete-instagram',
+        }).then(() => {
+          store.dispatch('getAuth')
+        })
+      })
     },
     async login() {
       // login with facebook then authenticate with the API to get a JWT auth token
