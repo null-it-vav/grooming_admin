@@ -48,7 +48,7 @@ export default {
       console.log(response.authResponse)
     },
     logout() {
-      window.FB.logout(response => {
+      window.FB.logout(() => {
         save_settings_part({
           action: 'delete-instagram',
         }).then(() => {
