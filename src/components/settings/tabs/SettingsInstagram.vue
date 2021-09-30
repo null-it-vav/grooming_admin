@@ -62,7 +62,7 @@ export default {
       // login with facebook then authenticate with the API to get a JWT auth token
       window.FB.login(response => {
         this.apiAuthenticate(response);
-      }, {scope: 'pages_show_list,pages_manage_metadata,instagram_basic,instagram_manage_messages'});
+      }, {scope: 'pages_show_list,pages_messaging,instagram_basic,instagram_manage_messages,pages_read_engagement,pages_manage_metadata,public_profile'});
     },
     async  apiAuthenticate(accessToken) {
       save_settings_part({
