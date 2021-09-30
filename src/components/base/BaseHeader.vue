@@ -50,7 +50,7 @@
             <div class="profile-menu-item">Мой аккаунт</div>
             <div class="profile-menu-item">Настройки компании</div>
             <div class="profile-menu-item">Реферальная программа Grooming Box</div>
-            <div class="profile-menu-item">Выйти</div>
+            <div class="profile-menu-item pointer" @click="logout">Выйти</div>
           </div>
         </div>
       </div>
@@ -60,6 +60,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {logout} from "@/api";
 
 export default {
   name: "BaseHeader",
@@ -81,6 +82,18 @@ export default {
   methods: {
     openSidebar() {
       this.$emit('openSidebar')
+    },
+    logout(){
+      logout()
+          .then(() => {
+            this.$store.dispatch('clearAuth');
+            this.$router.push({ name: 'login' });
+          }).catch((error) => {
+        if (error.response.status == 401){
+          this.$store.dispatch('clearAuth');
+          this.$router.push({ name: 'login' });
+        }
+      })
     }
   }
 }

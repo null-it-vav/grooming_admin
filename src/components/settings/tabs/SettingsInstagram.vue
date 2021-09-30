@@ -2,15 +2,27 @@
   <div>
     <b-card>
       <h4>
-        Integration with Instagram allows you to receive messages from your business account
+        Integration with Instagram allows you to receive messages from your business account:
       </h4>
-      <a @click="login" v-if="show_button"><img width="200px" src="https://i.stack.imgur.com/oL5c2.png"/> </a>
-      <a v-else>Connected</a>
+      <a
+          @click="login"
+          v-if="!auth.organization.facebook.accessToken"
+      >
+        <img width="200px" src="https://i.stack.imgur.com/oL5c2.png"/>
+      </a>
+      <div v-else>
+        <h5>Integration connected!</h5>
+        <a @click="logout" class="btn btn-danger">Disconnect</a>
+      </div>
     </b-card>
   </div>
 </template>
 
 <script>
+import {save_settings_part} from "@/api";
+import {mapGetters} from "vuex";
+import store from "@/store/app";
+
 export default {
   name: "SettingsInstagram",
   data() {
@@ -21,6 +33,11 @@ export default {
   created() {
     this.getLoginStatus()
   },
+  computed: {
+    ...mapGetters([
+      'auth'
+    ]),
+  },
   methods: {
     getLoginStatus() {
       window.FB.getLoginStatus(response => {
@@ -30,6 +47,17 @@ export default {
     statusChangeCallback(response) {
       console.log(response.authResponse)
     },
+    logout() {
+      window.FB.logout(response => {
+        console.log(response)
+        save_settings_part({
+          action: 'set-instagram',
+          authResponse: []
+        }).then(() => {
+          store.dispatch('getAuth')
+        })
+      });
+    },
     async login() {
       // login with facebook then authenticate with the API to get a JWT auth token
       window.FB.login(response => {
@@ -38,7 +66,13 @@ export default {
     },
     async  apiAuthenticate(accessToken) {
       this.show_button = false
-      console.log(accessToken.authResponse)
+      save_settings_part({
+        action: 'set-instagram',
+        authResponse: accessToken.authResponse
+      })
+          .then(() => {
+            store.dispatch('getAuth')
+          })
     }
   }
 }

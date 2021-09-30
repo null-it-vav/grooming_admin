@@ -217,6 +217,13 @@ export function save_settings(payload){
         .then((response) => response)
 }
 
+export function save_settings_part(payload){
+    return axios.post(BASE_URL + "profile/settings/part", payload)
+        .then((response) => response)
+}
+
+
+
 export function organizations(payload){
     return axios.get(BASE_URL + 'profile/organizations' , {
         params: payload

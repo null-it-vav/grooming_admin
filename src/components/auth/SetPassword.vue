@@ -5,7 +5,7 @@
     <div class="container vh-100">
       <div class="row vh-100">
         <div class="col-lg-8 text-center">
-          <img class=" my-5 logo" src='~@/assets/grooming_box.svg' />
+          <img class=" my-5 logo" src='~@/assets/growth-logo.svg' />
           <div class="d-none d-lg-block">
             <div class="text-white">{{ $t('app.components.login.head_title') }}</div>
             <div >
