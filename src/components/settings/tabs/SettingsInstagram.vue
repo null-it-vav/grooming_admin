@@ -51,8 +51,7 @@ export default {
       window.FB.logout(response => {
         console.log(response)
         save_settings_part({
-          action: 'set-instagram',
-          authResponse: []
+          action: 'delete-instagram',
         }).then(() => {
           store.dispatch('getAuth')
         })
