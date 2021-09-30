@@ -65,10 +65,9 @@ export default {
       }, {scope: 'pages_show_list,pages_manage_metadata,instagram_basic,instagram_manage_messages'});
     },
     async  apiAuthenticate(accessToken) {
-      this.show_button = false
       save_settings_part({
         action: 'set-instagram',
-        authResponse: accessToken.authResponse
+        authResponse: accessToken.authResponse || []
       })
           .then(() => {
             store.dispatch('getAuth')
