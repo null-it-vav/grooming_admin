@@ -6,7 +6,7 @@
       </h4>
       <a
           @click="login"
-          v-if="!auth.organization.facebook.accessToken"
+          v-if="!auth.organization.facebook.access_token"
       >
         <img width="200px" src="https://i.stack.imgur.com/oL5c2.png"/>
       </a>
