@@ -48,20 +48,21 @@ export default {
       console.log(response.authResponse)
     },
     logout() {
-      window.FB.logout(() => {
+      try {
+        window.FB.logout(() => {
+          save_settings_part({
+            action: 'delete-instagram',
+          }).then(() => {
+            store.dispatch('getAuth')
+          })
+        })
+      } catch (e) {
         save_settings_part({
           action: 'delete-instagram',
         }).then(() => {
           store.dispatch('getAuth')
         })
-      })
-      .catch(() => {
-        save_settings_part({
-          action: 'delete-instagram',
-        }).then(() => {
-          store.dispatch('getAuth')
-        })
-      })
+      }
     },
     async login() {
       // login with facebook then authenticate with the API to get a JWT auth token
