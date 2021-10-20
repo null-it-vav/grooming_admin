@@ -41,7 +41,7 @@ const ShopOrders = () => import('../components/shop/tabs/ShopOrders')
 const ShopItems = () => import('../components/shop/tabs/ShopItems')
 
 const AdminUsers = () => import( '../components/admin/Users');
-const ClientsIndex = () => import( '../components/clients/Index');
+const ClientsIndex = () => import( '../components/clients/ClientsIndex');
 const ClientsShow = () => import( '../components/clients/Show');
 const ClientsPetIndex = () => import( '../components/clients/pet/Index');
 const ClientTransactions = () => import( '../components/clients/ClientTransactions');
@@ -56,6 +56,19 @@ const Error404 = () => import( '../components/base/404.vue');
 
 const MailIndex = () => import( '../components/mail/MailIndex.vue');
 const GoogleOauth2callback = () => import('../components/google/GoogleOauth2callback')
+
+
+const MessagesIndex = () => import('../components/messages/MessagesIndex')
+const MessagesVkIndex = () => import('../components/messages/vk/VkIndex')
+const MessagesVkShow = () => import('../components/messages/vk/VkShow')
+
+const MessagesInstagramIndex = () => import('../components/messages/instagram/InstagramIndex')
+const MessagesInstagramConversationShow = () => import('../components/messages/instagram/InstagramConversationShow')
+
+const MessagesTelegramIndex = () => import('../components/messages/telegram/TelegramIndex')
+const TelegramChatShow = () => import('../components/messages/telegram/TelegramChatShow')
+
+
 
 const routes = [
     {
@@ -270,6 +283,57 @@ const routes = [
                         component: SettingsInstagram,
                         meta: { roles: ['admin'], needAuth: true },
                     }
+                ]
+            },
+            {
+                path: '/messages',
+                name: 'home.messages',
+                component: MessagesIndex,
+                children: [
+                    {
+                        path: '/messages/vk',
+                        name: 'home.messages.vk',
+                        component: MessagesVkIndex,
+                        meta: { roles: ['admin'], needAuth: true },
+                    },
+                    {
+                        path: '/messages/vk/:user_id/show',
+                        name: 'home.messages.vk.show',
+                        component: MessagesVkShow,
+                        meta: { roles: ['admin'], needAuth: true },
+                        props: route => ({ user_id: route.params.user_id })
+                    },
+                    {
+                        path: '/messages/instagram',
+                        name: 'home.messages.instagram',
+                        component: MessagesInstagramIndex,
+                        meta: { roles: ['admin'], needAuth: true },
+                        children: [
+                            {
+                                path: '/messages/instagram/:conversation_id',
+                                name: 'home.messages.instagram.conversation',
+                                component: MessagesInstagramConversationShow,
+                                meta: { roles: ['admin'], needAuth: true, notification_model: 'App_Models_FacebookInstagramMessage' },
+                                props: route => ({ conversation_id: route.params.conversation_id })
+                            },
+                        ]
+                    },
+                    {
+                        path: '/messages/telegram',
+                        name: 'home.messages.telegram',
+                        component: MessagesTelegramIndex,
+                        meta: { roles: ['admin'], needAuth: true },
+                        children: [
+                            {
+                                path: '/messages/telegram/:chat_id',
+                                name: 'home.messages.instagram.chat',
+                                component: TelegramChatShow,
+                                meta: { roles: ['admin'], needAuth: true, notification_model: 'App_Models_TelegramChatMessage' },
+                                props: route => ({ chat_id: route.params.chat_id })
+                            },
+                        ]
+                    },
+
                 ]
             },
             {

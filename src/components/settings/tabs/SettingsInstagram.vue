@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-card>
-      <h4>
-        Integration with Instagram allows you to receive messages from your business account:
-      </h4>
+      <h5>
+        Интеграция с Instagram позволяет получать сообщения из вашего бизнес-аккаунта:
+      </h5>
       <a
           @click="login"
           v-if="!auth.organization.facebook.access_token"
@@ -11,8 +11,16 @@
         <img width="200px" src="https://i.stack.imgur.com/oL5c2.png"/>
       </a>
       <div v-else>
-        <h5>Integration connected!</h5>
-        <a @click="logout" class="btn btn-danger">Disconnect</a>
+<!--        <h5>Интеграция подключена</h5>-->
+        Подключенные аккаунты Instagram:
+        <div
+            v-for="facebook_account in facebook_accounts"
+            :key="facebook_account.id"
+        >
+          <a :href="`https://instagram.com/${facebook_account.instagram_business_account_username}`" target="_blank">{{ facebook_account.instagram_business_account_username }}</a>
+        </div>
+        <br>
+        <a @click="logout" class="btn btn-danger">Отключить</a>
       </div>
     </b-card>
   </div>
@@ -27,11 +35,13 @@ export default {
   name: "SettingsInstagram",
   data() {
     return {
-      show_button: true
+      show_button: true,
+      facebook_accounts: []
     }
   },
   created() {
     this.getLoginStatus()
+    this.getFacebookAccounts();
   },
   computed: {
     ...mapGetters([
@@ -39,6 +49,12 @@ export default {
     ]),
   },
   methods: {
+    getFacebookAccounts() {
+      this.$axios.get('/api/v1/profile/socials/facebook-accounts')
+          .then(response => {
+            this.facebook_accounts = response.data.facebook_accounts
+          })
+    },
     getLoginStatus() {
       window.FB.getLoginStatus(response => {
         this.statusChangeCallback(response);
@@ -53,17 +69,6 @@ export default {
       }).then(() => {
         store.dispatch('getAuth')
       })
-      // try {
-      //   window.FB.logout(() => {
-      //     save_settings_part({
-      //       action: 'delete-instagram',
-      //     }).then(() => {
-      //       store.dispatch('getAuth')
-      //     })
-      //   })
-      // } catch (e) {
-      //
-      // }
     },
     async login() {
       // login with facebook then authenticate with the API to get a JWT auth token
@@ -78,6 +83,7 @@ export default {
       })
           .then(() => {
             store.dispatch('getAuth')
+            this.getFacebookAccounts();
           })
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="card p-4">
+  <div>
     <div class="row mb-4 align-items-center">
       <div class="col-lg-2">
         <form-group
@@ -93,46 +93,14 @@
 
         </td>
         <td>
-          <router-link
-              v-if="client.chat"
-              :to="{name: 'home.client.chat', params: {client_id: client.id, chat_id: client.chat.id}}"
-              class="btn btn-dark btn-sm rounded-circle fa fa-comment mr-2"
-          />
-          <router-link
-              :to="{name: 'home.client.show', params: {client_id: client.id}}"
-              class="btn btn-dark btn-sm rounded-circle fa fa-eye mr-2"
-          />
-          <router-link
-              :to="{name: 'home.client.transactions', params: {client_id: client.id}}"
-              class="btn btn-dark btn-sm rounded-circle fa fa-list mr-2"
-          />
+          <slot name="actions" :client="client"/>
         </td>
       </tr>
     </table>
 
-    <div class="row" v-if="clients.last_page > 1">
-      <div class="col-lg-2 d-flex">
-        <form-group
-            custom_class="align-items-center mb-0"
-            type="select"
-            :items="[5,10,15]"
-            v-model="clients.per_page"
-        />
-      </div>
-      <div class="col-lg-8 d-flex">
-        <b-pagination
-            v-model="clients.page"
-            :total-rows="clients.total"
-            :per-page="clients.per_page"
-            aria-controls="my-table"
-            class="m-auto"
-        ></b-pagination>
-      </div>
-      <div class="col-lg-2 d-flex align-items-center">
-        <div class="ml-auto text-secondary">{{ $t('base.total') }} {{ this.clients.total }}</div>
-      </div>
-    </div>
-
+    <row-pagination
+        :rows="clients"
+    />
   </div>
 </template>
 
@@ -140,10 +108,12 @@
 import {clients} from "@/api";
 import FormGroup from "@/components/base/FormGroup";
 import {mapGetters} from "vuex";
+import RowPagination from "@/components/base/RowPagination";
 
 export default {
-  name: "Index",
+  name: "ClientsBase",
   components: {
+    RowPagination,
     FormGroup,
     VNodes: {
       functional: true,
@@ -198,15 +168,15 @@ export default {
         phone: this.filters.phone,
         tag_id: this.filters.tag,
         with: [
-            'chat',
-            'pets'
+          'chat',
+          'pets'
         ]
       })
-      .then((response) => {
-        this.clients.data = response.data.data.clients.data
-        this.clients.total = response.data.data.clients.total
-        this.clients.last_page = response.data.data.clients.last_page
-      })
+          .then((response) => {
+            this.clients.data = response.data.data.clients.data
+            this.clients.total = response.data.data.clients.total
+            this.clients.last_page = response.data.data.clients.last_page
+          })
     },
     fetchTags(value){
       this.fetchTagsValue = value

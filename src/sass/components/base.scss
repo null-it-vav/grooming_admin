@@ -230,7 +230,7 @@
     left: auto;
     position: fixed;
     -webkit-transform: translate3d(262px,0,0);
-    transform: translate3d(262px,0,0)!important;
+    transform: translate3d(300px,0,0)!important;
   }
   .main-panel {
     width: 100%;
@@ -243,8 +243,8 @@
   .nav-open .main-panel {
     position: absolute;
     left: 0;
-    -webkit-transform: translate3d(-250px,0,0);
-    transform: translate3d(-250px,0,0)!important;
+    -webkit-transform: translate3d(-290px,0,0);
+    transform: translate3d(-290px,0,0)!important;
   }
 
   .nav-open .sidebar {

@@ -57,7 +57,7 @@
         </div>
       </router-link>
       <router-link
-          :to="{ name: 'home.mail.index' }"
+          :to="{ name: 'home.messages' }"
           class="sidebar-menu-item"
       >
         <div class="sidebar-menu-item-right" />
@@ -67,9 +67,9 @@
             Чат и почта
           </div>
         </div>
-        <div class="sidebar-menu-item-badge-red">
-          3
-        </div>
+<!--        <div class="sidebar-menu-item-badge-red">-->
+<!--          3-->
+<!--        </div>-->
       </router-link>
     </div>
     <div class="sidebar-block">

@@ -19,6 +19,10 @@ const store = new Vuex.Store({
             global: 0,
         },
         popup: false,
+        notifications: {
+            App_Models_FacebookInstagramMessage: {},
+            App_Models_TelegramChatMessage: {}
+        }
     },
     mutations: {
         auth(state, {data}) {
@@ -41,6 +45,9 @@ const store = new Vuex.Store({
         },
         salon_selected(state, {data}) {
             state.salon_selected = data
+        },
+        notifications(state, {data}) {
+            state.notifications = data
         },
         setStore(state, { key, data, allowCreate = false }) {
             if (key.includes('.')) {
@@ -73,6 +80,7 @@ const store = new Vuex.Store({
         salon_selected: (state) => state.salon_selected,
         breeds: (state) => state.breeds,
         tags: (state) => state.tags,
+        notifications: (state) => state.notifications,
         getStore: (state) => (key) => {
             if (key.includes('.')) {
                 let tmp = state;

@@ -5,7 +5,7 @@
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo';
+
 
 window._ = require('lodash'); // eslint disable-line global-require
 
@@ -31,7 +31,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-const axios = require('axios');
+let axios = require('axios');
 
 // axios.defaults.baseURL = 'https://api.null-it.ru';
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API_PROTOCOL + '://' +process.env.VUE_APP_BASE_API_URL;
@@ -47,21 +47,23 @@ window.io = require('socket.io-client');
 
 // window.Pusher = require('pusher-js');
 
+import Echo from "laravel-echo"
+
 // window.Echo = new Echo({
 //     broadcaster: 'socket.io',
 //     host: `${window.location.hostname}:6001`,
 // });
-// import Echo from "laravel-echo"
 
-// window.Echo = new Echo({
-//     broadcaster: 'socket.io',
-//     host: `${process.env.VUE_APP_BASE_API_URL}:6001`,
-//     auth : {
-//         headers : {
-//             Authorization : token
-//         }
-//     }
-// });
+
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: `${process.env.VUE_APP_BASE_API_URL}:6001`,
+    auth : {
+        headers : {
+            Authorization : token
+        }
+    }
+});
 
 
 export default axios;

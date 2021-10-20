@@ -265,6 +265,7 @@ export function clients(payload) {
 }
 
 export function client_update(id, payload) {
+    payload._method = 'patch'
     return axios.post(BASE_URL + 'profile/clients/'+id, payload)
         .then((response) => response)
 }

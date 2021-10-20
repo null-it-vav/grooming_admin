@@ -20,8 +20,9 @@
         <router-view />
 
       </div>
-    </div>
 
+    </div>
+    <notifications />
     <user-settings-popup
       v-if="showUserSettingsPopup"
       @closePopup="closeUserSettingsPopup"
@@ -36,10 +37,11 @@ import store from "@/store/app";
 import UserSettingsPopup from "@/components/users/UserSettingsPopup";
 import BaseHeader from "@/components/base/BaseHeader";
 import Sidebar from "@/components/base/Sidebar";
+import Notifications from "@/components/base/Notifications";
 
 export default {
   name: "DashboardIndex",
-  components: {Sidebar, BaseHeader, UserSettingsPopup},
+  components: {Notifications, Sidebar, BaseHeader, UserSettingsPopup},
   data() {
     return {
       showUserSettingsPopup: false,
@@ -54,13 +56,6 @@ export default {
       'salons',
       'salon_selected'
     ]),
-  },
-  created() {
-    //todo Вернуть
-    // window.Echo.private(`App.User.${this.auth.id}`)
-    //     .listen('UserNotification', ({ data }) => {
-    //       console.log(data)
-    //     });
   },
   watch: {
     // eslint-disable-next-line no-unused-vars
