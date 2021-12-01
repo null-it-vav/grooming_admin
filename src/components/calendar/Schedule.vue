@@ -408,6 +408,6 @@ export default {
   color: #FAFAFA;
 }
 .dhx_body {
-  overflow: auto;
+  overflow: auto !important;
 }
 </style>
