@@ -124,7 +124,7 @@ export default {
   },
   created() {
     this.loadMasters()
-    this.loadOrders()
+    //this.loadOrders()
   },
   mounted() {
     // eslint-disable-next-line no-undef
@@ -230,7 +230,11 @@ export default {
     calcWeekTitle(){
       // console.log(scheduler.getState().max_date, scheduler.getState().min_date)
       // eslint-disable-next-line no-undef
-      this.week = this.$moment(scheduler.getState().min_date).format("YYYY-MM-DD") + " - " + this.$moment(scheduler.getState().max_date).format("YYYY-MM-DD")
+      this.filter_start = this.$moment(scheduler.getState().min_date).format("YYYY-MM-DD")
+      // eslint-disable-next-line no-undef
+      this.filter_end = this.$moment(scheduler.getState().max_date).format("YYYY-MM-DD")
+      this.week = this.filter_start + " - " + this.filter_end
+      this.loadOrders()
     },
     previousWeek(){
       // eslint-disable-next-line no-undef
@@ -402,5 +406,8 @@ export default {
 #right-click-menu li:hover {
   background: #1E88E5;
   color: #FAFAFA;
+}
+.dhx_body {
+  overflow: auto;
 }
 </style>

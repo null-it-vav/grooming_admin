@@ -34,7 +34,7 @@ try {
 const axios = require('axios');
 
 // axios.defaults.baseURL = 'https://api.null-it.ru';
-axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL;
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API_PROTOCOL + "://" + process.env.VUE_APP_BASE_API_URL;
 
 const token = localStorage.getItem('user-token')
 if (token) {
